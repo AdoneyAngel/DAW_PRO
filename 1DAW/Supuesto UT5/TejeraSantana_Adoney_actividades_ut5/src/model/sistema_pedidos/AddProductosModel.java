@@ -56,7 +56,7 @@ public class AddProductosModel {
             
             productosPRUEBA.add(productoPRUEBA);
         }
-        for (int a = 0; a<5; a++) {
+        for (int a = 0; a<3; a++) {
             String nombrePRUEBA = "producto" + String.valueOf(a+5);
             String categoriaPRUEBA = String.valueOf(a);
             String idPRUEBA = String.valueOf(a+5);

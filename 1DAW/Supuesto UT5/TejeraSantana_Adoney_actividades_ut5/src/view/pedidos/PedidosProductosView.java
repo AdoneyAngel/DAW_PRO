@@ -4,6 +4,7 @@
  */
 package view.pedidos;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -98,7 +99,19 @@ public class PedidosProductosView extends javax.swing.JFrame {
     }
     
     public JButton[] getProductosButtons() {
+        JButton[] productosButtons;
         
+        Component[] componentes = this.panelProductos.getComponents();
+        
+        productosButtons = new JButton[componentes.length];
+        
+        for (int a = 0; a<componentes.length; a++) {
+            JButton botonActual = (JButton) componentes[a];
+            
+            productosButtons[a] = botonActual;
+        }
+        
+        return productosButtons;
     }
     
     public JLabel getLblTotal() {

@@ -73,9 +73,12 @@ public class NuevoPedidoController {
         }
         
         this.actualizarBotonesProductos();
+        
+        this.pedidosProductosView.setVisible(true);
     }
     
     private void actualizarBotonesProductos() {
+        this.limpiarBotonesProductos();
         this.pedidosProductosView.getProductoPanel().removeAll();
         
         //  Generando Productos
@@ -91,8 +94,14 @@ public class NuevoPedidoController {
         }
         
         //---------------------
-        
-        this.pedidosProductosView.setVisible(true);
+    }
+    
+    private void limpiarBotonesProductos() {
+        JButton[] botones = this.pedidosProductosView.getProductosButtons();
+    
+        for (JButton botonActual : botones) {
+            botonActual.setVisible(false);
+        }
     }
     
     private String[] getCategoria(int idCategoria) {
