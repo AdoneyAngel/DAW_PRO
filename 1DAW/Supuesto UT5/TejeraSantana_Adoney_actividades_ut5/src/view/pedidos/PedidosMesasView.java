@@ -4,6 +4,7 @@
  */
 package view.pedidos;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import javax.swing.JButton;
@@ -45,8 +46,8 @@ public class PedidosMesasView extends javax.swing.JFrame {
         return this.lblNoMesas;
     }
     
-    public JButton[] getMesasButtons() {
-        return (JButton[]) this.panelMesas.getComponents();
+    public Component[] getMesasButtons() {
+        return this.panelMesas.getComponents();
     }
 
     /**
@@ -67,8 +68,8 @@ public class PedidosMesasView extends javax.swing.JFrame {
         btnMesa2 = new javax.swing.JButton();
         lblTitulo = new javax.swing.JLabel();
         panelMesas = new javax.swing.JPanel();
-        lblNoMesas = new javax.swing.JLabel();
         btnAtras = new javax.swing.JButton();
+        lblNoMesas = new javax.swing.JLabel();
 
         btnMesa6.setText("Mesa 6");
         btnMesa6.addActionListener(new java.awt.event.ActionListener() {
@@ -132,28 +133,22 @@ public class PedidosMesasView extends javax.swing.JFrame {
         panelMesas.setMaximumSize(new java.awt.Dimension(100, 200));
         panelMesas.setMinimumSize(new java.awt.Dimension(80, 100));
 
-        lblNoMesas.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
-        lblNoMesas.setForeground(new java.awt.Color(200, 10, 10));
-        lblNoMesas.setText("No hay mesas disponibles");
-
         javax.swing.GroupLayout panelMesasLayout = new javax.swing.GroupLayout(panelMesas);
         panelMesas.setLayout(panelMesasLayout);
         panelMesasLayout.setHorizontalGroup(
             panelMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMesasLayout.createSequentialGroup()
-                .addContainerGap(140, Short.MAX_VALUE)
-                .addComponent(lblNoMesas)
-                .addContainerGap(163, Short.MAX_VALUE))
+            .addGap(0, 585, Short.MAX_VALUE)
         );
         panelMesasLayout.setVerticalGroup(
             panelMesasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMesasLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(lblNoMesas)
-                .addContainerGap(292, Short.MAX_VALUE))
+            .addGap(0, 361, Short.MAX_VALUE)
         );
 
         btnAtras.setText("Atrás");
+
+        lblNoMesas.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        lblNoMesas.setForeground(new java.awt.Color(200, 10, 10));
+        lblNoMesas.setText("No hay mesas disponibles");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -162,21 +157,25 @@ public class PedidosMesasView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(260, 260, 260)
                 .addComponent(lblTitulo)
-                .addContainerGap(315, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblNoMesas)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addComponent(panelMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNoMesas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelMesas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)

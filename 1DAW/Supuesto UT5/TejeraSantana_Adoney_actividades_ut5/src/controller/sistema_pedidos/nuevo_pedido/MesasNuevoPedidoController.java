@@ -5,11 +5,16 @@
 package controller.sistema_pedidos.nuevo_pedido;
 
 import controller.sistema_pedidos.MenuSistemaPedidosController;
-import java.awt.Dimension;
-import java.awt.Insets;
+import java.awt.Component;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
+import model.sistema_pedidos.AddProductosModel;
 import model.sistema_pedidos.MesasModel;
 import view.pedidos.PedidosMesasView;
+import view.pedidos.PedidosProductosView;
 
 /**
  *
@@ -19,6 +24,7 @@ public class MesasNuevoPedidoController {
     
     private MesasModel mesas;
     private PedidosMesasView pedidosMesasView;
+    private AddProductosModel productosModel;
     
     public MesasNuevoPedidoController() {
         this.mesas = new MesasModel();
@@ -30,8 +36,10 @@ public class MesasNuevoPedidoController {
     }
     
     public void generarVentana() {
-        String[] mesasDisponibles = this.mesas.getNombreMesasDisponibles();
+        this.productosModel = new AddProductosModel();
+        List<String[]> categorias = this.productosModel.getCategorias();
         
+        String[] mesasDisponibles = this.mesas.getNombreMesasDisponibles();
         this.pedidosMesasView = new PedidosMesasView(mesasDisponibles);
         
         pedidosMesasView.getBtnAtras().addActionListener(new java.awt.event.ActionListener() {
@@ -41,7 +49,44 @@ public class MesasNuevoPedidoController {
             }
         });
         
+        
+        //SE RECORRE TODOS LOS BOTONES Y SE SE AÑADE SU MÉTODO
+        Component[] botonesGenerados = pedidosMesasView.getMesasButtons();
+        
+        for (Component botonActual : botonesGenerados) {
+            JButton botonActualBtn = (JButton) botonActual;
+            String nombreBoton = botonActualBtn.getText();
+            
+            botonActualBtn.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    
+                    int idCategoria = getIdCategoriaNombre(nombreBoton);
+                    NuevoPedidoController nuevoPedidoController = new NuevoPedidoController(idCategoria);
+                    
+                    destruirVentana();
+                }
+            });
+        }
+        
+        if (botonesGenerados.length > 0) {
+            this.pedidosMesasView.getLblNoMesas().setVisible(false);
+        }
+        
         pedidosMesasView.setVisible(true);
         
+    }
+    
+    private int getIdCategoriaNombre(String nombre) {
+        Iterator<String[]> categoriasIt = this.productosModel.getCategorias().iterator();
+        
+        while (categoriasIt.hasNext()) {
+            String[] categoriaActual = categoriasIt.next();
+            
+            if (categoriaActual[1].equals(nombre)) {
+                return Integer.parseInt(categoriaActual[0]);
+            }
+        }
+        
+        return -1;
     }
 }

@@ -46,10 +46,20 @@ public class AddProductosModel {
         this.categorias = categoriasPRUEBA;
         
         List<String[]> productosPRUEBA = new ArrayList<>();
-        for (int a = 0; a<10; a++) {
+        for (int a = 0; a<5; a++) {
             String nombrePRUEBA = "producto" + String.valueOf(a);
             String categoriaPRUEBA = String.valueOf(a);
             String idPRUEBA = String.valueOf(a);
+            String precioPrueba = String.valueOf((a*1.5));
+            
+            String[] productoPRUEBA = {idPRUEBA, nombrePRUEBA, categoriaPRUEBA, precioPrueba};
+            
+            productosPRUEBA.add(productoPRUEBA);
+        }
+        for (int a = 0; a<5; a++) {
+            String nombrePRUEBA = "producto" + String.valueOf(a+5);
+            String categoriaPRUEBA = String.valueOf(a);
+            String idPRUEBA = String.valueOf(a+5);
             String precioPrueba = String.valueOf((a*1.5));
             
             String[] productoPRUEBA = {idPRUEBA, nombrePRUEBA, categoriaPRUEBA, precioPrueba};
@@ -131,7 +141,9 @@ public class AddProductosModel {
             }
         }
         
-        nombreProductosCategoria = (String[]) productosCategoriaList.toArray();
+        nombreProductosCategoria = new String[productosCategoriaList.size()];
+        
+        nombreProductosCategoria = productosCategoriaList.toArray(nombreProductosCategoria);
         
         return nombreProductosCategoria;
     }

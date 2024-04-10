@@ -4,6 +4,9 @@
  */
 package view.pedidos;
 
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,12 +25,17 @@ public class PedidosProductosView extends javax.swing.JFrame {
      */
     
     private DefaultTableModel facturaTableModel;
-    private final String[] facturaTableColumns = {"Producto", "Precio", "Unidades", "Subtotal"};
     
     public PedidosProductosView(DefaultTableModel tableModel,String[] categoriasButtonNames) {
         this.facturaTableModel = tableModel;
         
         initComponents();
+        
+        //Modificando estilos
+        this.panelCategorias.setLayout(new FlowLayout(NORMAL));
+        this.panelCategorias.setPreferredSize(new Dimension(500, 100));
+        this.panelProductos.setLayout(new FlowLayout(NORMAL));
+        this.panelProductos.setPreferredSize(new Dimension(500, 100));
     }
     
     public void addProductosButtons(String[] nombreProductos) {
@@ -71,7 +79,6 @@ public class PedidosProductosView extends javax.swing.JFrame {
     }
     
     public JScrollPane getScrollPane() {
-        
     } 
     
     public JTable getTable() {
@@ -79,11 +86,11 @@ public class PedidosProductosView extends javax.swing.JFrame {
     }
     
     public JPanel getCategoriaPanel() {
-        
+        return this.panelCategorias;
     }
     
     public JPanel getProductoPanel() {
-        
+        return this.panelProductos;
     }
     
     public JButton[] getCategoriasButtons() {
@@ -116,16 +123,8 @@ public class PedidosProductosView extends javax.swing.JFrame {
     private void initComponents() {
 
         lblCategorias = new javax.swing.JLabel();
-        lblProductos = new javax.swing.JLabel();
-        btnCatHamburguesas = new javax.swing.JButton();
-        btnProCocacola = new javax.swing.JButton();
-        btnProCocacolazero = new javax.swing.JButton();
-        btnProFantanaranja = new javax.swing.JButton();
-        btnProMonster = new javax.swing.JButton();
-        btnProRedbull = new javax.swing.JButton();
-        btnProNestea = new javax.swing.JButton();
         lblFacturas = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollTableFacturas = new javax.swing.JScrollPane();
         tFacturas = new javax.swing.JTable();
         lblTotal = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
@@ -134,8 +133,11 @@ public class PedidosProductosView extends javax.swing.JFrame {
         btnFacturasRes = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
         lblNoHayCategorias = new javax.swing.JLabel();
-        lblNoHayProductos = new javax.swing.JLabel();
         lblNoSeleccion = new javax.swing.JLabel();
+        panelCategorias = new javax.swing.JPanel();
+        panelProductos = new javax.swing.JPanel();
+        lblProductos = new javax.swing.JLabel();
+        lblNoHayProductos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -146,62 +148,6 @@ public class PedidosProductosView extends javax.swing.JFrame {
         lblCategorias.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblCategorias.setName(""); // NOI18N
 
-        lblProductos.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblProductos.setText("Productos: ");
-        lblProductos.setToolTipText("");
-        lblProductos.setFocusable(false);
-        lblProductos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblProductos.setName(""); // NOI18N
-
-        btnCatHamburguesas.setText("Hamburguesas");
-        btnCatHamburguesas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCatHamburguesasActionPerformed(evt);
-            }
-        });
-
-        btnProCocacola.setText("Cocacola");
-        btnProCocacola.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProCocacolaActionPerformed(evt);
-            }
-        });
-
-        btnProCocacolazero.setText("Coca Cola Zero");
-        btnProCocacolazero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProCocacolazeroActionPerformed(evt);
-            }
-        });
-
-        btnProFantanaranja.setText("Fanta Naranja");
-        btnProFantanaranja.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProFantanaranjaActionPerformed(evt);
-            }
-        });
-
-        btnProMonster.setText("Monster");
-        btnProMonster.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProMonsterActionPerformed(evt);
-            }
-        });
-
-        btnProRedbull.setText("Red Bull");
-        btnProRedbull.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProRedbullActionPerformed(evt);
-            }
-        });
-
-        btnProNestea.setText("Nestea");
-        btnProNestea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProNesteaActionPerformed(evt);
-            }
-        });
-
         lblFacturas.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblFacturas.setText("Facturas");
         lblFacturas.setToolTipText("");
@@ -210,7 +156,7 @@ public class PedidosProductosView extends javax.swing.JFrame {
         lblFacturas.setName(""); // NOI18N
 
         tFacturas.setModel(this.facturaTableModel);
-        jScrollPane1.setViewportView(tFacturas);
+        scrollTableFacturas.setViewportView(tFacturas);
 
         lblTotal.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         lblTotal.setText("Total: 0,0€");
@@ -233,11 +179,46 @@ public class PedidosProductosView extends javax.swing.JFrame {
         lblNoHayCategorias.setForeground(new java.awt.Color(255, 10, 10));
         lblNoHayCategorias.setText("No hay categorías");
 
-        lblNoHayProductos.setForeground(new java.awt.Color(255, 10, 10));
-        lblNoHayProductos.setText("No hay productos");
-
         lblNoSeleccion.setForeground(new java.awt.Color(255, 10, 10));
         lblNoSeleccion.setText("No ha seleccionado nada");
+
+        panelCategorias.setAutoscrolls(true);
+        panelCategorias.setPreferredSize(new java.awt.Dimension(463, 100));
+
+        javax.swing.GroupLayout panelCategoriasLayout = new javax.swing.GroupLayout(panelCategorias);
+        panelCategorias.setLayout(panelCategoriasLayout);
+        panelCategoriasLayout.setHorizontalGroup(
+            panelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 508, Short.MAX_VALUE)
+        );
+        panelCategoriasLayout.setVerticalGroup(
+            panelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 195, Short.MAX_VALUE)
+        );
+
+        panelProductos.setAutoscrolls(true);
+        panelProductos.setPreferredSize(new java.awt.Dimension(463, 100));
+
+        javax.swing.GroupLayout panelProductosLayout = new javax.swing.GroupLayout(panelProductos);
+        panelProductos.setLayout(panelProductosLayout);
+        panelProductosLayout.setHorizontalGroup(
+            panelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 507, Short.MAX_VALUE)
+        );
+        panelProductosLayout.setVerticalGroup(
+            panelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 165, Short.MAX_VALUE)
+        );
+
+        lblProductos.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblProductos.setText("Productos: ");
+        lblProductos.setToolTipText("");
+        lblProductos.setFocusable(false);
+        lblProductos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblProductos.setName(""); // NOI18N
+
+        lblNoHayProductos.setForeground(new java.awt.Color(255, 10, 10));
+        lblNoHayProductos.setText("No hay productos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -246,40 +227,28 @@ public class PedidosProductosView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblProductos)
-                                    .addComponent(lblCategorias))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(41, 41, 41)
-                                        .addComponent(btnCatHamburguesas, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(lblNoHayProductos)
-                                            .addComponent(lblNoHayCategorias)))))
+                                .addGap(22, 22, 22)
+                                .addComponent(lblCategorias)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNoHayCategorias))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnProCocacolazero, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnProCocacola, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnProFantanaranja, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnProRedbull, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnProMonster, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnProNestea, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addContainerGap()
+                                .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(lblProductos)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNoHayProductos)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addComponent(panelCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -290,7 +259,6 @@ public class PedidosProductosView extends javax.swing.JFrame {
                                 .addComponent(lblFacturas)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblNoSeleccion))
-                            .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -299,8 +267,9 @@ public class PedidosProductosView extends javax.swing.JFrame {
                                         .addComponent(btnFacturasSum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(btnFacturasRes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap())))
+                                    .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)))
+                            .addComponent(scrollTableFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(15, 15, 15))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,30 +280,20 @@ public class PedidosProductosView extends javax.swing.JFrame {
                     .addComponent(lblFacturas)
                     .addComponent(lblNoHayCategorias)
                     .addComponent(lblNoSeleccion))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(161, 161, 161)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(lblProductos)
-                                    .addComponent(lblNoHayProductos))
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnCatHamburguesas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnProCocacola, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProFantanaranja, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProRedbull, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(58, 58, 58)
+                        .addComponent(scrollTableFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(panelCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnProCocacolazero, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProMonster, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProNestea, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(lblProductos)
+                            .addComponent(lblNoHayProductos))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -357,34 +316,6 @@ public class PedidosProductosView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCatHamburguesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatHamburguesasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCatHamburguesasActionPerformed
-
-    private void btnProCocacolaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProCocacolaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProCocacolaActionPerformed
-
-    private void btnProCocacolazeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProCocacolazeroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProCocacolazeroActionPerformed
-
-    private void btnProFantanaranjaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProFantanaranjaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProFantanaranjaActionPerformed
-
-    private void btnProMonsterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProMonsterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProMonsterActionPerformed
-
-    private void btnProRedbullActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProRedbullActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProRedbullActionPerformed
-
-    private void btnProNesteaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProNesteaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProNesteaActionPerformed
-
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -392,18 +323,10 @@ public class PedidosProductosView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnCatHamburguesas;
     private javax.swing.JButton btnEliminarseleccion;
     private javax.swing.JButton btnFacturasRes;
     private javax.swing.JButton btnFacturasSum;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnProCocacola;
-    private javax.swing.JButton btnProCocacolazero;
-    private javax.swing.JButton btnProFantanaranja;
-    private javax.swing.JButton btnProMonster;
-    private javax.swing.JButton btnProNestea;
-    private javax.swing.JButton btnProRedbull;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCategorias;
     private javax.swing.JLabel lblFacturas;
     private javax.swing.JLabel lblNoHayCategorias;
@@ -411,6 +334,9 @@ public class PedidosProductosView extends javax.swing.JFrame {
     private javax.swing.JLabel lblNoSeleccion;
     private javax.swing.JLabel lblProductos;
     private javax.swing.JLabel lblTotal;
+    private javax.swing.JPanel panelCategorias;
+    private javax.swing.JPanel panelProductos;
+    private javax.swing.JScrollPane scrollTableFacturas;
     private javax.swing.JTable tFacturas;
     // End of variables declaration//GEN-END:variables
 }

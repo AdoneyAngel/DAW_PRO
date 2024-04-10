@@ -17,12 +17,19 @@ public class MesasModel {
         
     }
     
+    public String[][] getMesas() {
+        return mesas;
+    }
+    public int[] getMesasOcupadas() {
+        return mesasOcupadas;
+    }
+    
     public String[] getNombreMesasDisponibles() {
-        String[] nombreMesas = new String[this.mesas.length - this.mesasOcupadas.length];
+        String[] nombreMesas = new String[this.getMesas().length - this.getMesasOcupadas().length];
         
         int index = 0;
         
-        for (String[] mesa : this.mesas) {
+        for (String[] mesa : this.getMesas()) {
             int idMesa = Integer.parseInt(mesa[0]);
             
             if (!ocupado(idMesa)) {
@@ -36,11 +43,11 @@ public class MesasModel {
     }
     
     public String[] getNombreMesasOcupadas() {
-        String[] nombreMesasOcupadas = new String[this.mesasOcupadas.length];
+        String[] nombreMesasOcupadas = new String[this.getMesasOcupadas().length];
         
         int index = 0;
         
-        for (String[] mesa : this.mesas) {
+        for (String[] mesa : this.getMesas()) {
             int mesaId = Integer.parseInt(mesa[0]);
             
             if (ocupado(mesaId)) {
@@ -53,7 +60,7 @@ public class MesasModel {
     }
     
     private boolean ocupado(int idMesa) {
-        for (int idMesaActual : this.mesasOcupadas) {
+        for (int idMesaActual : this.getMesasOcupadas()) {
             if (idMesaActual == idMesa) {
                 return true;
             }
@@ -61,4 +68,6 @@ public class MesasModel {
         
         return false;
     }
+    
+    
 }
