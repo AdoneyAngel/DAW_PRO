@@ -10,16 +10,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author AdoneyDAW
  */
-public class AdministracionProdcutosView extends javax.swing.JFrame {
+public class AdministracionProductosView extends javax.swing.JFrame {
 
     /**
-     * Creates new form AdministracionProdcutosView
+     * Creates new form AdministracionProductosView
      */
     
     private final String[] categoriasTableColumns = {"ID", "Nombre", "Precio", "Categoría"};
     private DefaultTableModel categoriasTableModel;
     
-    public AdministracionProdcutosView() {
+    public AdministracionProductosView() {
         String[][] temporalCategoriasTableData = {{"1", "Coca Cola", "1,8", "Refrescos"}, {"2", "Bocadillo de Lomo", "2", "Bocadillos"}, {"3", "Hamburguesa con queso", "5,5", "Menus"}};
         
         this.categoriasTableModel = new DefaultTableModel(temporalCategoriasTableData, this.categoriasTableColumns) {
@@ -189,7 +189,6 @@ public class AdministracionProdcutosView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblCrearproductoprecio)
                                 .addGap(30, 30, 30)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboCrearProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCrearproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,7 +205,6 @@ public class AdministracionProdcutosView extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblEditarproductoprecio)
                                 .addGap(30, 30, 30)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboEditarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEditarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -250,20 +248,21 @@ public class AdministracionProdcutosView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdministracionProdcutosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministracionProductosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdministracionProdcutosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministracionProductosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdministracionProdcutosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministracionProductosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdministracionProdcutosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdministracionProductosView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdministracionProdcutosView().setVisible(true);
+                new AdministracionProductosView().setVisible(true);
             }
         });
     }
