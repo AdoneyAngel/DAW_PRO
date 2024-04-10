@@ -4,7 +4,6 @@
  */
 package controller.sistema_pedidos.nuevo_pedido;
 
-import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.sistema_pedidos.AddProductosModel;
 import view.pedidos.PedidosProductosView;
