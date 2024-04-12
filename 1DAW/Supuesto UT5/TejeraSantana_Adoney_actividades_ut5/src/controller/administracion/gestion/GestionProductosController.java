@@ -71,7 +71,7 @@ public class GestionProductosController {
                 } else if (existeNombre(nombreProducto)) {
                     administracionProductosView.getLblNombreExiste().setVisible(true);
                     
-                } else if (categoriaNombre.isEmpty() || categoriaNombre.isBlank() || precioProducto <= 0) {
+                } else if (categoriaNombre.isEmpty() || categoriaNombre.isBlank()) {
                     administracionProductosView.getLblCrearProductoVacio().setVisible(true);
                     
                 } else {  

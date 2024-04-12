@@ -6,15 +6,12 @@ package controller.sistema_pedidos.nuevo_pedido;
 
 import controller.sistema_pedidos.MenuSistemaPedidosController;
 import java.awt.Component;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JButton;
-import javax.swing.table.DefaultTableModel;
 import model.sistema_pedidos.AddProductosModel;
 import model.sistema_pedidos.MesasModel;
 import view.pedidos.PedidosMesasView;
-import view.pedidos.PedidosProductosView;
 
 /**
  *
@@ -38,9 +35,11 @@ public class MesasNuevoPedidoController {
     public void generarVentana() {
         this.productosModel = new AddProductosModel();
         List<String[]> categorias = this.productosModel.getCategorias();
+        List<String> mesasDisponibles = this.mesas.getNombreMesasDisponibles();
         
-        String[] mesasDisponibles = this.mesas.getNombreMesasDisponibles();
-        this.pedidosMesasView = new PedidosMesasView(mesasDisponibles);
+        String[] mesasDisponiblesArray = new String[mesasDisponibles.size()];
+        
+        this.pedidosMesasView = new PedidosMesasView(mesasDisponibles.toArray(mesasDisponiblesArray));
         
         pedidosMesasView.getBtnAtras().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,8 +59,8 @@ public class MesasNuevoPedidoController {
             botonActualBtn.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     
-                    int idCategoria = getIdCategoriaNombre(nombreBoton);
-                    NuevoPedidoController nuevoPedidoController = new NuevoPedidoController(idCategoria);
+                    int idMesa = getIdMesaNombre(nombreBoton);
+                    NuevoPedidoController nuevoPedidoController = new NuevoPedidoController(idMesa);
                     
                     destruirVentana();
                 }
@@ -76,12 +75,10 @@ public class MesasNuevoPedidoController {
         
     }
     
-    private int getIdCategoriaNombre(String nombre) {
-        Iterator<String[]> categoriasIt = this.productosModel.getCategorias().iterator();
+    private int getIdMesaNombre(String nombre) {
+        List<String[]> categorias = this.mesas.getMesas();
         
-        while (categoriasIt.hasNext()) {
-            String[] categoriaActual = categoriasIt.next();
-            
+        for (String[] categoriaActual : categorias) {
             if (categoriaActual[1].equals(nombre)) {
                 return Integer.parseInt(categoriaActual[0]);
             }

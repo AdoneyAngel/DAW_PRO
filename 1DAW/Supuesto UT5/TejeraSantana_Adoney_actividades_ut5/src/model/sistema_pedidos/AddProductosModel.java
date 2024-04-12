@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 //PRODUCTO: ID, nombre, categoriaID, precio
 //CATEGORIA: ID, nombre
-//PEDIDO: ID, idProducto
+//PEDIDO: ID, precio, fecha, idMesa
 //COMANDA: ID, idPedido
 //COMANDAPRODUCTO: IDcomanda, idProducto, cantidad
 //PRODUCTOPEDIDO: idPedido, idProducto, Cantidad
