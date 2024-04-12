@@ -53,7 +53,7 @@ public class InicioView extends javax.swing.JFrame {
         lblTitulo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblTitulo.setName(""); // NOI18N
 
-        btnAdministracion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAdministracion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAdministracion.setText("Administracion");
         btnAdministracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -61,6 +61,7 @@ public class InicioView extends javax.swing.JFrame {
             }
         });
 
+        btnSistemaPedidos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSistemaPedidos.setText("Sistema de Pedidos");
         btnSistemaPedidos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

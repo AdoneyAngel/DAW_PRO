@@ -88,7 +88,7 @@
     <Component class="javax.swing.JButton" name="btnAdministracion">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Segoe UI" size="14" style="0"/>
+          <Font name="Segoe UI" size="14" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Administracion"/>
       </Properties>
@@ -98,6 +98,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnSistemaPedidos">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI" size="14" style="1"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Sistema de Pedidos"/>
       </Properties>
       <Events>
