@@ -5,6 +5,7 @@
 package model.administracion.gestion;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -17,7 +18,7 @@ import javax.swing.table.TableModel;
  */
 public class GestionProductosModel {
     private GestionCategoriasModel categoriasModel;
-    private List<String[]> productos;
+    private ArrayList<String[]> productos;
 
     public GestionProductosModel() {
         this.categoriasModel = new GestionCategoriasModel();
@@ -31,11 +32,16 @@ public class GestionProductosModel {
     }
     
     public DefaultTableModel getModelProductos() {
-        List<String[]> productosCopia = new ArrayList<>(this.productos);
+        ArrayList<String[]> productosCopia = new ArrayList();
+        
+        for (String[] producto : this.productos) {
+            String[] productoCopia = Arrays.copyOf(producto, producto.length);
+            productosCopia.add(productoCopia);
+        }          
         
         String[] tableColumns = {"ID", "Nombre", "Precio", "Categoria"};
-        String[][] tableData = new String[productosCopia.size()][4];
         
+        String[][] tableData = new String[productosCopia.size()][4];
         tableData = productosCopia.toArray(tableData);
         
         //Se cambia el ID de categoria por el nombre
@@ -52,6 +58,11 @@ public class GestionProductosModel {
             
         }
         
+        for (String[] producto : this.productos) {
+            String[] productoCopia = Arrays.copyOf(producto, producto.length);
+            productosCopia.add(productoCopia);
+        }
+
         DefaultTableModel tableModel = new DefaultTableModel(tableData, tableColumns) {
              @Override
              public boolean isCellEditable(int r, int c) {

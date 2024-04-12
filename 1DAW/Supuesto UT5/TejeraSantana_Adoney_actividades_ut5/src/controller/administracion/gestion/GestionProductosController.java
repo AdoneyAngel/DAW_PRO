@@ -88,7 +88,6 @@ public class GestionProductosController {
                 ocultarLbl();
                 
                 int rowIndex = administracionProductosView.getTableProductos().getSelectedRow();
-                int idProducto =  Integer.parseInt(administracionProductosView.getTableProductos().getValueAt(rowIndex, 0).toString());
                 
                 String nombreProducto = administracionProductosView.getFieldNombreEditar().getText();
                 String categoriaNombre = administracionProductosView.getComboEditar().getSelectedItem().toString();
@@ -99,7 +98,10 @@ public class GestionProductosController {
                 
                 double precioProducto = precioValido(precioProductoStr);
                 
-                if (precioProducto < 0) {
+                if (rowIndex < 0) {
+                    administracionProductosView.getLblNoSeleccion().setVisible(true);
+                    
+                }else if (precioProducto <= 0) {
                     administracionProductosView.getLblCrearPrecioInvalido().setVisible(true);
                     
                 } else if (existeNombre(nombreProducto)) {
@@ -109,12 +111,33 @@ public class GestionProductosController {
                     administracionProductosView.getLblEditarProductoVacio().setVisible(true);
                     
                 } else {
+                    int idProducto =  Integer.parseInt(administracionProductosView.getTableProductos().getValueAt(rowIndex, 0).toString());
+                    
                     model.actualizarProducto(idProducto, nombreProducto, precioProducto, categoriaId);
                     
                 }
                 
                 actualizarTablaProductos();
                
+            }
+        });
+        
+        this.administracionProductosView.getBtnEliminarSeleccion().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ocultarLbl();
+                
+                int rowIndex = administracionProductosView.getTableProductos().getSelectedRow();
+                
+                if (rowIndex < 0) {
+                    administracionProductosView.getLblNoSeleccion().setVisible(true);
+                
+                } else {
+                    int productoId = Integer.parseInt(administracionProductosView.getTableProductos().getValueAt(rowIndex, 0).toString());
+                    
+                    model.eliminarProducto(productoId);
+                    
+                    actualizarTablaProductos();
+                }
             }
         });
         
@@ -160,6 +183,7 @@ public class GestionProductosController {
         this.administracionProductosView.getLblNombreExiste().setVisible(false);
         this.administracionProductosView.getLblCrearPrecioInvalido().setVisible(false);
         this.administracionProductosView.getLblEditarPrecioInvalido().setVisible(false);
+        this.administracionProductosView.getLblNoSeleccion().setVisible(false);
     }
     
     private int generarProductoId() {

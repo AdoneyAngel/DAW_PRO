@@ -18,21 +18,24 @@ import javax.swing.table.DefaultTableModel;
 //CATEGORIA: ID, nombre
 //PEDIDO: ID, idProducto
 //COMANDA: ID, idPedido
-//COMANDAPRODUCTO: IDcomanda, IDpedido
+//COMANDAPRODUCTO: IDcomanda, idProducto, cantidad
+//PRODUCTOPEDIDO: idPedido, idProducto, Cantidad
 
 public class AddProductosModel {
     private List<String[]> categorias;
     private List<String[]> productos;
     private List<String[]> pedidos;
+    private List<String[]> pedidoProductos;
     private List<int[]> comandas;
     private List<int[]> comandaProducto;
     
     public AddProductosModel() {
-        this.productos = new ArrayList<>();
-        this.pedidos = new ArrayList<>();
-        this.categorias = new ArrayList<>();
-        this.comandas = new ArrayList<>();
-        this.comandaProducto = new ArrayList<>();
+        this.productos = new ArrayList();
+        this.pedidos = new ArrayList();
+        this.categorias = new ArrayList();
+        this.comandas = new ArrayList();
+        this.comandaProducto = new ArrayList();
+        this.pedidoProductos = new ArrayList();
         
         //GENERANDO PRODUCTOS, CATEGORIAS Y PEDIDOS DE PRUEBA
             //CATEGORIAS
@@ -82,21 +85,51 @@ public class AddProductosModel {
         return categorias;
     }
 
+    public void setCategorias(List<String[]> categorias) {
+        this.categorias = categorias;
+    }
+
     public List<String[]> getProductos() {
         return productos;
+    }
+
+    public void setProductos(List<String[]> productos) {
+        this.productos = productos;
     }
 
     public List<String[]> getPedidos() {
         return pedidos;
     }
 
+    public void setPedidos(List<String[]> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public List<String[]> getPedidoProductos() {
+        return pedidoProductos;
+    }
+
+    public void setPedidoProductos(List<String[]> pedidoProductos) {
+        this.pedidoProductos = pedidoProductos;
+    }
+
     public List<int[]> getComandas() {
         return comandas;
     }
 
+    public void setComandas(List<int[]> comandas) {
+        this.comandas = comandas;
+    }
+
     public List<int[]> getComandaProducto() {
         return comandaProducto;
-    } 
+    }
+
+    public void setComandaProducto(List<int[]> comandaProducto) {
+        this.comandaProducto = comandaProducto;
+    }
+
+    
    
     public String[] getNombreCategorias() {
         String[] nombreCategorias = new String[this.getCategorias().size()];
