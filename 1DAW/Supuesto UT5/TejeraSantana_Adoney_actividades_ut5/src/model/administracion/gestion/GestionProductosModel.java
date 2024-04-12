@@ -4,6 +4,7 @@
  */
 package model.administracion.gestion;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -20,24 +21,43 @@ public class GestionProductosModel {
 
     public GestionProductosModel() {
         this.categoriasModel = new GestionCategoriasModel();
+        this.productos = new ArrayList<>();
         
         //GENERANDO PRODUCTOS DE PRUEBA
         for (int a = 0; a<10; a++) {
-            String nombreCategoria = this.getCategoriaNombre(a);
-            
-            String[] nuevoProducto = {String.valueOf(a), ("Producto" + String.valueOf(a)), String.valueOf(a*1.5), nombreCategoria};
-            
-            this.productos.add(nuevoProducto);
+            this.insertarProducto(a, ("Producto" + String.valueOf(a)), a*1.5, a);
         }
         //-----------------------------
     }
     
     public DefaultTableModel getModelProductos() {
-        String[] tableColumns = {"ID", "Nombre", "Precio", "Categoria"};
-        String[][] tableData = new String[this.productos.size()][4];
-        tableData = this.productos.toArray(tableData);
+        List<String[]> productosCopia = new ArrayList<>(this.productos);
         
-        DefaultTableModel tableModel = new DefaultTableModel(tableData, tableColumns);
+        String[] tableColumns = {"ID", "Nombre", "Precio", "Categoria"};
+        String[][] tableData = new String[productosCopia.size()][4];
+        
+        tableData = productosCopia.toArray(tableData);
+        
+        //Se cambia el ID de categoria por el nombre
+        
+        for (int tablaIndex = 0; tablaIndex<tableData.length; tablaIndex++) {
+            String[] producto = tableData[tablaIndex];
+            
+            int categoriaId = Integer.parseInt(producto[3]);
+            String nombreCategoria = this.getCategoriaNombre(categoriaId);
+            
+            producto[3] = nombreCategoria;
+            
+            tableData[tablaIndex] = producto;
+            
+        }
+        
+        DefaultTableModel tableModel = new DefaultTableModel(tableData, tableColumns) {
+             @Override
+             public boolean isCellEditable(int r, int c) {
+                 return false;
+             }
+        };
         
         return tableModel;
     }
@@ -53,13 +73,11 @@ public class GestionProductosModel {
     public void insertarProducto(int id, String nombre, double precio, int idCategoria) {
         
         if (!existeNombreProducto(nombre)) {
-            String categoriaNombre = getCategoriaNombre(idCategoria);
-            
-            String[] nuevoProducto = {
+             String[] nuevoProducto = {
                 String.valueOf(id),
                 nombre,
                 String.valueOf(precio),
-                categoriaNombre
+                 String.valueOf(idCategoria)
             };
             
             this.productos.add(nuevoProducto);
@@ -71,11 +89,10 @@ public class GestionProductosModel {
         if (existeIdProducto(id)) {
             String[] producto = this.getProductoPorId(id);
             int productoIndex = this.productos.indexOf(producto);
-            String nombreCategoria = this.getCategoriaNombre(idCategoria);
             
             producto[1] = nombre;
             producto[2] = String.valueOf(precio);
-            producto[3] = nombreCategoria;
+            producto[3] = String.valueOf(idCategoria);
             
             this.productos.set(productoIndex, producto);
         }
@@ -90,28 +107,13 @@ public class GestionProductosModel {
     }
     
     public int buscarCategoriaIdPorNombre(String nombre) {
-        if (existeNombreProducto(nombre)) {
-            String[] producto = getProductoPorNombre(nombre);
-            int categoriaId = getCategoriaId(producto[3]);
-            
-            return categoriaId;
-            
-        }
+        List<String[]> categorias = this.categoriasModel.getCategorias();
         
-        return -1;
+        return categorias.indexOf(nombre);
     }
     
-    private int generarId() {
-        boolean idValido = false;
-        int nuevoId = -1;
-        
-        while (!idValido || nuevoId < 0) {
-            nuevoId++;
-            
-            idValido = !existeIdProducto(nuevoId);
-        }
-        
-        return nuevoId;
+    public List<String[]> getProductos() {
+        return this.productos;
     }
     
     private boolean existeIdProducto(int id) {
@@ -162,28 +164,12 @@ public class GestionProductosModel {
         return nombres;
     }
     
-    private int getCategoriaId(String nombre) {
-        TableModel categoriaTable = this.categoriasModel.getModelCategorias();
-        
-        for (int a = 0; a<categoriaTable.getRowCount(); a++) {
-            String nombreCategoria = (String) categoriaTable.getValueAt(a, 1);
-            String idCategoria = (String) categoriaTable.getValueAt(a, 0);
-            
-            if (nombreCategoria.equals(nombre)) {
-                return Integer.parseInt(idCategoria);
-            }
-            
-        }
-        
-        return -1;
-    }
-    
     private String getCategoriaNombre (int id) {
-        TableModel categoriaTable = this.categoriasModel.getModelCategorias();
+        List <String[]> categorias = this.categoriasModel.getCategorias();
         
-        for (int a = 0; a<categoriaTable.getRowCount(); a++) {
-            String IdCategoria = (String) categoriaTable.getValueAt(a, 1);
-            String nombreCategoria = (String) categoriaTable.getValueAt(a, 1);
+        for (String[] categoria : categorias) {
+            String IdCategoria = categoria[0];
+            String nombreCategoria = categoria[1];
             
             if (IdCategoria.equals(String.valueOf(id))) {
                 return nombreCategoria;

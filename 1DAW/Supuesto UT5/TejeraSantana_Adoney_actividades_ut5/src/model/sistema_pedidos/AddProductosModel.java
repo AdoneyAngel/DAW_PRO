@@ -34,7 +34,8 @@ public class AddProductosModel {
         this.comandas = new ArrayList<>();
         this.comandaProducto = new ArrayList<>();
         
-        //GENERANDO PRODUCTOS Y CATEGORIAS DE PRUEBA
+        //GENERANDO PRODUCTOS, CATEGORIAS Y PEDIDOS DE PRUEBA
+            //CATEGORIAS
         List<String[]> categoriasPRUEBA = new ArrayList<>();
         
         for (int a = 0; a<10; a++) {
@@ -45,6 +46,7 @@ public class AddProductosModel {
         
         this.categorias = categoriasPRUEBA;
         
+            //PRODUCTOS
         List<String[]> productosPRUEBA = new ArrayList<>();
         for (int a = 0; a<5; a++) {
             String nombrePRUEBA = "producto" + String.valueOf(a);
@@ -68,6 +70,11 @@ public class AddProductosModel {
         }
         
         this.productos = productosPRUEBA;
+        
+            // PEDIDOS
+
+        
+        
         //------------------------------
     }
 

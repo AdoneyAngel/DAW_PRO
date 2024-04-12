@@ -80,19 +80,26 @@ public class NuevoPedidoController {
     private void actualizarBotonesProductos() {
         this.limpiarBotonesProductos();
         
-        //  Generando Productos
+        //Se insrtan los botones con la funcion addProductosButtons de la vista
+        
         String[] CategoriaSeleccionado = this.getCategoria(this.categoriaSeleccionada);
         String[] nombreProductosPorCategoria = this.productosModel.getNombreProductosCategoria(CategoriaSeleccionado[1]);
         
-        for (String productoActual : nombreProductosPorCategoria) {
-            
-            JButton btnProducto = new JButton (productoActual);
-            btnProducto.setPreferredSize(new Dimension(160, 40));
-            
-            this.pedidosProductosView.getProductoPanel().add(btnProducto);
+        this.pedidosProductosView.addProductosButtons(nombreProductosPorCategoria);
+        
+        //Se agrega los eventos de los botones
+        
+        JButton[] productoBotones = this.pedidosProductosView.getProductosButtons();
+        
+        for (JButton botonActual : productoBotones) {
+            botonActual.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    
+                }
+            });
         }
         
-        //---------------------
+        this.pedidosProductosView.setVisible(true);
     }
     
     private void limpiarBotonesProductos() {

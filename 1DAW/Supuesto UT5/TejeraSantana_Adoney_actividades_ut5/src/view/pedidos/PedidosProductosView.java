@@ -40,7 +40,12 @@ public class PedidosProductosView extends javax.swing.JFrame {
     }
     
     public void addProductosButtons(String[] nombreProductos) {
-        
+        for (String nombreProducot : nombreProductos) {
+            JButton btnProducto = new JButton (nombreProducot);
+            btnProducto.setPreferredSize(new Dimension(160, 40));
+            
+            this.panelProductos.add(btnProducto);
+        }
     }
     
     public JButton getBtnAtras() {
@@ -80,6 +85,7 @@ public class PedidosProductosView extends javax.swing.JFrame {
     }
     
     public JScrollPane getScrollPane() {
+        return this.scrollTableFacturas;
     } 
     
     public JTable getTable() {
@@ -95,7 +101,19 @@ public class PedidosProductosView extends javax.swing.JFrame {
     }
     
     public JButton[] getCategoriasButtons() {
+        JButton[] categoriasButtons;
         
+        Component[] componentes = this.panelCategorias.getComponents();
+        
+        categoriasButtons = new JButton[componentes.length];
+        
+        for (int a = 0; a<componentes.length; a++) {
+            JButton botonActual = (JButton) componentes[a];
+            
+            categoriasButtons[a] = botonActual;
+        }
+        
+        return categoriasButtons;
     }
     
     public JButton[] getProductosButtons() {

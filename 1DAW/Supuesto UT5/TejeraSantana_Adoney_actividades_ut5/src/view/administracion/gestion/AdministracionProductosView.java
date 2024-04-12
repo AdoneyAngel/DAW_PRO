@@ -4,6 +4,12 @@
  */
 package view.administracion.gestion;
 
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -31,6 +37,55 @@ public class AdministracionProductosView extends javax.swing.JFrame {
         
         initComponents();
     }
+    
+    public JTextField getFieldNombreCrear() {
+        return this.fieldCrearproductonombre;
+    }    
+    public JSpinner getFieldPrecioCrear() {
+        return this.fieldCrearproductoprecio;
+    }
+    public JTextField getFieldNombreEditar() {
+        return this.fieldEditarproductonombre;
+    } 
+    public JSpinner getFieldPrecioEditar() {
+        return this.fieldEditarproductoprecio;
+    }
+    public JComboBox getComboCrear() {
+        return this.comboCrearProducto;
+    }
+    public JComboBox getComboEditar() {
+        return this.comboEditarProducto;
+    }
+    public JButton getBtnCrearProduct() {
+        return this.btnCrearproducto;
+    }
+    public JButton getBtnEditarProducto() {
+        return this.btnEditarProducto;
+    }
+    public JTable getTableProductos() {
+        return this.tProductos;
+    }
+    public JButton getBtnEliminarSeleccion() {
+        return this.btnEliminarseleccion;
+    }
+    public JButton getBtnAtras() {
+        return this.btnAtras;
+    }
+    public JLabel getLblNombreExiste() {
+        return this.lblNombreExiste;
+    }
+    public JLabel getLblCrearProductoVacio() {
+        return this.lblCrearProductoVacio;
+    }
+    public JLabel getLblEditarProductoVacio() {
+        return this.lblEditarProductoVacio;
+    }
+    public JLabel getLblCrearPrecioInvalido() {
+        return this.lblCrearPrecioInvalido;
+    }
+    public JLabel getLblEditarPrecioInvalido() {
+        return this.lblEditarPrecioInvalido;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,7 +97,7 @@ public class AdministracionProductosView extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        tCategorias = new javax.swing.JTable();
+        tProductos = new javax.swing.JTable();
         btnEliminarseleccion = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
         lblCrearproducto = new javax.swing.JLabel();
@@ -60,11 +115,16 @@ public class AdministracionProductosView extends javax.swing.JFrame {
         fieldEditarproductonombre = new javax.swing.JTextField();
         comboCrearProducto = new javax.swing.JComboBox<>();
         comboEditarProducto = new javax.swing.JComboBox<>();
+        lblCrearProductoVacio = new javax.swing.JLabel();
+        lblEditarProductoVacio = new javax.swing.JLabel();
+        lblNombreExiste = new javax.swing.JLabel();
+        lblCrearPrecioInvalido = new javax.swing.JLabel();
+        lblEditarPrecioInvalido = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tCategorias.setModel(this.categoriasTableModel);
-        jScrollPane1.setViewportView(tCategorias);
+        tProductos.setModel(this.categoriasTableModel);
+        jScrollPane1.setViewportView(tProductos);
 
         btnEliminarseleccion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         btnEliminarseleccion.setText("Eliminar Selección");
@@ -88,15 +148,19 @@ public class AdministracionProductosView extends javax.swing.JFrame {
         btnEditarProducto.setText("Modificar");
 
         lblCategorias.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        lblCategorias.setText("Categorías:");
+        lblCategorias.setText("Productos:");
 
         lblCrearproductonombre.setText("Nombre:");
 
         lblCrearproductoprecio.setText("Precio");
 
+        fieldCrearproductoprecio.setModel(new javax.swing.SpinnerNumberModel(1.0d, 0.01d, null, 1.0d));
+
         lblEditarproductonombre.setText("Nombre:");
 
         lblEditarproductoprecio.setText("Precio");
+
+        fieldEditarproductoprecio.setModel(new javax.swing.SpinnerNumberModel(1.0d, 0.01d, null, 1.0d));
 
         fieldEditarproductonombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,41 +182,72 @@ public class AdministracionProductosView extends javax.swing.JFrame {
             }
         });
 
+        lblCrearProductoVacio.setForeground(new java.awt.Color(255, 10, 10));
+        lblCrearProductoVacio.setText("Debe seleccionar un nombre y un precio");
+
+        lblEditarProductoVacio.setForeground(new java.awt.Color(255, 10, 10));
+        lblEditarProductoVacio.setText("Debe seleccionar un nombre y un precio");
+
+        lblNombreExiste.setForeground(new java.awt.Color(255, 10, 10));
+        lblNombreExiste.setText("Ya existe el nombre de ese producto");
+
+        lblCrearPrecioInvalido.setForeground(new java.awt.Color(255, 10, 10));
+        lblCrearPrecioInvalido.setText("Precio inválido");
+
+        lblEditarPrecioInvalido.setForeground(new java.awt.Color(255, 10, 10));
+        lblEditarPrecioInvalido.setText("Precio inválido");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(fieldEditarproductonombre, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(lblEditarproductonombre)
+                                    .addGap(139, 139, 139)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblEditarproductoprecio)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lblEditarPrecioInvalido))
+                                .addComponent(fieldEditarproductoprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(lblCrearproducto)
+                            .addGap(18, 18, 18)
+                            .addComponent(lblCrearProductoVacio))
+                        .addComponent(btnCrearproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(fieldCrearproductonombre, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                    .addComponent(lblCrearproductonombre)
+                                    .addGap(139, 139, 139)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(lblCrearproductoprecio)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(lblCrearPrecioInvalido))
+                                .addComponent(fieldCrearproductoprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnEditarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(comboCrearProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(comboEditarProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fieldEditarproductonombre, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblEditarproductonombre)
-                                .addGap(139, 139, 139)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblEditarproductoprecio)
-                            .addComponent(fieldEditarproductoprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(lblEditarproducto)
-                    .addComponent(lblCrearproducto)
-                    .addComponent(btnCrearproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fieldCrearproductonombre, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblCrearproductonombre)
-                                .addGap(139, 139, 139)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCrearproductoprecio)
-                            .addComponent(fieldCrearproductoprecio, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btnEditarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboCrearProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(comboEditarProducto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 127, Short.MAX_VALUE)
+                        .addComponent(lblEditarproducto)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblEditarProductoVacio)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCategorias))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCategorias)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblNombreExiste)))
                 .addGap(23, 23, 23))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -160,7 +255,7 @@ public class AdministracionProductosView extends javax.swing.JFrame {
                 .addGap(131, 131, 131))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAtras)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -169,15 +264,15 @@ public class AdministracionProductosView extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCrearproducto)
-                    .addComponent(lblCategorias))
+                    .addComponent(lblCategorias)
+                    .addComponent(lblCrearProductoVacio)
+                    .addComponent(lblNombreExiste))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                        .addComponent(btnAtras))
+                        .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -187,13 +282,17 @@ public class AdministracionProductosView extends javax.swing.JFrame {
                                     .addComponent(fieldCrearproductonombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fieldCrearproductoprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCrearproductoprecio)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblCrearproductoprecio)
+                                    .addComponent(lblCrearPrecioInvalido))
                                 .addGap(30, 30, 30)))
                         .addComponent(comboCrearProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCrearproducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(70, 70, 70)
-                        .addComponent(lblEditarproducto)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEditarproducto)
+                            .addComponent(lblEditarProductoVacio))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
@@ -203,12 +302,15 @@ public class AdministracionProductosView extends javax.swing.JFrame {
                                     .addComponent(fieldEditarproductonombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fieldEditarproductoprecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblEditarproductoprecio)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(lblEditarproductoprecio)
+                                    .addComponent(lblEditarPrecioInvalido))
                                 .addGap(30, 30, 30)))
                         .addComponent(comboEditarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnEditarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addComponent(btnAtras)
                 .addContainerGap())
         );
 
@@ -280,12 +382,17 @@ public class AdministracionProductosView extends javax.swing.JFrame {
     private javax.swing.JSpinner fieldEditarproductoprecio;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCategorias;
+    private javax.swing.JLabel lblCrearPrecioInvalido;
+    private javax.swing.JLabel lblCrearProductoVacio;
     private javax.swing.JLabel lblCrearproducto;
     private javax.swing.JLabel lblCrearproductonombre;
     private javax.swing.JLabel lblCrearproductoprecio;
+    private javax.swing.JLabel lblEditarPrecioInvalido;
+    private javax.swing.JLabel lblEditarProductoVacio;
     private javax.swing.JLabel lblEditarproducto;
     private javax.swing.JLabel lblEditarproductonombre;
     private javax.swing.JLabel lblEditarproductoprecio;
-    private javax.swing.JTable tCategorias;
+    private javax.swing.JLabel lblNombreExiste;
+    private javax.swing.JTable tProductos;
     // End of variables declaration//GEN-END:variables
 }

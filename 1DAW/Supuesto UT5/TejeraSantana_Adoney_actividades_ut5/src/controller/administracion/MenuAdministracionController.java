@@ -6,6 +6,7 @@ package controller.administracion;
 
 import controller.InicioController;
 import controller.administracion.gestion.GestionCategoriasController;
+import controller.administracion.gestion.GestionProductosController;
 import view.administracion.AdministracionMenuView;
 
 /**
@@ -33,6 +34,13 @@ public class MenuAdministracionController {
         this.administracionMenuView.getBtnGestionarCategorias().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GestionCategoriasController gestonCategoriasController = new GestionCategoriasController();
+                destruirVentana();
+            }
+        });
+        
+        this.administracionMenuView.getBtnGestionarProductos().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                GestionProductosController gestionProductosController = new GestionProductosController();
                 destruirVentana();
             }
         });

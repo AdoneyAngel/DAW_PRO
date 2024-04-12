@@ -91,6 +91,10 @@ public class GestionCategoriasModel {
         return null;
     }
     
+    public List<String[]> getCategorias() {
+        return this.categorias;
+    }
+    
     private String[] getCategoriaPorNombre(String nombre) {
         Iterator<String[]> categoriasIt = this.categorias.iterator();
         
