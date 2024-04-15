@@ -3,7 +3,7 @@
 
 package controller.administracion;
 
-import controller.administracion.MenuAdministracionController;
+import controller.InicioController;
 import view.administracion.acceso.AdministracionInicioSesionView;
 
 public class PassAdministracionController {
@@ -33,6 +33,13 @@ public class PassAdministracionController {
                 } else {
                     view.getLblInvalido().setVisible(true);
                 }
+            }
+        });
+        
+        this.view.getBtnCancelar().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InicioController inicio = new InicioController();
+                destruirVentana();
             }
         });
         

@@ -22,7 +22,11 @@ public class AdministracionInicioSesionView extends javax.swing.JFrame {
     }
     
     public JButton getBtnEntrar() {
-        return  this.btnAceptar;
+        return this.btnAceptar;
+    }
+    
+    public JButton getBtnCancelar() {
+        return this.btnCancelar;
     }
     
     public JTextField getFieldUsuario() {
