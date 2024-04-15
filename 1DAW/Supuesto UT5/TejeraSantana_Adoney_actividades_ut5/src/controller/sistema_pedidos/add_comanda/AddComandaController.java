@@ -200,8 +200,12 @@ public class AddComandaController {
         
         this.pedidosComandasView.getBtnGuardar().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insertarComanda();
-                irAtras();
+                if (comandaProductos.size() > 0) {
+                    insertarComanda();
+                    irAtras();                    
+                } else {
+                    pedidosComandasView.getLblNoGuardar().setVisible(true);
+                }
             }
         });
         
@@ -289,6 +293,7 @@ public class AddComandaController {
     }
     
     private void ocultarLbl() {
+        this.pedidosComandasView.getLblNoGuardar().setVisible(false);
         this.pedidosComandasView.getLblNoHayCategorias().setVisible(false);
         this.pedidosComandasView.getLblNoHayProductos().setVisible(false);
         this.pedidosComandasView.getLblNoSeleccion().setVisible(false);
