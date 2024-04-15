@@ -1,10 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+//@@@@@@@@@@@@@@@@ PROYECTO Brandom-Adoney
+
 package controller;
 
-import controller.administracion.MenuAdministracionController;
+import controller.administracion.PassAdministracionController;
 import controller.sistema_pedidos.MenuSistemaPedidosController;
 import javax.swing.JButton;
 import view.InicioView;
@@ -33,7 +32,7 @@ public class InicioController {
 
         btnAdministracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdministracionController menuAdministracionController = new MenuAdministracionController();
+                PassAdministracionController inicioSesionView = new PassAdministracionController();
                 destruirVentana();
             }
         });

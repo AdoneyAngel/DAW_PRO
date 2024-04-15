@@ -1,7 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+//@@@@@@@@@@@@@@@@ PROYECTO Brandom-Adoney
+
+
 package controller.sistema_pedidos.nuevo_pedido;
 
 import java.awt.Dimension;
@@ -37,8 +37,8 @@ public class NuevoPedidoController {
     public NuevoPedidoController(int idMesa) {
         this.precioTotal = 0;
         this.productosModel = new AddProductosModel();
-        this.productos = this.productosModel.getProductos();
-        this.pedidoProductos = this.productosModel.getPedidoProductos();
+        this.productos = new ArrayList(this.productosModel.getProductos());
+        this.pedidoProductos = new ArrayList(this.productosModel.getPedidoProductos());
         this.idMesa = idMesa;
         
         DefaultTableModel tableModel = this.productosModel.getTablaVaciaModel();
@@ -61,6 +61,39 @@ public class NuevoPedidoController {
         this.pedidosProductosView.setVisible(false);
     }
     
+    public void recalcularTotal() {
+        List<String[]> productosPedido = this.pedidoProductos;
+        double precioTotal = 0;
+        
+        for (String[] productoActula : productosPedido) {
+            String[] productoOriginal = this.buscarProducto(Integer.parseInt(productoActula[1]));
+            int cantidad = Integer.parseInt(productoActula[2]);
+            double precio = Double.parseDouble(productoOriginal[3]);
+            
+            double precioProducto = precio*cantidad;
+            
+            precioTotal += precioProducto;
+                    
+        }
+        
+        this.precioTotal = precioTotal;
+        this.pedidosProductosView.getLblTotal().setText("Total: " + String.valueOf(precioTotal) + "€");
+    }
+    
+    public int getIndiceProductoTablaModel(String nombreProducto) {
+        JTable tablaProductos = this.pedidosProductosView.getTable();
+        
+        for (int a = 0; a<tablaProductos.getRowCount(); a++) {
+            String nombreProductoActual = (String) tablaProductos.getValueAt(a, 0);
+            
+            if (nombreProducto.equals(nombreProductoActual)) {
+                return a;
+            }
+        }
+        
+        return -1;
+    }
+    
     public void generarVentana(DefaultTableModel vaciaTablaModel, String[] categoriasBotones) {
         this.pedidosProductosView = new PedidosProductosView(vaciaTablaModel, categoriasBotones);
         
@@ -79,8 +112,7 @@ public class NuevoPedidoController {
         this.pedidosProductosView.getBtnAtras().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ocultarLbl();
-                MesasNuevoPedidoController mesasNuevoPedidoController = new MesasNuevoPedidoController();
-                destruirVentana();
+                irAtras();
             }
         });
         
@@ -176,10 +208,32 @@ public class NuevoPedidoController {
         this.pedidosProductosView.getBtnGuardar().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertarPedido();
+                irAtras();
             }
         });
         
         this.pedidosProductosView.setVisible(true);
+    }
+    
+    public void insertarActionListenerBotonesProductos() {
+        JButton[] productoBotones = this.pedidosProductosView.getProductosButtons();
+        
+        for (JButton botonActual : productoBotones) {
+            botonActual.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    String nombreProducto = botonActual.getText();
+                    
+                    insertarProductoTablaModel(nombreProducto);
+                    
+                    actualizarTabla();
+                }
+            });
+        }
+    }
+    
+    private void irAtras() {
+        MesasNuevoPedidoController mesasNuevoPedidoController = new MesasNuevoPedidoController();
+        this.destruirVentana();
     }
     
     private void insertarPedido() {
@@ -257,7 +311,6 @@ public class NuevoPedidoController {
         List<String[]> productosParaTabla = new ArrayList();
         DefaultTableModel tableModel;
         String[] tableColumns = {"Producto", "Precio", "Unidades", "Subtotal"};
-        double precioTotal = 0;
         
         //SE INSERTAN LOS DATOS DE pedidoProductos A LA NUEVA LISTA
         for (String[] producto : this.pedidoProductos) {
@@ -277,7 +330,6 @@ public class NuevoPedidoController {
             double precio = Double.parseDouble(productoOriginal[3]);
             int cantidad = Integer.parseInt(pedidoProductoActual[2]);
             double subtotal = cantidad*precio;
-            precioTotal += subtotal;
             
             String[] nuevoProductoTabla = {nombrePedidoProducto, String.valueOf(precio), String.valueOf(cantidad), String.valueOf(subtotal)};
             
@@ -295,12 +347,11 @@ public class NuevoPedidoController {
             }
         };
         
+        //Se establece el nuevo modelo
         this.pedidosProductosView.getTable().setModel(tableModel);
         
         //Se actualiza el precio total del pedido
-        this.precioTotal = precioTotal;
-        
-        this.pedidosProductosView.getLblTotal().setText("Total: " + String.valueOf(precioTotal) + "€");
+        this.recalcularTotal();
         
         return tableModel;
     }
@@ -317,20 +368,7 @@ public class NuevoPedidoController {
         
         //Se agrega los eventos de los botones
         
-        JButton[] productoBotones = this.pedidosProductosView.getProductosButtons();
-        
-        for (JButton botonActual : productoBotones) {
-            botonActual.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    String nombreProducto = botonActual.getText();
-                    int idProducto = productosModel.getIdProductoNombre(nombreProducto);
-                    
-                    insertarProductoPedido(idProducto);
-                    
-                    actualizarTabla();
-                }
-            });
-        }
+        this.insertarActionListenerBotonesProductos();
         
         this.pedidosProductosView.setVisible(true);
     }
@@ -356,7 +394,9 @@ public class NuevoPedidoController {
         return nuevoId;
     }
     
-    private void insertarProductoPedido(int idProducto) {
+    private void insertarProductoTablaModel(String nombreProducto) {
+        int idProducto = productosModel.getIdProductoNombre(nombreProducto);
+        
         if (!existeProductoPedido(idProducto)) {
             String[] productoPedido = {this.pedido[0], String.valueOf(idProducto), "1"};
             
@@ -373,8 +413,6 @@ public class NuevoPedidoController {
             
             actualizarPedidoProducto(idProducto, cantidad);
         }
-        
-        String nombreProducto = this.buscarProducto(idProducto)[1];
         this.ultimoProductoModificado = nombreProducto;
     }
     

@@ -1,7 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+//@@@@@@@@@@@@@@@@ PROYECTO Brandom-Adoney
+
+
 package model.sistema_pedidos;
 
 import java.util.List;
@@ -27,14 +27,14 @@ public class AddProductosModel {
     private List<String[]> pedidos;
     private List<String[]> pedidoProductos;
     private List<int[]> comandas;
-    private List<int[]> comandaProducto;
+    private List<int[]> comandaProductos;
     
     public AddProductosModel() {
         this.productos = new ArrayList();
         this.pedidos = new ArrayList();
         this.categorias = new ArrayList();
         this.comandas = new ArrayList();
-        this.comandaProducto = new ArrayList();
+        this.comandaProductos = new ArrayList();
         this.pedidoProductos = new ArrayList();
         
         //GENERANDO PRODUCTOS, CATEGORIAS Y PEDIDOS DE PRUEBA
@@ -75,6 +75,11 @@ public class AddProductosModel {
         this.productos = productosPRUEBA;
         
             // PEDIDOS
+            String[] pedido1 = {"0", "23", "0", "1"};           
+            String[] pedido2 = {"1", "10", "0", "2"};   
+            
+            this.pedidos.add(pedido1);
+            this.pedidos.add(pedido2);
 
         
         
@@ -121,12 +126,12 @@ public class AddProductosModel {
         this.comandas = comandas;
     }
 
-    public List<int[]> getComandaProducto() {
-        return comandaProducto;
+    public List<int[]> getComandaProductos() {
+        return comandaProductos;
     }
 
     public void setComandaProducto(List<int[]> comandaProducto) {
-        this.comandaProducto = comandaProducto;
+        this.comandaProductos = comandaProducto;
     }
 
     
@@ -232,7 +237,7 @@ public class AddProductosModel {
     public void insertarComandaProducto(int idComanda, int idProducto, int cantidad) {
         int[] nuevoComandaProducto = {idComanda, idProducto, cantidad};
         
-        this.getComandaProducto().add(nuevoComandaProducto);
+        this.getComandaProductos().add(nuevoComandaProducto);
     }
     
     public void actualizarPrecioTotalPedido(int idPedido, double precio) {

@@ -1,12 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+//@@@@@@@@@@@@@@@@ PROYECTO Brandom-Adoney
+
+
 package controller.sistema_pedidos.nuevo_pedido;
 
 import controller.sistema_pedidos.MenuSistemaPedidosController;
 import java.awt.Component;
-import java.util.Iterator;
 import java.util.List;
 import javax.swing.JButton;
 import model.sistema_pedidos.AddProductosModel;
@@ -34,7 +33,6 @@ public class MesasNuevoPedidoController {
     
     public void generarVentana() {
         this.productosModel = new AddProductosModel();
-        List<String[]> categorias = this.productosModel.getCategorias();
         List<String> mesasDisponibles = this.mesas.getNombreMesasDisponibles();
         
         String[] mesasDisponiblesArray = new String[mesasDisponibles.size()];

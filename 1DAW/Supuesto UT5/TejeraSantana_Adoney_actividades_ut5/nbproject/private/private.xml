@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/view/InicioView.java</file>
+            <file>file:/D:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/controller/sistema_pedidos/add_comanda/MesasAddComandaController.java</file>
+            <file>file:/D:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/controller/sistema_pedidos/nuevo_pedido/NuevoPedidoController.java</file>
+            <file>file:/D:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/view/pedidos/PedidosComandaView.java</file>
+            <file>file:/D:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/model/sistema_pedidos/AddProductosModel.java</file>
             <file>file:/D:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/controller/InicioController.java</file>
+            <file>file:/D:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/view/pedidos/PedidosProductosView.java</file>
+            <file>file:/D:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/controller/sistema_pedidos/add_comanda/AddComandaController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,10 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+//@@@@@@@@@@@@@@@@ PROYECTO Brandom-Adoney
+
+
 package controller.sistema_pedidos;
 
 import controller.InicioController;
+import controller.sistema_pedidos.add_comanda.MesasAddComandaController;
 import controller.sistema_pedidos.nuevo_pedido.MesasNuevoPedidoController;
 import view.pedidos.PedidosMenuView;
 
@@ -34,6 +35,14 @@ public class MenuSistemaPedidosController {
         pedidosMenuView.getBtnNuevoPedido().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 MesasNuevoPedidoController mesasNuevoPedidoController = new MesasNuevoPedidoController();
+                
+                destruirVentana();
+            }
+        });
+        
+        pedidosMenuView.getBtnAddComanda().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MesasAddComandaController mesasNuevoPedidoController = new MesasAddComandaController();
                 
                 destruirVentana();
             }

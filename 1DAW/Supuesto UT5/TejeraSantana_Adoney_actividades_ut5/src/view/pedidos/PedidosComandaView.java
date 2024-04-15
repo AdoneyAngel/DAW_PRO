@@ -1,10 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
+//@@@@@@@@@@@@@@@@ PROYECTO Brandom-Adoney
+
+
 package view.pedidos;
 
-import javax.swing.table.DefaultTableModel;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -16,13 +23,95 @@ public class PedidosComandaView extends javax.swing.JFrame {
      * Creates new form PedidosProductosView
      */
     
-    private DefaultTableModel facturaTableModel;
-    private final String[] facturaTableColumns = {"Producto", "Precio", "Unidades", "Subtotal"};
-    
     public PedidosComandaView() {
-        this.facturaTableModel = new DefaultTableModel(this.facturaTableColumns, 0);
         
         initComponents();
+        
+        //Modificando estilos
+        this.panelCategorias.setLayout(new FlowLayout(NORMAL));
+        this.panelCategorias.setPreferredSize(new Dimension(500, 100));
+        this.panelProductos.setLayout(new FlowLayout(NORMAL));
+        this.panelProductos.setPreferredSize(new Dimension(500, 100));
+    }
+    
+    public JButton getBtnAtras() {
+        return this.btnAtras;
+    }
+    
+    public JLabel getLblCategorias() {
+        return this.lblCategorias;
+    }
+    
+    public JLabel getLblProductos() {
+        return this.lblProductos;
+    }
+    
+    public JLabel getLblNoHayCategorias() {
+        return this.lblNoHayCategorias;
+    }
+    
+    public JLabel getLblNoHayProductos() {
+        return this.lblNoHayProductos;
+    }
+    
+    public JLabel getLblNoSeleccion() {
+        return this.lblNoSeleccion;
+    }
+    
+    public JLabel getLblNoGuardar() {
+        return this.lblNoGuardar;
+    }
+    
+    public JButton getBtnEliminarSeleccion() {
+        return this.btnEliminarseleccion;
+    }
+    
+    public JButton getBtnGuardar() {
+        return this.btnGuardar;
+    }
+    
+    public JScrollPane getScrollPane() {
+        return this.scrollTableFacturas;
+    } 
+    
+    public JTable getTable() {
+        return this.tFacturas;
+    }
+    
+    public JPanel getCategoriaPanel() {
+        return this.panelCategorias;
+    }
+    
+    public JPanel getProductoPanel() {
+        return this.panelProductos;
+    }
+    
+    public JButton[] getProductosButtons() {
+        JButton[] productosButtons;
+        
+        Component[] componentes = this.panelProductos.getComponents();
+        
+        productosButtons = new JButton[componentes.length];
+        
+        for (int a = 0; a<componentes.length; a++) {
+            JButton botonActual = (JButton) componentes[a];
+            
+            productosButtons[a] = botonActual;
+        }
+        
+        return productosButtons;
+    }
+    
+    public JLabel getLblTotal() {
+        return this.lblTotal;
+    }
+    
+    public JButton getBtnMas() {
+        return this.btnFacturasSum;
+    }
+    
+    public JButton getBtnMenos() {
+        return this.btnFacturasRes;
     }
 
     /**
@@ -34,32 +123,36 @@ public class PedidosComandaView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         lblCategorias = new javax.swing.JLabel();
-        lblProductos = new javax.swing.JLabel();
-        btnCatRefrescos = new javax.swing.JButton();
-        btnCatBatidos = new javax.swing.JButton();
-        btnCatCervezas = new javax.swing.JButton();
-        btnCatBocadillos = new javax.swing.JButton();
-        btnCatSandwitches = new javax.swing.JButton();
-        btnCatHamburguesas = new javax.swing.JButton();
-        btnCatCombinados = new javax.swing.JButton();
-        btnCatMenus = new javax.swing.JButton();
-        btnProCocacola = new javax.swing.JButton();
-        btnProCocacolazero = new javax.swing.JButton();
-        btnProFantanaranja = new javax.swing.JButton();
-        btnProMonster = new javax.swing.JButton();
-        btnProRedbull = new javax.swing.JButton();
-        btnProNestea = new javax.swing.JButton();
         lblFacturas = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        scrollTableFacturas = new javax.swing.JScrollPane();
         tFacturas = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        lblTotal = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnFacturasSum = new javax.swing.JButton();
         btnEliminarseleccion = new javax.swing.JButton();
         btnFacturasRes = new javax.swing.JButton();
         btnAtras = new javax.swing.JButton();
-        lblComandanueva = new javax.swing.JLabel();
+        lblNoHayCategorias = new javax.swing.JLabel();
+        lblNoSeleccion = new javax.swing.JLabel();
+        panelCategorias = new javax.swing.JPanel();
+        panelProductos = new javax.swing.JPanel();
+        lblProductos = new javax.swing.JLabel();
+        lblNoHayProductos = new javax.swing.JLabel();
+        lblNoGuardar = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,111 +163,6 @@ public class PedidosComandaView extends javax.swing.JFrame {
         lblCategorias.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblCategorias.setName(""); // NOI18N
 
-        lblProductos.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        lblProductos.setText("Productos: ");
-        lblProductos.setToolTipText("");
-        lblProductos.setFocusable(false);
-        lblProductos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        lblProductos.setName(""); // NOI18N
-
-        btnCatRefrescos.setText("Refrescos");
-        btnCatRefrescos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCatRefrescosActionPerformed(evt);
-            }
-        });
-
-        btnCatBatidos.setText("Batidos");
-        btnCatBatidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCatBatidosActionPerformed(evt);
-            }
-        });
-
-        btnCatCervezas.setText("Cervezas");
-        btnCatCervezas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCatCervezasActionPerformed(evt);
-            }
-        });
-
-        btnCatBocadillos.setText("Bocadillos");
-        btnCatBocadillos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCatBocadillosActionPerformed(evt);
-            }
-        });
-
-        btnCatSandwitches.setText("Sandwiches");
-        btnCatSandwitches.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCatSandwitchesActionPerformed(evt);
-            }
-        });
-
-        btnCatHamburguesas.setText("Hamburguesas");
-        btnCatHamburguesas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCatHamburguesasActionPerformed(evt);
-            }
-        });
-
-        btnCatCombinados.setText("Combinados");
-        btnCatCombinados.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCatCombinadosActionPerformed(evt);
-            }
-        });
-
-        btnCatMenus.setText("Menús");
-        btnCatMenus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCatMenusActionPerformed(evt);
-            }
-        });
-
-        btnProCocacola.setText("Cocacola");
-        btnProCocacola.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProCocacolaActionPerformed(evt);
-            }
-        });
-
-        btnProCocacolazero.setText("Coca Cola Zero");
-        btnProCocacolazero.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProCocacolazeroActionPerformed(evt);
-            }
-        });
-
-        btnProFantanaranja.setText("Fanta Naranja");
-        btnProFantanaranja.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProFantanaranjaActionPerformed(evt);
-            }
-        });
-
-        btnProMonster.setText("Monster");
-        btnProMonster.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProMonsterActionPerformed(evt);
-            }
-        });
-
-        btnProRedbull.setText("Red Bull");
-        btnProRedbull.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProRedbullActionPerformed(evt);
-            }
-        });
-
-        btnProNestea.setText("Nestea");
-        btnProNestea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnProNesteaActionPerformed(evt);
-            }
-        });
-
         lblFacturas.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblFacturas.setText("Facturas");
         lblFacturas.setToolTipText("");
@@ -182,13 +170,17 @@ public class PedidosComandaView extends javax.swing.JFrame {
         lblFacturas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lblFacturas.setName(""); // NOI18N
 
-        tFacturas.setModel(this.facturaTableModel);
-        jScrollPane1.setViewportView(tFacturas);
+        scrollTableFacturas.setViewportView(tFacturas);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Total: 0,0€");
+        lblTotal.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblTotal.setText("Total: 0,0€");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnFacturasSum.setText("+");
 
@@ -198,9 +190,56 @@ public class PedidosComandaView extends javax.swing.JFrame {
 
         btnAtras.setText("Atrás");
 
-        lblComandanueva.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
-        lblComandanueva.setForeground(new java.awt.Color(200, 5, 5));
-        lblComandanueva.setText("Añadir Comanda Nueva Mesa: ");
+        lblNoHayCategorias.setForeground(new java.awt.Color(255, 10, 10));
+        lblNoHayCategorias.setText("No hay categorías");
+
+        lblNoSeleccion.setForeground(new java.awt.Color(255, 10, 10));
+        lblNoSeleccion.setText("No ha seleccionado nada");
+
+        panelCategorias.setAutoscrolls(true);
+        panelCategorias.setPreferredSize(new java.awt.Dimension(463, 100));
+
+        javax.swing.GroupLayout panelCategoriasLayout = new javax.swing.GroupLayout(panelCategorias);
+        panelCategorias.setLayout(panelCategoriasLayout);
+        panelCategoriasLayout.setHorizontalGroup(
+            panelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 508, Short.MAX_VALUE)
+        );
+        panelCategoriasLayout.setVerticalGroup(
+            panelCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 195, Short.MAX_VALUE)
+        );
+
+        panelProductos.setAutoscrolls(true);
+        panelProductos.setPreferredSize(new java.awt.Dimension(463, 100));
+
+        javax.swing.GroupLayout panelProductosLayout = new javax.swing.GroupLayout(panelProductos);
+        panelProductos.setLayout(panelProductosLayout);
+        panelProductosLayout.setHorizontalGroup(
+            panelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 507, Short.MAX_VALUE)
+        );
+        panelProductosLayout.setVerticalGroup(
+            panelProductosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 165, Short.MAX_VALUE)
+        );
+
+        lblProductos.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblProductos.setText("Productos: ");
+        lblProductos.setToolTipText("");
+        lblProductos.setFocusable(false);
+        lblProductos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblProductos.setName(""); // NOI18N
+
+        lblNoHayProductos.setForeground(new java.awt.Color(255, 10, 10));
+        lblNoHayProductos.setText("No hay productos");
+
+        lblNoGuardar.setForeground(new java.awt.Color(255, 10, 10));
+        lblNoGuardar.setText("No se ha podido guardar el pedido");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 10, 10));
+        jLabel1.setText("Añadir Comanda Nueva a la Mesa:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -208,248 +247,133 @@ public class PedidosComandaView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(7, Short.MAX_VALUE)
+                        .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 507, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(lblCategorias)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNoHayCategorias))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addComponent(lblProductos)
-                                .addComponent(lblCategorias))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNoHayProductos))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCatCervezas, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCatHamburguesas, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCatBatidos, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCatSandwitches, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCatMenus, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCatRefrescos, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCatBocadillos, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnCatCombinados, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnProCocacolazero, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnProCocacola, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnProFantanaranja, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnProRedbull, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnProMonster, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(btnProNestea, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblFacturas))
+                                .addContainerGap()
+                                .addComponent(panelCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addContainerGap()
+                        .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblNoGuardar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnFacturasSum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblFacturas)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblNoSeleccion))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnFacturasRes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnFacturasSum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnFacturasRes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)))
+                            .addComponent(scrollTableFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addGap(15, 15, 15))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblComandanueva)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(lblComandanueva)
-                .addGap(42, 42, 42)
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(45, 45, 45)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCategorias)
-                    .addComponent(lblFacturas))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblFacturas)
+                    .addComponent(lblNoHayCategorias)
+                    .addComponent(lblNoSeleccion))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCatRefrescos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCatBocadillos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCatCombinados, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(58, 58, 58)
+                        .addComponent(scrollTableFacturas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(panelCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCatBatidos, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCatSandwitches, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCatMenus, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblProductos)
+                            .addComponent(lblNoHayProductos))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCatCervezas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCatHamburguesas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32)
-                        .addComponent(lblProductos)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnProCocacola, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProFantanaranja, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProRedbull, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnProCocacolazero, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProMonster, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnProNestea, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(panelProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnAtras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblTotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnFacturasSum, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnFacturasRes, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(16, 16, 16))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(btnFacturasSum, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(btnFacturasRes, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(10, 10, 10))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblNoGuardar)
+                                .addGap(24, 24, 24)))))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCatRefrescosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatRefrescosActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCatRefrescosActionPerformed
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnCatBatidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatBatidosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCatBatidosActionPerformed
-
-    private void btnCatCervezasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatCervezasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCatCervezasActionPerformed
-
-    private void btnCatBocadillosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatBocadillosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCatBocadillosActionPerformed
-
-    private void btnCatSandwitchesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatSandwitchesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCatSandwitchesActionPerformed
-
-    private void btnCatHamburguesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatHamburguesasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCatHamburguesasActionPerformed
-
-    private void btnCatCombinadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatCombinadosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCatCombinadosActionPerformed
-
-    private void btnCatMenusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatMenusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCatMenusActionPerformed
-
-    private void btnProCocacolaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProCocacolaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProCocacolaActionPerformed
-
-    private void btnProCocacolazeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProCocacolazeroActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProCocacolazeroActionPerformed
-
-    private void btnProFantanaranjaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProFantanaranjaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProFantanaranjaActionPerformed
-
-    private void btnProMonsterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProMonsterActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProMonsterActionPerformed
-
-    private void btnProRedbullActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProRedbullActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProRedbullActionPerformed
-
-    private void btnProNesteaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProNesteaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnProNesteaActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PedidosComandaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PedidosComandaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PedidosComandaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PedidosComandaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PedidosComandaView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
-    private javax.swing.JButton btnCatBatidos;
-    private javax.swing.JButton btnCatBocadillos;
-    private javax.swing.JButton btnCatCervezas;
-    private javax.swing.JButton btnCatCombinados;
-    private javax.swing.JButton btnCatHamburguesas;
-    private javax.swing.JButton btnCatMenus;
-    private javax.swing.JButton btnCatRefrescos;
-    private javax.swing.JButton btnCatSandwitches;
     private javax.swing.JButton btnEliminarseleccion;
     private javax.swing.JButton btnFacturasRes;
     private javax.swing.JButton btnFacturasSum;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnProCocacola;
-    private javax.swing.JButton btnProCocacolazero;
-    private javax.swing.JButton btnProFantanaranja;
-    private javax.swing.JButton btnProMonster;
-    private javax.swing.JButton btnProNestea;
-    private javax.swing.JButton btnProRedbull;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCategorias;
-    private javax.swing.JLabel lblComandanueva;
     private javax.swing.JLabel lblFacturas;
+    private javax.swing.JLabel lblNoGuardar;
+    private javax.swing.JLabel lblNoHayCategorias;
+    private javax.swing.JLabel lblNoHayProductos;
+    private javax.swing.JLabel lblNoSeleccion;
     private javax.swing.JLabel lblProductos;
+    private javax.swing.JLabel lblTotal;
+    private javax.swing.JPanel panelCategorias;
+    private javax.swing.JPanel panelProductos;
+    private javax.swing.JScrollPane scrollTableFacturas;
     private javax.swing.JTable tFacturas;
     // End of variables declaration//GEN-END:variables
 }

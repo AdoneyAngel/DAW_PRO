@@ -1,7 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+//@@@@@@@@@@@@@@@@ PROYECTO Brandom-Adoney
+
+
 package model.sistema_pedidos;
 
 import java.util.ArrayList;
@@ -14,35 +14,32 @@ import java.util.List;
 public class MesasModel {
     
     //private String[][] mesas = {{"1", "Mesa 1"}, {"2", "Mesa 2"}, {"3", "Mesa A"}, {"4", "Mesa B"}, {"5", "Mesa Calle"}};
+    //MESA: {ID, nombre}
     private List<String[]> mesas;
-    private List<Integer> mesasOcupadas;
+    private List<String[]> pedidos;
+    private AddProductosModel productosModel;
     
     public MesasModel() {
         this.mesas = new ArrayList();
-        this.mesasOcupadas = new ArrayList();
+        this.productosModel = new AddProductosModel();
+        this.pedidos = this.productosModel.getPedidos();
         
         //Agregando mesas de ejemplo
-        String[] mesa1 = {"1", "Mesa 1"};
-        String[] mesa2 = {"2", "Mesa 2"};
-        String[] mesa3 = {"3", "Mesa A"};
-        String[] mesa4 = {"4", "Mesa B"};
-        String[] mesa5 = {"5", "Mesa Calle"};
+        String[] mesa1 = {"1", "Mesa 1", "0"};
+        String[] mesa2 = {"2", "Mesa 2", "1"};
+        String[] mesa3 = {"3", "Mesa A", ""};
+        String[] mesa4 = {"4", "Mesa B", ""};
+        String[] mesa5 = {"5", "Mesa Calle", ""};
         
         this.mesas.add(mesa1);
         this.mesas.add(mesa2);
         this.mesas.add(mesa3);
         this.mesas.add(mesa4);
         this.mesas.add(mesa5);
-        
-        this.mesasOcupadas.add(1);
-        this.mesasOcupadas.add(3);
     }
     
     public List<String[]> getMesas() {
         return mesas;
-    }
-    public List<Integer> getMesasOcupadas() {
-        return mesasOcupadas;
     }
     
     public List<String> getNombreMesasDisponibles() {
@@ -74,8 +71,8 @@ public class MesasModel {
     }
     
     private boolean ocupado(int idMesa) {
-        for (int mesaActual : this.mesasOcupadas) {
-            if (idMesa == mesaActual) {
+        for (String[] pedidoActual : this.pedidos) {
+            if (pedidoActual[3].equals(String.valueOf(idMesa))) {
                 return true;
             }
         }
