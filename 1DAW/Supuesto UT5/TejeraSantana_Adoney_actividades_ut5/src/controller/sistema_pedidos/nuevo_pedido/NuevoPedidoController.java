@@ -207,8 +207,14 @@ public class NuevoPedidoController {
         
         this.pedidosProductosView.getBtnGuardar().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insertarPedido();
-                irAtras();
+                ocultarLbl();
+                
+                if (pedidoProductos.size() > 0) {
+                    insertarPedido();
+                    irAtras();                    
+                } else {
+                    pedidosProductosView.getLblNoGuardar().setVisible(true);
+                }
             }
         });
         
@@ -291,6 +297,7 @@ public class NuevoPedidoController {
     }
     
     private void ocultarLbl() {
+        this.pedidosProductosView.getLblNoGuardar().setVisible(false);
         this.pedidosProductosView.getLblNoHayCategorias().setVisible(false);
         this.pedidosProductosView.getLblNoHayProductos().setVisible(false);
         this.pedidosProductosView.getLblNoSeleccion().setVisible(false);
