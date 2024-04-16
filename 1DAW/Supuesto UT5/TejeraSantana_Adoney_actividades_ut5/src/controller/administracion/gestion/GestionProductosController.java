@@ -38,8 +38,14 @@ public class GestionProductosController {
         //Modelos
         
         this.administracionProductosView.getTableProductos().setModel(productosTablaModel);
-        this.administracionProductosView.getComboCrear().setModel(categoriaComboBoxModelNew);
-        this.administracionProductosView.getComboEditar().setModel(categoriaComboBoxModelNew);
+        
+            // Se separa en 2 modelos para cada combo
+            
+        DefaultComboBoxModel comboCrear = this.clonarCombo(categoriaComboBoxModelNew);
+        DefaultComboBoxModel comboEditar = this.clonarCombo(categoriaComboBoxModelNew);
+        
+        this.administracionProductosView.getComboCrear().setModel(comboCrear);
+        this.administracionProductosView.getComboEditar().setModel(comboEditar);
         
         //Métodos de botones
         
@@ -217,5 +223,15 @@ public class GestionProductosController {
         }
         
         return false;
+    }
+    
+    private DefaultComboBoxModel clonarCombo(DefaultComboBoxModel modeloOriginal) {
+        DefaultComboBoxModel nuevoModelo = new DefaultComboBoxModel();
+        
+        for (int a = 0; a<modeloOriginal.getSize(); a++) {
+            nuevoModelo.addElement(modeloOriginal.getElementAt(a));
+        }
+        
+        return nuevoModelo;
     }
 }
