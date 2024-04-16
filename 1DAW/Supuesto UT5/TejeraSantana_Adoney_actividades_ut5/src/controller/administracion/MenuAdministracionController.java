@@ -6,6 +6,7 @@ package controller.administracion;
 import controller.InicioController;
 import controller.administracion.gestion.GestionCategoriasController;
 import controller.administracion.gestion.GestionProductosController;
+import controller.administracion.historial_pedidos.HistorialPedidosController;
 import view.administracion.AdministracionMenuView;
 
 /**
@@ -40,6 +41,13 @@ public class MenuAdministracionController {
         this.administracionMenuView.getBtnGestionarProductos().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 GestionProductosController gestionProductosController = new GestionProductosController();
+                destruirVentana();
+            }
+        });
+        
+        this.administracionMenuView.getBtnHistorialPedidos().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HistorialPedidosController historialPedidosController = new HistorialPedidosController();
                 destruirVentana();
             }
         });

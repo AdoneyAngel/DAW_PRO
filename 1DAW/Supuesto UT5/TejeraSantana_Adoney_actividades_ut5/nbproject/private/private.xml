@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/controller/sistema_pedidos/add_comanda/AddComandaController.java</file>
+            <file>file:/E:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/view/administracion/historial/AdministracionHistorialView.java</file>
+            <file>file:/E:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/model/administracion/historial_pedidos/HistorialPedidosModel.java</file>
             <file>file:/E:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/controller/InicioController.java</file>
             <file>file:/E:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/model/sistema_pedidos/AddProductosModel.java</file>
+            <file>file:/E:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/controller/administracion/historial_pedidos/HistorialPedidosController.java</file>
+            <file>file:/E:/DAW/Programacion/3ro/DAW_PRO/1DAW/Supuesto%20UT5/TejeraSantana_Adoney_actividades_ut5/src/controller/administracion/MenuAdministracionController.java</file>
         </group>
     </open-files>
 </project-private>
