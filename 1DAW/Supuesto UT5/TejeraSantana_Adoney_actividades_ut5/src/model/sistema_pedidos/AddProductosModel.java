@@ -16,7 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 //PRODUCTO: ID, nombre, categoriaID, precio
 //CATEGORIA: ID, nombre
-//PEDIDO: ID, precio, fecha, idMesa
+//PEDIDO: ID, precio, fecha, idMesa, enCurso
 //COMANDA: ID, idPedido
 //COMANDAPRODUCTO: IDcomanda, idProducto, cantidad
 //PRODUCTOPEDIDO: idPedido, idProducto, Cantidad
@@ -75,12 +75,19 @@ public class AddProductosModel {
         this.productos = productosPRUEBA;
         
             // PEDIDOS
-            String[] pedido1 = {"0", "23", "0", "1"};           
-            String[] pedido2 = {"1", "10", "0", "2"};   
+            String[] pedido1 = {"0", "23", "0", "1", "true"};           
+            String[] pedido2 = {"1", "10", "0", "2", "false"};   
             
             this.pedidos.add(pedido1);
             this.pedidos.add(pedido2);
 
+        //Productos de pedido
+        for (String[] pedidoActual : this.pedidos) {
+            for (int a = 0; a<4; a++) {
+                String[] productoPedido = {pedidoActual[0], String.valueOf(a), String.valueOf(a+1)};
+                this.pedidoProductos.add(productoPedido);
+            }
+        }
         
         
         //------------------------------

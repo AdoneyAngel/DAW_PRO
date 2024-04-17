@@ -35,10 +35,33 @@ public class HistorialPedidosController {
             }
         });
         
+        
+        this.view.getBtnDetalles().addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                int pedidoSeleccionado = getPedidoSeleccionado();
+                
+                if (pedidoSeleccionado >= 0) {
+                    DetallesPedidoController detallesPedidoController = new DetallesPedidoController(pedidoSeleccionado);
+                    destruirVentana();                    
+                }
+            }
+        });
+        
         this.view.setVisible(true);
     }
     
     public void destruirVentana() {
         this.view.setVisible(false);
+    }
+    
+    private int getPedidoSeleccionado() {
+        int filaRow = this.view.getTable().getSelectedRow();
+        
+        if (filaRow >= 0) {
+            int idPedido = Integer.parseInt((String) this.view.getTable().getValueAt(filaRow, 0));
+            return idPedido;
+        }
+        
+        return -1;
     }
 }

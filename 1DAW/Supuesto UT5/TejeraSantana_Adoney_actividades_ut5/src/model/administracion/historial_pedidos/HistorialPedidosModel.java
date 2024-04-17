@@ -35,7 +35,7 @@ public class HistorialPedidosModel {
             mesas.add(nuevaMesa);
         }
         //  Pedidos
-        for (int a = 0; a<3; a++) {
+        for (int a = 0; a<2; a++) {
             double precio = a*1.2;
             boolean hecho = a % 2 == 0;
             String fecha = String.valueOf(a) + "-03-2024";
