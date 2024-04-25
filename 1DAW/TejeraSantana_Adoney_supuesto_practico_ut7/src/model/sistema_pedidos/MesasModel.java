@@ -119,6 +119,15 @@ public class MesasModel {
             
         } catch (IOException e) {
             System.out.println("Error al cargar ruta de rutas.properties");
+            
+        } finally {
+            try {
+                inputStream.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR: " + e.getMessage());
+                        
+            }
         }
     }
     

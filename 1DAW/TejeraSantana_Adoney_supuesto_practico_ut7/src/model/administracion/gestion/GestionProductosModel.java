@@ -4,10 +4,19 @@
 
 package model.administracion.gestion;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -19,16 +28,20 @@ import javax.swing.table.TableModel;
 public class GestionProductosModel {
     private GestionCategoriasModel categoriasModel;
     private ArrayList<String[]> productos;
+    private String rutaProductos;
 
     public GestionProductosModel() {
         this.categoriasModel = new GestionCategoriasModel();
         this.productos = new ArrayList<>();
         
-        //GENERANDO PRODUCTOS DE PRUEBA
+        /*//GENERANDO PRODUCTOS DE PRUEBA
         for (int a = 0; a<10; a++) {
             this.insertarProducto(a, ("Producto" + String.valueOf(a)), a*1.5, a);
-        }
+        }*/
         //-----------------------------
+        
+        this.cargarRutaProductos();
+        this.cargarDatos();
     }
     
     public DefaultTableModel getModelProductos() {
@@ -91,7 +104,31 @@ public class GestionProductosModel {
                  String.valueOf(idCategoria)
             };
             
-            this.productos.add(nuevoProducto);
+            //this.productos.add(nuevoProducto);
+            
+            BufferedWriter productosWriter = null;
+            
+            try {
+                String rowData = nuevoProducto[0] + "#" + nuevoProducto[1] + "#" + nuevoProducto[2] + "#" + nuevoProducto[3];
+                
+                File archivoProductos = new File(this.rutaProductos);
+                productosWriter = new BufferedWriter(new FileWriter(archivoProductos, true));
+                
+                productosWriter.newLine();
+                productosWriter.write(rowData);
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al insrtar producto: " + e.getMessage());
+                
+            } finally {
+                try {
+                    productosWriter.close();
+                    this.cargarDatos();
+                    
+                } catch (IOException e) {
+                    System.out.println("ERROR al inserar producto: " + e.getMessage());
+                }
+            }
         }
         
     }
@@ -111,9 +148,43 @@ public class GestionProductosModel {
     
     public void eliminarProducto(int id) {
         if (existeIdProducto(id)) {
-            String[] producto = this.getProductoPorId(id);
+            /*String[] producto = this.getProductoPorId(id);
             
-            this.productos.remove(producto);
+            this.productos.remove(producto);*/
+            
+            BufferedWriter productosWriter = null;
+            
+            try {
+                File archivoProductos = new File(this.rutaProductos);
+                
+                //Se abre 2 flujos, uno vaciará el archivo y el siguiente añadirá la información
+                productosWriter = new BufferedWriter(new FileWriter(archivoProductos));
+                productosWriter.close();
+                
+                productosWriter = new BufferedWriter(new FileWriter(archivoProductos, true));
+                
+                for (String[] productoActual : this.productos) {
+                    if (Integer.parseInt(productoActual[0]) != id) {
+                        String rowData = productoActual[0] + "#" + productoActual[1] + "#" + productoActual[2] + "#" + productoActual[3];
+                        
+                        productosWriter.newLine();
+                        productosWriter.write(rowData);
+                    }
+                }
+                
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al eliminar producto: " + e.getMessage());
+                
+            }finally {
+                try {
+                    productosWriter.close();
+                    this.cargarDatos();
+                    
+                } catch (IOException e) {
+                    System.out.println("ERROR al eliminar producto: " + e.getMessage());
+                }
+            }
         }
     }
     
@@ -125,6 +196,70 @@ public class GestionProductosModel {
     
     public List<String[]> getProductos() {
         return this.productos;
+    }
+    
+    private void cargarRutaProductos() {
+        InputStream fileInputStream = null;
+        Properties properties = new Properties();
+        
+        try {
+            File archivoProperties = new File(System.getProperty("user.dir") + "\\src\\model\\datos\\rutas.properties");
+            fileInputStream = new FileInputStream(archivoProperties);
+            
+            properties.load(fileInputStream);
+            
+            String rutaProductos = System.getProperty("user.dir") + properties.getProperty("path_productos");
+            
+            this.rutaProductos = rutaProductos;
+            
+            fileInputStream.close();
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar la ruga de productos: " + e.getMessage());
+            
+        } finally {
+            try {
+                fileInputStream.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar ruta productos: " + e.getMessage());
+                        
+            }
+        }
+    }
+    
+    private void cargarDatos() {
+        ArrayList<String[]> productos = new ArrayList();
+        BufferedReader productosReader = null;
+        
+        try {
+            File archivoProductos = new File(this.rutaProductos);
+            
+            productosReader = new BufferedReader(new FileReader(archivoProductos));
+            
+            String fila = "";
+            
+            while ((fila = productosReader.readLine()) != null) {
+                if (!fila.isEmpty()) {
+                    String[] rowData = fila.split("#");
+                    productos.add(rowData);                    
+                }
+            }
+            
+            this.productos = productos;
+            
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar datos: " + e.getMessage());
+            
+        } finally {
+            try {
+                productosReader.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar datos: " + e.getMessage());
+            }
+        }
     }
     
     private boolean existeIdProducto(int id) {
