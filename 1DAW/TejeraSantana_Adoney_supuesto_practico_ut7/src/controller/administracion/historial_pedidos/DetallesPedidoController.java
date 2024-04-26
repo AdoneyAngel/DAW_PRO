@@ -37,7 +37,7 @@ public class DetallesPedidoController {
         
         this.view.getTable().setModel(tablaDetallesPedidoModel);
         this.view.getLblId().setText(String.valueOf(id));
-        this.view.getLblFinalizado().setText(String.valueOf(!enCurso));
+        this.view.getLblFinalizado().setText(enCurso ? "No" : "Si");
         this.view.getLblFecha().setText(fecha);
         this.view.getLblMesa().setText(mesa);
         this.view.getLblPrecio().setText(String.valueOf(precio));

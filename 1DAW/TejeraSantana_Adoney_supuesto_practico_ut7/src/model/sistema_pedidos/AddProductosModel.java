@@ -205,7 +205,7 @@ public class AddProductosModel {
             File archivoPedido = new File(this.rutaPedidos);
             pedidosWriter = new BufferedWriter(new FileWriter(archivoPedido, true));
             
-            String rowData = nuevoPedido[0] + "#" + nuevoPedido[1] + "#" + "1" + "#" + nuevoPedido[2] + "#" + nuevoPedido[3];
+            String rowData = nuevoPedido[0] + "#" + nuevoPedido[1] + "#1#" + nuevoPedido[2] + "#" + nuevoPedido[3];
             
             pedidosWriter.newLine();
             pedidosWriter.write(rowData);
@@ -277,6 +277,13 @@ public class AddProductosModel {
             try {
                 comandaProductoWriter.close();
                 
+                this.cargarDatosComandas();
+                this.cargarDatosPedidos();
+                
+                int[] comandaOriginal = this.obtenerComanda(idComanda);
+                
+                this.recalcularPrecioPedido(comandaOriginal[1]);
+                
             } catch (IOException e) {
                 System.out.println("ERROR al insertar producto de comanda: " + e.getMessage());
             }
@@ -302,34 +309,98 @@ public class AddProductosModel {
     }
     
     //----------------------Métodos implementados
-    private void actualizarPrecioPedido(int idPedido) {
+    private int[] obtenerComanda(int idComanda) {
+        for (int[] comandaActual : this.comandas) {
+            if (comandaActual[0] == idComanda) {
+                return comandaActual;
+            }
+        }
+        
+        return null;
+    }
+    
+    private void recalcularPrecioPedido(int idPedido) {
+        String[] pedidoOriginal = this.obtenerPedido(idPedido);
+        
         this.cargarDatosComandas();
         this.cargarDatosComandaProductos();
         
         double precioTotal = 0;
-        List<String[]> pedidoProductos = this.obtenerProductosDePedido(idPedido);
         
-        for (String[] productoActual : pedidoProductos) {
-            double precio = Double.parseDouble(productoActual[2].replace(",", "."));
-            precioTotal += precio; //CONTINUAAAAAAAAAAAAAAAAAAAAAAR
-        }
-    }
-    
-    private List<String[]> obtenerProductosDePedido(int idPedido) {
         List<int[]> comandasDePedido = this.obtenerComandasDePedido(idPedido);
-        List<String[]> pedidoProductos = new ArrayList();
         
         for (int[] comandaActual : comandasDePedido) {
             for (int[] comandaProductoActual : this.comandaProductos) {
                 if (comandaProductoActual[0] == comandaActual[0]) {
                     String[] productoOriginal = this.obtenerProducto(comandaProductoActual[1]);
-                    pedidoProductos.add(productoOriginal);
+                    double subtotal = Double.parseDouble(productoOriginal[2].replace(",", ".")) * comandaProductoActual[2];
+                    
+                    precioTotal += subtotal;
                 }
             }
         }
         
-        return pedidoProductos;
+        //Se actualizan los datos del pedido
+        this.actualizarPedido(idPedido, precioTotal, Integer.parseInt(pedidoOriginal[2]), pedidoOriginal[3], Integer.parseInt(pedidoOriginal[4]));
         
+        //Se vuelve a cargar los datos
+        this.cargarDatosPedidos();
+    }
+    
+    private String[] obtenerPedido(int idPedido) {
+        for (String[] pedidoActual : this.pedidos) {
+            if (Integer.parseInt(pedidoActual[0]) == idPedido) {
+                return pedidoActual;
+            }
+        }
+        
+        return null;
+    }
+    
+    private void actualizarPedido(int idPedido, double precio, int enCurso, String fecha, int idMesa) {
+        BufferedWriter pedidoWriter = null;
+        this.cargarDatosPedidos();
+        
+        try {
+            File archivoPedidos = new File(this.rutaPedidos);
+            
+            pedidoWriter = new BufferedWriter(new FileWriter(archivoPedidos));
+            pedidoWriter.close();
+            
+            pedidoWriter = new BufferedWriter(new FileWriter(archivoPedidos, true));
+            
+            String linea = "";
+            
+            for (String[] pedidoActual : this.pedidos) {
+                pedidoWriter.newLine();
+                
+                if (Integer.parseInt(pedidoActual[0]) != idPedido) {
+                    String rowData = pedidoActual[0]+"#"+pedidoActual[1]+"#"+pedidoActual[2]+"#"+pedidoActual[3]+"#"+pedidoActual[4];
+                    pedidoWriter.write(rowData);
+                
+                } else {
+                    String rowData = 
+                            String.valueOf(idPedido)
+                            +"#"+String.valueOf(precio)
+                            +"#"+String.valueOf(enCurso)
+                            +"#"+fecha
+                            +"#"+String.valueOf(idMesa);
+                    
+                    pedidoWriter.write(rowData);
+                }
+            }
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al actualizar pedido: " + e.getMessage());
+            
+        } finally {
+            try {
+                pedidoWriter.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cerrar archivo al actualizar pedido: " + e.getMessage());
+            }
+        }
     }
     
     private String[] obtenerProducto(int idProducto) {

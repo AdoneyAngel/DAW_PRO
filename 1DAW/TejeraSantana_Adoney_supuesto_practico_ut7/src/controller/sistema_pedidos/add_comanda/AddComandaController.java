@@ -251,7 +251,7 @@ public class AddComandaController {
         this.productosModel.insertarComanda(id, idPedido);
         
         for (int[] productoActual : this.comandaProductos) {
-            this.productosModel.insertarComandaProducto(id, productoActual[0], productoActual[2]);
+            this.productosModel.insertarComandaProducto(id, productoActual[1], productoActual[2]);
         }
     }
     

@@ -4,8 +4,15 @@
 
 package model.administracion.historial_pedidos;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,16 +25,22 @@ import javax.swing.table.DefaultTableModel;
 public class HistorialPedidosModel {
     private List<String[]> pedidos;
     private List<String[]> mesas;
-    private List<String[]> pedidoProductos;
     private List<String[]> productos;
+    private String rutaPedidos;
+    private String rutaProductos;
+    private String rutaMesas;
     
     public HistorialPedidosModel() {
         this.pedidos = new ArrayList();
         this.mesas = new ArrayList();
         this.productos = new ArrayList();
-        this.pedidoProductos = new ArrayList();
         
-        //Generando valores de ejemplo
+        this.cargarRutas();
+        this.cargarDatosPedidos();
+        this.cargarDatosProductos();
+        this.cargarDatosMesas();
+        
+        /*//Generando valores de ejemplo
         //  Mesas
         for (int a = 0; a<5; a++) {
             String nombreMesa = "Mesa" + String.valueOf(a);
@@ -60,7 +73,7 @@ public class HistorialPedidosModel {
             String[] nuevoProducto = {String.valueOf(dePedido), String.valueOf(a), String.valueOf(cantidad)};
             
             this.pedidoProductos.add(nuevoProducto);
-        }
+        }*/
         
     }
     
@@ -78,9 +91,6 @@ public class HistorialPedidosModel {
             
             @Override
             public boolean isCellEditable(int r, int c) {
-                if (c == 2) {
-                    return true;
-                }
                 
                 return false;
             }
@@ -91,11 +101,11 @@ public class HistorialPedidosModel {
         for (String[] pedidoActual : this.pedidos) {
             String id = pedidoActual[0];
             String precio = pedidoActual[1];
-            String fecha = pedidoActual[2];
-            String nombreMesa = this.buscarNombreMesa(Integer.parseInt(pedidoActual[3]));
-            String hecho = pedidoActual[4];
+            String fecha = pedidoActual[3];
+            String nombreMesa = this.buscarNombreMesa(Integer.parseInt(pedidoActual[4]));
+            boolean enCurso = Integer.parseInt(pedidoActual[2]) == 1 ? true : false;
             
-            Object[] nuevoPedidoParaTabla = {id, precio, new Boolean(Boolean.valueOf(hecho)), fecha, nombreMesa};
+            Object[] nuevoPedidoParaTabla = {id, precio, enCurso, fecha, nombreMesa};
             
             tableModel.addRow(nuevoPedidoParaTabla);
         }
@@ -117,4 +127,136 @@ public class HistorialPedidosModel {
         
         return null;
     } 
+    
+    private void cargarRutas() {
+        InputStream fileInputStream = null;
+        Properties properties = new Properties();
+        
+        try {
+            File archivoProperties = new File(System.getProperty("user.dir") + "\\src\\model\\datos\\rutas.properties");
+            fileInputStream = new FileInputStream(archivoProperties);
+            
+            properties.load(fileInputStream);
+            
+            String rutaPedidos = System.getProperty("user.dir") + properties.getProperty("path_pedidos");
+            String rutaProductos = System.getProperty("user.dir") + properties.getProperty("path_productos");
+            String rutaMesas = System.getProperty("user.dir") + properties.getProperty("path_mesas");
+            
+            this.rutaPedidos = rutaPedidos;
+            this.rutaProductos = rutaProductos;
+            this.rutaMesas = rutaMesas;
+            
+            fileInputStream.close();
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar la ruga de comandas: " + e.getMessage());
+            
+        } finally {
+            try {
+                fileInputStream.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar ruta de comandas: " + e.getMessage());
+                        
+            }
+        }
+    }
+    
+    private void cargarDatosPedidos() {
+        List<String[]> pedidos = new ArrayList();
+        
+        BufferedReader pedidosReader = null;
+        
+        try {
+            File archivoPedidos = new File(this.rutaPedidos);
+            pedidosReader = new BufferedReader(new FileReader(archivoPedidos));
+            
+            String fila = "";
+            
+            while ((fila = pedidosReader.readLine()) != null) {
+                if (!fila.isBlank()) {
+                    String[] filaSplit = fila.split("#");
+                    String rowData[] = {filaSplit[0], filaSplit[1], filaSplit[2], filaSplit[3], filaSplit[4]};
+                    pedidos.add(rowData);
+                }
+            }
+            
+            this.pedidos = pedidos;
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar datos de pedidos: " + e.getMessage());
+            
+        } finally {
+            try {
+                pedidosReader.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar datos de pedidos: " + e.getMessage());
+            }
+        }
+    }
+    
+    private void cargarDatosProductos() {
+        List<String[]> productos = new ArrayList();
+        
+        BufferedReader productosReader = null;
+        
+        try {
+            File archivoProductos = new File(this.rutaProductos);
+            productosReader = new BufferedReader(new FileReader(archivoProductos));
+            
+            String fila = "";
+            
+            while ((fila = productosReader.readLine()) != null) {
+                if (!fila.isBlank()) {
+                    String[] filaSplit = fila.split("#");
+                    String rowData[] = {filaSplit[0], filaSplit[1], filaSplit[2], filaSplit[3]};
+                    productos.add(rowData);
+                }
+            }
+            
+            this.productos = productos;
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar datos de productos: " + e.getMessage());
+            
+        } finally {
+            try {
+                productosReader.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar datos de productos: " + e.getMessage());
+            }
+        }
+    }
+    
+    private void cargarDatosMesas() {
+            BufferedReader mesasReader = null;
+        try {
+            File archivo = new File(this.rutaMesas);
+            mesasReader = new BufferedReader(new FileReader(archivo));
+            
+            String fila;
+            
+            List<String[]> mesas = new ArrayList();
+            
+            while ((fila = mesasReader.readLine()) != null) {
+                String[] rowData = fila.split("#");
+                mesas.add(rowData);
+            }
+            
+            this.mesas = mesas;
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar datos: " + e.getMessage());
+            
+        } finally {
+            try {
+                mesasReader.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar datos: " + e.getMessage());
+            }
+        }
+    }
 }
