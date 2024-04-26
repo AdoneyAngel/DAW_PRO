@@ -136,13 +136,49 @@ public class GestionProductosModel {
     public void actualizarProducto(int id, String nombre, double precio, int idCategoria) {
         if (existeIdProducto(id)) {
             String[] producto = this.getProductoPorId(id);
-            int productoIndex = this.productos.indexOf(producto);
+            //int productoIndex = this.productos.indexOf(producto);
             
             producto[1] = nombre;
             producto[2] = String.valueOf(precio);
             producto[3] = String.valueOf(idCategoria);
             
-            this.productos.set(productoIndex, producto);
+            //this.productos.set(productoIndex, producto);
+            
+            BufferedWriter productosWriter = null;
+            
+            try {
+                File archivoProductos = new File(this.rutaProductos);
+                //se crea 2 flujos, uno limpia los datos y el otro los introduce
+                productosWriter = new BufferedWriter(new FileWriter(archivoProductos));
+                productosWriter.close();
+                
+                productosWriter = new BufferedWriter(new FileWriter(archivoProductos, true));
+                
+                for (String[] productoActual : this.productos) {
+                    productosWriter.newLine();
+                    
+                    if (Integer.parseInt(productoActual[0]) != id) {
+                        String rowData = productoActual[0] + "#" + productoActual[1] + "#" + productoActual[2] + "#" + productoActual[3];
+                        productosWriter.write(rowData);
+                        
+                    } else {
+                        String rowData = productoActual[0] + "#" + nombre + "#" + precio + "#" + idCategoria;
+                        productosWriter.write(rowData);
+                    }
+                }
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al actualizar producto: " + e.getMessage());
+                
+            } finally {
+                try {
+                    productosWriter.close();
+                    this.cargarDatos();
+                    
+                } catch (IOException e) {
+                    System.out.println("ERROR al actualizar producto: " + e.getMessage());
+                }
+            }
         }
     }
     
