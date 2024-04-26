@@ -4,9 +4,18 @@
 
 package model.sistema_pedidos;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Properties;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -28,6 +37,11 @@ public class AddProductosModel {
     private List<String[]> pedidoProductos;
     private List<int[]> comandas;
     private List<int[]> comandaProductos;
+    private String rutaComanda;
+    private String rutaComandaProductos;
+    private String rutaPedidos;
+    private String rutaProductos;
+    private String rutaCategorias;
     
     public AddProductosModel() {
         this.productos = new ArrayList();
@@ -37,60 +51,12 @@ public class AddProductosModel {
         this.comandaProductos = new ArrayList();
         this.pedidoProductos = new ArrayList();
         
-        //GENERANDO PRODUCTOS, CATEGORIAS Y PEDIDOS DE PRUEBA
-            //CATEGORIAS
-        List<String[]> categoriasPRUEBA = new ArrayList<>();
-        
-        for (int a = 0; a<10; a++) {
-            String[] categoriaPRUEBA = {String.valueOf(a), "categoria" + String.valueOf(a)};
-            
-            categoriasPRUEBA.add(categoriaPRUEBA);
-        }
-        
-        this.categorias = categoriasPRUEBA;
-        
-            //PRODUCTOS
-        List<String[]> productosPRUEBA = new ArrayList<>();
-        for (int a = 0; a<5; a++) {
-            String nombrePRUEBA = "producto" + String.valueOf(a);
-            String categoriaPRUEBA = String.valueOf(a);
-            String idPRUEBA = String.valueOf(a);
-            String precioPrueba = String.valueOf((a*1.5));
-            
-            String[] productoPRUEBA = {idPRUEBA, nombrePRUEBA, categoriaPRUEBA, precioPrueba};
-            
-            productosPRUEBA.add(productoPRUEBA);
-        }
-        for (int a = 0; a<3; a++) {
-            String nombrePRUEBA = "producto" + String.valueOf(a+5);
-            String categoriaPRUEBA = String.valueOf(a);
-            String idPRUEBA = String.valueOf(a+5);
-            String precioPrueba = String.valueOf((a*1.5));
-            
-            String[] productoPRUEBA = {idPRUEBA, nombrePRUEBA, categoriaPRUEBA, precioPrueba};
-            
-            productosPRUEBA.add(productoPRUEBA);
-        }
-        
-        this.productos = productosPRUEBA;
-        
-            // PEDIDOS
-            String[] pedido1 = {"0", "23", "0", "1", "true"};           
-            String[] pedido2 = {"1", "10", "0", "2", "false"};   
-            
-            this.pedidos.add(pedido1);
-            this.pedidos.add(pedido2);
-
-        //Productos de pedido
-        for (String[] pedidoActual : this.pedidos) {
-            for (int a = 0; a<4; a++) {
-                String[] productoPedido = {pedidoActual[0], String.valueOf(a), String.valueOf(a+1)};
-                this.pedidoProductos.add(productoPedido);
-            }
-        }
-        
-        
-        //------------------------------
+        this.cargarRutas();
+        this.cargarDatosComandas();
+        this.cargarDatosComandaProductos();
+        this.cargarDatosPedidos();
+        this.cargarDatosProductos();
+        this.cargarDatosCategorias();
     }
 
     public List<String[]> getCategorias() {
@@ -186,7 +152,7 @@ public class AddProductosModel {
         while (productosIt.hasNext()) {
             String[] productoActual = productosIt.next();
             
-            if (categoria[0].equals(productoActual[2])) {
+            if (categoria[0].equals(productoActual[3])) {
                 productosCategoriaList.add(productoActual[1]);
                 
                 index++;
@@ -231,20 +197,90 @@ public class AddProductosModel {
         
         String[] nuevoPedido = {idStr, precioStr, fecha, idMesaStr};
         
-        this.getPedidos().add(nuevoPedido);
+        //this.getPedidos().add(nuevoPedido);
+        
+        BufferedWriter pedidosWriter = null;
+        
+        try {
+            File archivoPedido = new File(this.rutaPedidos);
+            pedidosWriter = new BufferedWriter(new FileWriter(archivoPedido, true));
+            
+            String rowData = nuevoPedido[0] + "#" + nuevoPedido[1] + "#" + "1" + "#" + nuevoPedido[2] + "#" + nuevoPedido[3];
+            
+            pedidosWriter.newLine();
+            pedidosWriter.write(rowData);
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al insertar pedido: " + e.getMessage());
+            
+        } finally {
+            try {
+                pedidosWriter.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al insertar pedido: " + e.getMessage());
+            }
+        }
     }
     
     public void insertarComanda(int id, int idPedido) {
         
         int[] nuevaComanda = {id, idPedido};
         
-        this.getComandas().add(nuevaComanda);
+        //this.getComandas().add(nuevaComanda);
+
+        BufferedWriter comandasWriter = null;
+        
+        try {
+            File archivoComanda = new File(this.rutaComanda);
+            comandasWriter = new BufferedWriter(new FileWriter(archivoComanda, true));
+            
+            String rowData = nuevaComanda[0] + "#" + nuevaComanda[1];
+            
+            comandasWriter.newLine();
+            comandasWriter.write(rowData);
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al insertar comanda: " + e.getMessage());
+            
+        } finally {
+            try {
+                comandasWriter.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al insertar comanda: " + e.getMessage());
+            }
+        }        
+        
     }
     
     public void insertarComandaProducto(int idComanda, int idProducto, int cantidad) {
-        int[] nuevoComandaProducto = {idComanda, idProducto, cantidad};
+        /*int[] nuevoComandaProducto = {idComanda, idProducto, cantidad};
         
-        this.getComandaProductos().add(nuevoComandaProducto);
+        this.getComandaProductos().add(nuevoComandaProducto);*/
+        
+        BufferedWriter comandaProductoWriter = null;
+        
+        try {
+            File archivoComandaProducto = new File(this.rutaComandaProductos);
+            comandaProductoWriter = new BufferedWriter(new FileWriter(archivoComandaProducto, true));
+            
+            String rowData = String.valueOf(idComanda) + "#" + String.valueOf(idProducto) + "#" + String.valueOf(cantidad);
+            
+            comandaProductoWriter.newLine();
+            comandaProductoWriter.write(rowData);
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al insertar producto de comanda: " + e.getMessage());
+            
+        } finally {
+            try {
+                comandaProductoWriter.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al insertar producto de comanda: " + e.getMessage());
+            }
+        }
     }
     
     public void actualizarPrecioTotalPedido(int idPedido, double precio) {
@@ -266,6 +302,266 @@ public class AddProductosModel {
     }
     
     //----------------------Métodos implementados
+    private void actualizarPrecioPedido(int idPedido) {
+        this.cargarDatosComandas();
+        this.cargarDatosComandaProductos();
+        
+        double precioTotal = 0;
+        List<String[]> pedidoProductos = this.obtenerProductosDePedido(idPedido);
+        
+        for (String[] productoActual : pedidoProductos) {
+            double precio = Double.parseDouble(productoActual[2].replace(",", "."));
+            precioTotal += precio; //CONTINUAAAAAAAAAAAAAAAAAAAAAAR
+        }
+    }
+    
+    private List<String[]> obtenerProductosDePedido(int idPedido) {
+        List<int[]> comandasDePedido = this.obtenerComandasDePedido(idPedido);
+        List<String[]> pedidoProductos = new ArrayList();
+        
+        for (int[] comandaActual : comandasDePedido) {
+            for (int[] comandaProductoActual : this.comandaProductos) {
+                if (comandaProductoActual[0] == comandaActual[0]) {
+                    String[] productoOriginal = this.obtenerProducto(comandaProductoActual[1]);
+                    pedidoProductos.add(productoOriginal);
+                }
+            }
+        }
+        
+        return pedidoProductos;
+        
+    }
+    
+    private String[] obtenerProducto(int idProducto) {
+        for (String[] productoActual : this.productos) {
+            if (Integer.parseInt(productoActual[0]) == idProducto) {
+                return productoActual;
+            }
+        }
+        
+        return null;
+    }
+    
+    private List<int[]> obtenerComandasDePedido(int idPedido) {
+        List<int[]> comandas = new ArrayList();
+        
+        for (int[] comandaActual : this.comandas) {
+            if (comandaActual[1] == idPedido) {
+                comandas.add(comandaActual);
+            }
+        }
+        
+        return comandas;
+    }
+    
+    private void cargarRutas() {
+        InputStream fileInputStream = null;
+        Properties properties = new Properties();
+        
+        try {
+            File archivoProperties = new File(System.getProperty("user.dir") + "\\src\\model\\datos\\rutas.properties");
+            fileInputStream = new FileInputStream(archivoProperties);
+            
+            properties.load(fileInputStream);
+            
+            String rutaComandas = System.getProperty("user.dir") + properties.getProperty("path_comandas");
+            String rutaComandaProductos = System.getProperty("user.dir") + properties.getProperty("path_comandaProductos");
+            String rutaPedidos = System.getProperty("user.dir") + properties.getProperty("path_pedidos");
+            String rutaProductos = System.getProperty("user.dir") + properties.getProperty("path_productos");
+            String rutaCategorias = System.getProperty("user.dir") + properties.getProperty("path_categorias");
+            
+            this.rutaComanda = rutaComandas;
+            this.rutaComandaProductos = rutaComandaProductos;
+            this.rutaPedidos = rutaPedidos;
+            this.rutaProductos = rutaProductos;
+            this.rutaCategorias = rutaCategorias;
+            
+            fileInputStream.close();
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar la ruga de comandas: " + e.getMessage());
+            
+        } finally {
+            try {
+                fileInputStream.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar ruta de comandas: " + e.getMessage());
+                        
+            }
+        }
+    }
+    
+    private void cargarDatosComandas() {
+        List<int[]> comandas = new ArrayList();
+        
+        BufferedReader comandasReader = null;
+        
+        try {
+            File archivoComandas = new File(this.rutaComanda);
+            comandasReader = new BufferedReader(new FileReader(archivoComandas));
+            
+            String fila = "";
+            
+            while ((fila = comandasReader.readLine()) != null) {
+                if (!fila.isBlank()) {
+                    String[] filaSplit = fila.split("#");
+                    int rowData[] = {Integer.parseInt(filaSplit[0]), Integer.parseInt(filaSplit[1])};
+                    comandas.add(rowData);
+                }
+            }
+            
+            this.comandas = comandas;
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar datos de comandas: " + e.getMessage());
+            
+        } finally {
+            try {
+                comandasReader.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar datos de comandas: " + e.getMessage());
+            }
+        }
+    }
+    
+    private void cargarDatosPedidos() {
+        List<String[]> pedidos = new ArrayList();
+        
+        BufferedReader pedidosReader = null;
+        
+        try {
+            File archivoPedidos = new File(this.rutaPedidos);
+            pedidosReader = new BufferedReader(new FileReader(archivoPedidos));
+            
+            String fila = "";
+            
+            while ((fila = pedidosReader.readLine()) != null) {
+                if (!fila.isBlank()) {
+                    String[] filaSplit = fila.split("#");
+                    String rowData[] = {filaSplit[0], filaSplit[1], filaSplit[2], filaSplit[3], filaSplit[4]};
+                    pedidos.add(rowData);
+                }
+            }
+            
+            this.pedidos = pedidos;
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar datos de pedidos: " + e.getMessage());
+            
+        } finally {
+            try {
+                pedidosReader.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar datos de pedidos: " + e.getMessage());
+            }
+        }
+    }
+    
+    private void cargarDatosProductos() {
+        List<String[]> productos = new ArrayList();
+        
+        BufferedReader productosReader = null;
+        
+        try {
+            File archivoProductos = new File(this.rutaProductos);
+            productosReader = new BufferedReader(new FileReader(archivoProductos));
+            
+            String fila = "";
+            
+            while ((fila = productosReader.readLine()) != null) {
+                if (!fila.isBlank()) {
+                    String[] filaSplit = fila.split("#");
+                    String rowData[] = {filaSplit[0], filaSplit[1], filaSplit[2], filaSplit[3]};
+                    productos.add(rowData);
+                }
+            }
+            
+            this.productos = productos;
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar datos de productos: " + e.getMessage());
+            
+        } finally {
+            try {
+                productosReader.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar datos de productos: " + e.getMessage());
+            }
+        }
+    }
+    
+    private void cargarDatosCategorias() {
+        List<String[]> categorias = new ArrayList();
+        
+        BufferedReader categoriasReader = null;
+        
+        try {
+            File archivoCategorias = new File(this.rutaCategorias);
+            categoriasReader = new BufferedReader(new FileReader(archivoCategorias));
+            
+            String fila = "";
+            
+            while ((fila = categoriasReader.readLine()) != null) {
+                if (!fila.isBlank()) {
+                    String[] filaSplit = fila.split("#");
+                    String rowData[] = {filaSplit[0], filaSplit[1]};
+                    categorias.add(rowData);
+                }
+            }
+            
+            this.categorias = categorias;
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar datos de categorias: " + e.getMessage());
+            
+        } finally {
+            try {
+                categoriasReader.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar datos de categorias: " + e.getMessage());
+            }
+        }
+    }
+    
+    private void cargarDatosComandaProductos() {
+        List<int[]> comandaProductos = new ArrayList();
+        
+        BufferedReader comandasProductosReader = null;
+        
+        try {
+            File archivoComandas = new File(this.rutaComandaProductos);
+            comandasProductosReader = new BufferedReader(new FileReader(archivoComandas));
+            
+            String fila = "";
+            
+            while ((fila = comandasProductosReader.readLine()) != null) {
+                if (!fila.isBlank()) {
+                    String[] filaSplit = fila.split("#");
+                    int rowData[] = {Integer.parseInt(filaSplit[0]), Integer.parseInt(filaSplit[1]), Integer.parseInt(filaSplit[2])};
+                    comandaProductos.add(rowData);
+                }
+            }
+            
+            this.comandaProductos = comandaProductos;
+            
+        } catch (IOException e) {
+            System.out.println("ERROR al cargar datos de productos de comandas: " + e.getMessage());
+            
+        } finally {
+            try {
+                comandasProductosReader.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar datos de productos de comandas: " + e.getMessage());
+            }
+        }
+    }
+    
     private String[] getCategoriaPorNombre(String nombreCategoria) {
         Iterator<String[]> categoriasIt = this.getCategorias().iterator();
         

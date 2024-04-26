@@ -35,7 +35,7 @@ public class AddComandaController {
         this.precioTotal = 0;
         this.productosModel = new AddProductosModel();
         this.productos = new ArrayList(this.productosModel.getProductos()) ;
-        this.comandaProductos = new ArrayList(this.productosModel.getComandaProductos()) ;
+        this.comandaProductos = new ArrayList() ;
         this.idPedido = idPedido;
         
         DefaultTableModel tableModel = this.productosModel.getTablaVaciaModel();
@@ -60,7 +60,7 @@ public class AddComandaController {
         for (int[] productoActula : productosComanda) {
             String[] productoOriginal = this.buscarProducto(productoActula[1]);
             int cantidad = productoActula[2];
-            double precio = Double.parseDouble(productoOriginal[3]);
+            double precio = Double.parseDouble(productoOriginal[2].replace(",", "."));
             
             double precioProducto = precio*cantidad;
             
@@ -247,8 +247,12 @@ public class AddComandaController {
         int id = this.comanda[0];
         int idPedido = this.idPedido;
         
-        this.productosModel.getComandaProductos().addAll(comandaProductos);
+        //this.productosModel.getComandaProductos().addAll(comandaProductos);
         this.productosModel.insertarComanda(id, idPedido);
+        
+        for (int[] productoActual : this.comandaProductos) {
+            this.productosModel.insertarComandaProducto(id, productoActual[0], productoActual[2]);
+        }
     }
     
     private void borrarComandaProducto(int idProducto) {
@@ -331,7 +335,7 @@ public class AddComandaController {
             
             //Se extrae los datos necesarios para las columnas de la tabla
             String nombreComandaProducto = productoOriginal[1];
-            double precio = Double.parseDouble(productoOriginal[3]);
+            double precio = Double.parseDouble(productoOriginal[2].replace(",", "."));
             int cantidad = comandaProductoActual[2];
             double subtotal = cantidad*precio;
             

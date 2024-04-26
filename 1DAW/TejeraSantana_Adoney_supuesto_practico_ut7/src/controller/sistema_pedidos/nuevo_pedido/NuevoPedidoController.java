@@ -68,7 +68,7 @@ public class NuevoPedidoController {
         for (String[] productoActula : productosPedido) {
             String[] productoOriginal = this.buscarProducto(Integer.parseInt(productoActula[1]));
             int cantidad = Integer.parseInt(productoActula[2]);
-            double precio = Double.parseDouble(productoOriginal[3]);
+            double precio = Double.parseDouble(productoOriginal[2].replace(",", "."));
             
             double precioProducto = precio*cantidad;
             
@@ -246,15 +246,33 @@ public class NuevoPedidoController {
     }
     
     private void insertarPedido() {
+        int comandaId = generarComandaId();
+        List<int[]> comandaProductos = new ArrayList();
+        
+        for (String[] productoActual : this.pedidoProductos) {
+            int idProducto = Integer.parseInt(productoActual[1]);            
+            int cantidad = Integer.parseInt(productoActual[2]);
+            
+            int[] pedidoProducto = {comandaId, idProducto, cantidad};
+            
+            comandaProductos.add(pedidoProducto);
+        }
+        
         double precioTotal = this.precioTotal;
         String fecha = this.pedido[2];
-        int id = Integer.parseInt(this.pedido[0]);
+        int pedidoId = Integer.parseInt(this.pedido[0]);
         int idMesa = this.idMesa;
         
         this.pedido[1] = String.valueOf(precioTotal);
         
-        this.productosModel.getPedidoProductos().addAll(pedidoProductos);
-        this.productosModel.insertarPedido(id, precioTotal, fecha, idMesa);
+        this.productosModel.insertarComanda(comandaId, pedidoId);
+        this.productosModel.insertarPedido(pedidoId, precioTotal, fecha, idMesa);
+        
+        for (int[] comandaProductoActual : comandaProductos) {
+            this.productosModel.insertarComandaProducto(comandaProductoActual[0], comandaProductoActual[1], comandaProductoActual[2]);
+        }
+        
+        //this.productosModel.getComandaProductos().addAll(comandaProductos);
     }
     
     private void borrarPedidoProducto(int idProducto) {
@@ -337,7 +355,7 @@ public class NuevoPedidoController {
             
             //Se extrae los datos necesarios para las columnas de la tabla
             String nombrePedidoProducto = productoOriginal[1];
-            double precio = Double.parseDouble(productoOriginal[3]);
+            double precio = Double.parseDouble(productoOriginal[2].replace(",", "."));
             int cantidad = Integer.parseInt(pedidoProductoActual[2]);
             double subtotal = cantidad*precio;
             
@@ -396,6 +414,27 @@ public class NuevoPedidoController {
             
             for (String[] pedido : pedidos) {
                 if (pedido[0].equals(String.valueOf(nuevoId))) {
+                    idValido = false;
+                }
+            }
+        }
+        
+        return nuevoId;
+    }
+    
+    private int generarComandaId() {
+        List<int[]> comandas = this.productosModel.getComandas();
+        
+        int nuevoId = -1;
+        boolean idValido = false;
+        
+        while (!idValido || nuevoId < 0) {
+            nuevoId++;
+            
+            idValido = true;
+            
+            for (int[] coamnda : comandas) {
+                if (coamnda[0] == nuevoId) {
                     idValido = false;
                 }
             }

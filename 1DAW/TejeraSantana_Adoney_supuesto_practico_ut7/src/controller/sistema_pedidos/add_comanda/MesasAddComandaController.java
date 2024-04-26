@@ -97,7 +97,7 @@ public class MesasAddComandaController {
         
         for (String[] pedidoActual : pedidos) {
             
-            if (pedidoActual[3].equals(mesaOriginal[0])) {
+            if (pedidoActual[4].equals(mesaOriginal[0])) {
                 return pedidoActual;
             }
             

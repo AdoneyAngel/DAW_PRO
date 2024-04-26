@@ -136,9 +136,10 @@ public class MesasModel {
     }
     
     private void cargarDatos() {
+            BufferedReader mesasReader = null;
         try {
             File archivo = new File(this.rutaDatos);
-            BufferedReader mesasReader = new BufferedReader(new FileReader(archivo));
+            mesasReader = new BufferedReader(new FileReader(archivo));
             
             String fila;
             
@@ -152,7 +153,15 @@ public class MesasModel {
             this.mesas = mesas;
             
         } catch (IOException e) {
-            System.out.println("ERROR al cargar datos: " + e.getLocalizedMessage());
+            System.out.println("ERROR al cargar datos: " + e.getMessage());
+            
+        } finally {
+            try {
+                mesasReader.close();
+                
+            } catch (IOException e) {
+                System.out.println("ERROR al cargar datos: " + e.getMessage());
+            }
         }
     }
     
@@ -168,7 +177,7 @@ public class MesasModel {
     
     private String[] ocupado(int idMesa) {
         for (String[] pedidoActual : this.pedidos) {
-            if (pedidoActual[3].equals(String.valueOf(idMesa))) {
+            if (Integer.parseInt(pedidoActual[4]) == idMesa) {
                 String[] mesaOriginal = obtenerMesaPorId(idMesa);
                 String[] mesaOcupada = {mesaOriginal[0], mesaOriginal[1], pedidoActual[0]};
                 
