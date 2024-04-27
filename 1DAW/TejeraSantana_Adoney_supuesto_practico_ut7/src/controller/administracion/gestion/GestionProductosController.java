@@ -5,6 +5,7 @@
 package controller.administracion.gestion;
 
 import controller.administracion.MenuAdministracionController;
+import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -42,8 +43,10 @@ public class GestionProductosController {
         //Modelos
         
         this.administracionProductosView.getTableProductos().setModel(productosTablaModel);
-        this.administracionProductosView.getComboCrear().setModel(categoriaComboBoxModelNew);
-        this.administracionProductosView.getComboEditar().setModel(categoriaComboBoxModelNew);
+        
+        //Se crea una copia del modelo de categorias, para arreglar el problema de que al editar uno se modificaba el otro tambien
+        this.administracionProductosView.getComboCrear().setModel(clonarComboModel(categoriaComboBoxModelNew));
+        this.administracionProductosView.getComboEditar().setModel(clonarComboModel(categoriaComboBoxModelNew));
         
         //Métodos de botones
         
@@ -93,6 +96,8 @@ public class GestionProductosController {
                 
                 int rowIndex = administracionProductosView.getTableProductos().getSelectedRow();
                 
+                String nombreOriginal = administracionProductosView.getTableProductos().getValueAt(rowIndex, 1).toString();
+                
                 String nombreProducto = administracionProductosView.getFieldNombreEditar().getText();
                 String categoriaNombre = administracionProductosView.getComboEditar().getSelectedItem().toString();
                 String precioProductoStr = administracionProductosView.getFieldPrecioEditar().getValue().toString();
@@ -108,7 +113,7 @@ public class GestionProductosController {
                 }else if (precioProducto <= 0) {
                     administracionProductosView.getLblCrearPrecioInvalido().setVisible(true);
                     
-                } else if (existeNombre(nombreProducto)) {
+                } else if (existeNombre(nombreProducto) && !nombreOriginal.equals(nombreProducto)) {
                     administracionProductosView.getLblNombreExiste().setVisible(true);
                     
                 } else if (nombreProducto.isBlank() || nombreProducto.isEmpty() || precioProducto <= 0) {
@@ -142,6 +147,20 @@ public class GestionProductosController {
                     
                     actualizarTablaProductos();
                 }
+            }
+        });
+        
+        this.administracionProductosView.getTableProductos().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                int rowIndex = administracionProductosView.getTableProductos().rowAtPoint(evt.getPoint());
+                String nombreProductoSeleccionado = administracionProductosView.getTableProductos().getValueAt(rowIndex, 1).toString();
+                String precioProductoSeleccionado = administracionProductosView.getTableProductos().getValueAt(rowIndex, 2).toString();
+                String categoriaProductoSeleccionado = administracionProductosView.getTableProductos().getValueAt(rowIndex, 3).toString();
+                
+                administracionProductosView.getFieldNombreEditar().setText(nombreProductoSeleccionado);
+                administracionProductosView.getFieldPrecioEditar().setValue(Double.parseDouble(precioProductoSeleccionado.replace(",", ".")));
+                administracionProductosView.getComboEditar().setSelectedItem(categoriaProductoSeleccionado);
             }
         });
         
@@ -221,5 +240,15 @@ public class GestionProductosController {
         }
         
         return false;
+    }
+    
+    private DefaultComboBoxModel clonarComboModel(DefaultComboBoxModel originalModel) {
+        DefaultComboBoxModel clonedModel = new DefaultComboBoxModel();
+        
+        for (int a = 0; a<originalModel.getSize(); a++) {
+            clonedModel.addElement(originalModel.getElementAt(a));
+        }
+        
+        return clonedModel;
     }
 }

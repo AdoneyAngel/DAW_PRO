@@ -5,6 +5,7 @@
 package controller.administracion.gestion;
 
 import controller.administracion.MenuAdministracionController;
+import java.awt.event.MouseEvent;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import model.administracion.gestion.GestionCategoriasModel;
@@ -122,6 +123,16 @@ public class GestionCategoriasController {
                 clearFields();
                 //--------------
                 
+            }
+        });
+        
+        this.administracionCategoriasView.getTable().addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                int rowIndex = administracionCategoriasView.getTable().rowAtPoint(evt.getPoint());
+                String nombreCategoriaSeleccionada = administracionCategoriasView.getTable().getValueAt(rowIndex, 1).toString();
+                
+                administracionCategoriasView.getTextFieldEditNombre().setText(nombreCategoriaSeleccionada);
             }
         });
         //-----------------------
