@@ -5,7 +5,10 @@
 package view.pedidos;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -20,10 +23,102 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
     private DefaultTableModel facturaTableModel;
     private final String[] facturaTableColumns = {"Producto", "Precio", "Unidades", "Subtotal"};
     
-    public PedidosFinalizarView() {
+    public PedidosFinalizarView(boolean lblAtentionVisible, String mesaP, double precioP, TableModel tableDetallesPedidoModelP) {
         this.facturaTableModel = new DefaultTableModel(this.facturaTableColumns, 0);
         
         initComponents();
+    }
+    
+    public JTable getTableDetallesPedido() {
+        return this.tFactura;
+    }
+    
+    public JLabel getLblPrecio() {
+        return this.lblTotalNum;
+    }
+    
+    public JLabel getLblMesa() {
+        return this.lblMesaNum;
+    }
+    
+    public JButton getBtn1c() {
+        return this.btn1cent;
+    }
+    
+    public JButton getBtn2c() {
+        return this.btn2cent;
+    }
+    
+    public JButton getBtn5c() {
+        return this.btn5cent;
+    }
+    
+    public JButton getBtn10c() {
+        return this.btn10cent;
+    }
+    
+    public JButton getBtn20c() {
+        return this.btn20cent;
+    }
+    
+    public JButton getBtn50c() {
+        return this.btn50cent1;
+    }
+    
+    public JButton getBtn1e() {
+        return this.btn1euro;
+    }
+    
+    public JButton getBtn2e() {
+        return this.btn2euro;
+    }
+    
+    public JButton getBtn5e() {
+        return this.btn5euro;
+    }
+    
+    public JButton getBtn10e() {
+        return this.btn10euro;
+    }
+    
+    public JButton getBtn20e() {
+        return this.btn20euro;
+    }
+    
+    public JButton getBtn50e() {
+        return this.btn50euro;
+    }
+    
+    public JButton getBtn100e() {
+        return this.btn100euro;
+    }
+    
+    public JButton getBtn200e() {
+        return this.btn200euro;
+    }
+    
+    public JButton getBtn500e() {
+        return this.btn500euro;
+    }
+    
+    public JButton getBtnTarjeta() {
+        return this.btnPagotarjeta;
+    }
+    
+    public JButton getBtnReiniciarPago() {
+        return this.btnReiniciarpago;
+    }
+    
+    public JLabel getLblPagado() {
+        return this.lblPagadoNum;
+    }
+    
+    public JLabel getLblDevolucion() {
+        return this.lblDevolucionNum;
+    }
+    
+    public JLabel getLblAtention() {
+        return this.lblAtention;
     }
 
     /**
@@ -35,8 +130,9 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tFacturas = new javax.swing.JTable();
+        tFactura = new javax.swing.JTable();
         btnReiniciarpago = new javax.swing.JButton();
         btn1cent = new javax.swing.JButton();
         btn2cent = new javax.swing.JButton();
@@ -50,7 +146,7 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
         btn10euro = new javax.swing.JButton();
         btn20euro = new javax.swing.JButton();
         btn50euro = new javax.swing.JButton();
-        btn100€ = new javax.swing.JButton();
+        btn100euro = new javax.swing.JButton();
         btn200euro = new javax.swing.JButton();
         btn500euro = new javax.swing.JButton();
         btnPagotarjeta = new javax.swing.JButton();
@@ -65,11 +161,14 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
         lblTotal = new javax.swing.JLabel();
         lblTotalNum = new javax.swing.JLabel();
         btnFinalizar = new javax.swing.JButton();
+        lblAtention = new javax.swing.JLabel();
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tFacturas.setModel(this.facturaTableModel);
-        jScrollPane1.setViewportView(tFacturas);
+        tFactura.setModel(this.facturaTableModel);
+        jScrollPane1.setViewportView(tFactura);
 
         btnReiniciarpago.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnReiniciarpago.setText("Reiniciar Pago");
@@ -110,8 +209,8 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
         btn50euro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn50euro.setText("50€");
 
-        btn100€.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn100€.setText("100€");
+        btn100euro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn100euro.setText("100€");
 
         btn200euro.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btn200euro.setText("200€");
@@ -161,6 +260,10 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
             }
         });
 
+        lblAtention.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblAtention.setForeground(new java.awt.Color(255, 10, 10));
+        lblAtention.setText("No ha ingresado suficiente dinero");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -195,7 +298,7 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn50euro, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btn100€, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn100euro, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btn200euro, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -207,34 +310,40 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(lblPagado))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(lblPagadoNum))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblDevolucion)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(86, 86, 86)
-                                .addComponent(lblDevolucionNum))))
+                        .addComponent(lblDevolucion))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(121, 121, 121)
-                        .addComponent(btnReiniciarpago, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnReiniciarpago, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblPagadoNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDevolucionNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(36, 36, 36))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMesaNum)
-                            .addComponent(lblTotalNum)
-                            .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblMesa)
-                            .addComponent(lblTotal))))
-                .addGap(36, 36, 36))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                                    .addComponent(lblMesa)
+                                    .addComponent(lblTotal)
+                                    .addComponent(lblTotalNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblMesaNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(36, 36, 36))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(lblAtention)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,48 +363,48 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
                         .addComponent(lblTotalNum)
                         .addGap(18, 18, 18)
                         .addComponent(btnFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblAtention)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btn1cent)
-                                    .addComponent(btn2cent)
-                                    .addComponent(btn5cent))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btn10cent)
-                                    .addComponent(btn20cent)
-                                    .addComponent(btn50cent1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btn1euro)
-                                    .addComponent(btn2euro)
-                                    .addComponent(btn5euro))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btn10euro)
-                                    .addComponent(btn20euro)
-                                    .addComponent(btn50euro))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btn100€)
-                                    .addComponent(btn200euro)
-                                    .addComponent(btn500euro))
-                                .addGap(18, 18, 18)
-                                .addComponent(btnPagotarjeta)
-                                .addGap(25, 25, 25)
-                                .addComponent(lblPagado)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblPagadoNum)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblDevolucion)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblDevolucionNum)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1))
-                        .addContainerGap())))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn1cent)
+                            .addComponent(btn2cent)
+                            .addComponent(btn5cent))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn10cent)
+                            .addComponent(btn20cent)
+                            .addComponent(btn50cent1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn1euro)
+                            .addComponent(btn2euro)
+                            .addComponent(btn5euro))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn10euro)
+                            .addComponent(btn20euro)
+                            .addComponent(btn50euro))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn100euro)
+                            .addComponent(btn200euro)
+                            .addComponent(btn500euro))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnPagotarjeta)
+                        .addGap(25, 25, 25)
+                        .addComponent(lblPagado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPagadoNum)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblDevolucion)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblDevolucionNum)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAtras, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
 
         pack();
@@ -305,43 +414,9 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnFinalizarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PedidosFinalizarView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PedidosFinalizarView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PedidosFinalizarView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PedidosFinalizarView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PedidosFinalizarView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn100€;
+    private javax.swing.JButton btn100euro;
     private javax.swing.JButton btn10cent;
     private javax.swing.JButton btn10euro;
     private javax.swing.JButton btn1cent;
@@ -360,8 +435,10 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnPagotarjeta;
     private javax.swing.JButton btnReiniciarpago;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAtention;
     private javax.swing.JLabel lblDevolucion;
     private javax.swing.JLabel lblDevolucionNum;
     private javax.swing.JLabel lblMesa;
@@ -370,7 +447,7 @@ public class PedidosFinalizarView extends javax.swing.JFrame {
     private javax.swing.JLabel lblPagadoNum;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblTotalNum;
-    private javax.swing.JTable tFacturas;
+    private javax.swing.JTable tFactura;
     // End of variables declaration//GEN-END:variables
 
     public JButton getbtnFinalizar() {

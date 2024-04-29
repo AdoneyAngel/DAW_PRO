@@ -177,7 +177,7 @@ public class MesasModel {
     
     private String[] ocupado(int idMesa) {
         for (String[] pedidoActual : this.pedidos) {
-            if (Integer.parseInt(pedidoActual[4]) == idMesa) {
+            if (Integer.parseInt(pedidoActual[4]) == idMesa && Integer.parseInt(pedidoActual[2]) == 1) {
                 String[] mesaOriginal = obtenerMesaPorId(idMesa);
                 String[] mesaOcupada = {mesaOriginal[0], mesaOriginal[1], pedidoActual[0]};
                 
