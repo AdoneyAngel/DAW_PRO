@@ -146,8 +146,10 @@ public class MesasModel {
             List<String[]> mesas = new ArrayList();
             
             while ((fila = mesasReader.readLine()) != null) {
-                String[] rowData = fila.split("#");
-                mesas.add(rowData);
+                if (!fila.isBlank()) {
+                    String[] rowData = fila.split("#");
+                    mesas.add(rowData);                    
+                }
             }
             
             this.mesas = mesas;

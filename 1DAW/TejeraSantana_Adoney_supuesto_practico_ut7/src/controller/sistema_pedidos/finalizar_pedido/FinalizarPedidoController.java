@@ -47,14 +47,6 @@ public class FinalizarPedidoController {
         
         this.ocultarLbl();
         
-        this.view.getbtnFinalizar().addActionListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e){
-                DestruirVentana();
-                new MenuSistemaPedidosController();
-            }
-        });
-        
         this.view.getbtnAtras().addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -198,8 +190,6 @@ public class FinalizarPedidoController {
             @Override
             public void actionPerformed(ActionEvent e){
                 pagarFactura();
-                
-                DestruirVentana();
             }
         });
     }
@@ -207,6 +197,7 @@ public class FinalizarPedidoController {
     public void pagarFactura() {
         if (this.pagado >= this.precio) {
             this.model.finalizarPedido(this.idPedido);
+            this.DestruirVentana();
         
         } else {
             this.view.getLblAtention().setVisible(true);

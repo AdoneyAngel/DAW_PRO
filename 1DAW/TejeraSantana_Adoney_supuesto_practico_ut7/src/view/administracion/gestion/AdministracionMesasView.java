@@ -4,6 +4,9 @@
 
 package view.administracion.gestion;
 
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -45,6 +48,38 @@ public class AdministracionMesasView extends javax.swing.JFrame {
     public void setBtnEliminarseleccion(javax.swing.JButton btnEliminarseleccion) {
         this.btnEliminarseleccion = btnEliminarseleccion;
     }
+    
+    public JTable getTable() {
+        return this.tMesas;
+    }
+    
+    public JLabel getLblNombreCrear() {
+        return this.lblNombreCrear;
+    }
+    
+    public JLabel getLblNombreEditar() {
+        return this.lblNombreEditar;
+    }
+    
+    public JLabel getLblSeleccion() {
+        return this.lblSeleccion;
+    }
+    
+    public JTextField getCrearField() {
+        return this.fieldCrearmesa;
+    }
+    
+    public JTextField getEditarField() {
+        return this.fieldEditarmesa;
+    }
+    
+    public JLabel getLblNoCrear() {
+        return this.lblNocrear;
+    }
+    
+    public JLabel getLblNoEditar() {
+        return this.lblNoeditar;
+    }
 
     /**
      * Creates new form AdministracionMesasView
@@ -54,14 +89,6 @@ public class AdministracionMesasView extends javax.swing.JFrame {
     private DefaultTableModel mesasTableModel;
     
     public AdministracionMesasView() {
-        String[][] temporalMesasTableData = {{"1", "Mesa 1"}, {"2", "Mesa 2"}, {"3", "Mesa 3"}};
-        this.mesasTableModel = new DefaultTableModel(temporalMesasTableData, this.mesasTableColumns) {
-            @Override 
-            public boolean isCellEditable(int r1, int r2) {
-                return false;
-            }
-        };
-        
         initComponents();
     }
 
@@ -85,6 +112,11 @@ public class AdministracionMesasView extends javax.swing.JFrame {
         fieldCrearmesa = new javax.swing.JTextField();
         btnCrearmesa = new javax.swing.JButton();
         lblEditarmesa = new javax.swing.JLabel();
+        lblNombreCrear = new javax.swing.JLabel();
+        lblNombreEditar = new javax.swing.JLabel();
+        lblSeleccion = new javax.swing.JLabel();
+        lblNoeditar = new javax.swing.JLabel();
+        lblNocrear = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,7 +131,6 @@ public class AdministracionMesasView extends javax.swing.JFrame {
         lblMesas.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblMesas.setText("Mesas:");
 
-        tMesas.setModel(this.mesasTableModel);
         jScrollPane1.setViewportView(tMesas);
 
         btnEliminarseleccion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -121,34 +152,75 @@ public class AdministracionMesasView extends javax.swing.JFrame {
         lblEditarmesa.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         lblEditarmesa.setText("Editar Mesa:");
 
+        lblNombreCrear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNombreCrear.setForeground(new java.awt.Color(255, 10, 10));
+        lblNombreCrear.setText("El nombre de la mesa debe ser único");
+
+        lblNombreEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNombreEditar.setForeground(new java.awt.Color(255, 10, 10));
+        lblNombreEditar.setText("El nombre de la mesa debe ser único");
+
+        lblSeleccion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblSeleccion.setForeground(new java.awt.Color(255, 10, 10));
+        lblSeleccion.setText("Debe seleccionar una mesa");
+
+        lblNoeditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNoeditar.setForeground(new java.awt.Color(255, 10, 10));
+        lblNoeditar.setText("Campo vacío");
+
+        lblNocrear.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNocrear.setForeground(new java.awt.Color(255, 10, 10));
+        lblNocrear.setText("Campo vacío");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnEditarmesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(fieldEditarmesa, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblEditarmesa))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnCrearmesa, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
-                        .addComponent(fieldCrearmesa)
-                        .addComponent(lblCrearMesa)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnEditarmesa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(fieldEditarmesa, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnCrearmesa, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+                                    .addComponent(fieldCrearmesa)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblCrearMesa)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblNocrear))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblEditarmesa)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblNoeditar))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addComponent(lblNombreEditar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(52, 52, 52)
+                        .addComponent(lblNombreCrear)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMesas))
                 .addGap(23, 23, 23))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(131, 131, 131))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAtras)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAtras)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(131, 131, 131))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lblSeleccion)
+                .addGap(183, 183, 183))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,23 +228,32 @@ public class AdministracionMesasView extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCrearMesa)
-                    .addComponent(lblMesas))
+                    .addComponent(lblMesas)
+                    .addComponent(lblNocrear))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(fieldCrearmesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnCrearmesa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(68, 68, 68)
-                        .addComponent(lblEditarmesa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblNombreCrear)
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblEditarmesa)
+                            .addComponent(lblNoeditar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(fieldEditarmesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEditarmesa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnEditarmesa, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblNombreEditar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminarseleccion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 110, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblSeleccion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addComponent(btnAtras)
                 .addContainerGap())
         );
@@ -234,6 +315,11 @@ public class AdministracionMesasView extends javax.swing.JFrame {
     private javax.swing.JLabel lblCrearMesa;
     private javax.swing.JLabel lblEditarmesa;
     private javax.swing.JLabel lblMesas;
+    private javax.swing.JLabel lblNocrear;
+    private javax.swing.JLabel lblNoeditar;
+    private javax.swing.JLabel lblNombreCrear;
+    private javax.swing.JLabel lblNombreEditar;
+    private javax.swing.JLabel lblSeleccion;
     private javax.swing.JTable tMesas;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,9 +5,9 @@ package controller.administracion;
 
 import controller.InicioController;
 import controller.administracion.gestion.GestionCategoriasController;
+import controller.administracion.gestion.GestionMesasController;
 import controller.administracion.gestion.GestionProductosController;
 import controller.administracion.historial_pedidos.HistorialPedidosController;
-import controller.sistema_pedidos.finalizar_pedido.MesasFinalizarPedidoController;
 import view.administracion.AdministracionMenuView;
 
 /**
@@ -61,7 +61,7 @@ public class MenuAdministracionController {
         });
         this.administracionMenuView.getBtnMesas().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MesasFinalizarPedidoController MesasFinalizarPedidoController = new MesasFinalizarPedidoController();
+                new GestionMesasController();
                 destruirVentana();
             }
         });
