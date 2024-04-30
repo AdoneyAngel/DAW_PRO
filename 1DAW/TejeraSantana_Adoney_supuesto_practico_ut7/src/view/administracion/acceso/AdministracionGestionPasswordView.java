@@ -2,6 +2,7 @@
 package view.administracion.acceso;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
@@ -29,13 +30,15 @@ public class AdministracionGestionPasswordView extends javax.swing.JFrame {
 
         lblTitle = new javax.swing.JLabel();
         lbContraseñaactual = new javax.swing.JLabel();
-        fieldContraeñaactual = new javax.swing.JTextField();
         lblNuevacontraseña = new javax.swing.JLabel();
-        fieldNuevaContraseña = new javax.swing.JTextField();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         lblRepetircontraseña = new javax.swing.JLabel();
-        fieldRepetircontraseña = new javax.swing.JTextField();
+        lblIncorrecto = new javax.swing.JLabel();
+        lblNocoincide = new javax.swing.JLabel();
+        fieldContraeñaactual = new javax.swing.JPasswordField();
+        fieldNuevacontraseña = new javax.swing.JPasswordField();
+        fieldRepetircontraseña = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -45,12 +48,6 @@ public class AdministracionGestionPasswordView extends javax.swing.JFrame {
 
         lbContraseñaactual.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lbContraseñaactual.setText("Contraseña Actual:");
-
-        fieldContraeñaactual.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fieldContraeñaactualActionPerformed(evt);
-            }
-        });
 
         lblNuevacontraseña.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblNuevacontraseña.setText("Nueva Contraseña:");
@@ -74,50 +71,74 @@ public class AdministracionGestionPasswordView extends javax.swing.JFrame {
         lblRepetircontraseña.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblRepetircontraseña.setText("Repetir Contraseña:");
 
+        lblIncorrecto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblIncorrecto.setForeground(new java.awt.Color(255, 10, 10));
+        lblIncorrecto.setText("La contraseña actual no es correcta");
+
+        lblNocoincide.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNocoincide.setForeground(new java.awt.Color(255, 10, 10));
+        lblNocoincide.setText("La contraseña repetida no coincide");
+
+        fieldRepetircontraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fieldRepetircontraseñaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(41, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblNuevacontraseña)
-                    .addComponent(fieldContraeñaactual, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbContraseñaactual)
+                .addContainerGap(38, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblTitle)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblRepetircontraseña)
-                            .addComponent(fieldRepetircontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(fieldNuevaContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblRepetircontraseña)
+                        .addComponent(fieldRepetircontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(fieldContraeñaactual, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lbContraseñaactual)
+                        .addComponent(fieldNuevacontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblNuevacontraseña))
+                    .addComponent(lblNocoincide)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(67, 67, 67)
-                            .addComponent(btnCancelar))))
-                .addContainerGap(41, Short.MAX_VALUE))
+                            .addGap(18, 18, 18)
+                            .addComponent(btnCancelar))
+                        .addComponent(lblIncorrecto)))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTitle)
-                .addGap(41, 41, 41)
+                .addGap(37, 37, 37)
                 .addComponent(lbContraseñaactual)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldContraeñaactual, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fieldContraeñaactual, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
                 .addComponent(lblNuevacontraseña)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldNuevaContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fieldNuevacontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lblRepetircontraseña)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(fieldRepetircontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(btnCancelar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAceptar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fieldRepetircontraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnCancelar))
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addComponent(lblIncorrecto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblNocoincide)
+                .addContainerGap())
         );
 
         pack();
@@ -131,59 +152,20 @@ public class AdministracionGestionPasswordView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void fieldContraeñaactualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldContraeñaactualActionPerformed
+    private void fieldRepetircontraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldRepetircontraseñaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_fieldContraeñaactualActionPerformed
+    }//GEN-LAST:event_fieldRepetircontraseñaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdministracionGestionPasswordView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdministracionGestionPasswordView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdministracionGestionPasswordView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdministracionGestionPasswordView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AdministracionGestionPasswordView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JTextField fieldContraeñaactual;
-    private javax.swing.JTextField fieldNuevaContraseña;
-    private javax.swing.JTextField fieldRepetircontraseña;
+    private javax.swing.JPasswordField fieldContraeñaactual;
+    private javax.swing.JPasswordField fieldNuevacontraseña;
+    private javax.swing.JPasswordField fieldRepetircontraseña;
     private javax.swing.JLabel lbContraseñaactual;
+    private javax.swing.JLabel lblIncorrecto;
+    private javax.swing.JLabel lblNocoincide;
     private javax.swing.JLabel lblNuevacontraseña;
     private javax.swing.JLabel lblRepetircontraseña;
     private javax.swing.JLabel lblTitle;
@@ -199,22 +181,30 @@ public class AdministracionGestionPasswordView extends javax.swing.JFrame {
     /**
      * @return the fieldNuevaContraseña
      */
-    public javax.swing.JTextField getFieldNuevaContraseña() {
-        return fieldNuevaContraseña;
+    public javax.swing.JPasswordField getFieldNuevaContraseña() {
+        return fieldNuevacontraseña;
     }
 
     /**
      * @return the fieldRepetircontraseña
      */
-    public javax.swing.JTextField getFieldRepetircontraseña() {
+    public javax.swing.JPasswordField getFieldRepetircontraseña() {
         return fieldRepetircontraseña;
     }
 
     /**
      * @return the fieldContraeñaactual
      */
-    public javax.swing.JTextField getFieldContraeñaactual() {
+    public javax.swing.JPasswordField getFieldContraeñaactual() {
         return fieldContraeñaactual;
+    }
+
+    public javax.swing.JLabel getLblIncorrecto() {
+        return lblIncorrecto;
+    }
+
+    public javax.swing.JLabel getLblNocoincide() {
+        return lblNocoincide;
     }
 
     /**

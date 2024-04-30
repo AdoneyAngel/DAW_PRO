@@ -3,22 +3,22 @@
 
 package controller.administracion;
 
+import model.administracion.acceso.UsuariosModel;
 import controller.InicioController;
 import view.administracion.acceso.AdministracionInicioSesionView;
+import model.administracion.acceso.UsuariosModel;
 
 
 // González Olivares Brandon - Tejera Santana Adoney
 
 public class PassAdministracionController {
     private AdministracionInicioSesionView view;
-    public  String usuario = "admin";
-    public  String contraseña = "1234";
+    private UsuariosModel model;
     
     public PassAdministracionController() {
+        this.model = new UsuariosModel();
         this.generarVentana();
     }
-
-    
     
     public void generarVentana() {
         this.view = new AdministracionInicioSesionView();
@@ -69,10 +69,8 @@ public class PassAdministracionController {
     }
     
     private boolean validar(String usuario, String contraseña) {
-        if (this.usuario.equals(usuario) && this.contraseña.equals(contraseña)) {
-            return true;
-        }
+        boolean validado = this.model.iniciarSesion(usuario, contraseña);
         
-        return false;
+        return validado;
     }
 }

@@ -4,6 +4,7 @@
 package controller.administracion;
 import controller.administracion.PassAdministracionController;
 import controller.administracion.MenuAdministracionController;
+import model.administracion.acceso.UsuariosModel;
 import view.administracion.acceso.AdministracionGestionPasswordView;
 /**
  *
@@ -11,8 +12,11 @@ import view.administracion.acceso.AdministracionGestionPasswordView;
  */
 public class CambiarPassAdministracionController {
     private static AdministracionGestionPasswordView view =null;
-    public static void main(String[] args) {
-       GenerarVentana();
+    private static UsuariosModel model;
+    
+    public CambiarPassAdministracionController(){
+        this.model = new UsuariosModel();
+        GenerarVentana();
     }
     
     public static void GenerarVentana(){
@@ -30,16 +34,49 @@ public class CambiarPassAdministracionController {
         });
         view.getbtnAceptar().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PassAdministracionController passAdministracionController = new PassAdministracionController();
-                DestruirVentana();
+                if (cambiarContraseña()) {
+                    PassAdministracionController passAdministracionController = new PassAdministracionController();
+                    DestruirVentana();
+                }
             }
         });
         
+        ocultarLbl();
+        
     }
+    
     public static void DestruirVentana(){
         view.dispose();
     }
-    public CambiarPassAdministracionController(){
-        GenerarVentana();
+    
+    private static void ocultarLbl() {
+        view.getLblIncorrecto().setVisible(false);
+        view.getLblNocoincide().setVisible(false);
+    }
+    
+    private static boolean cambiarContraseña() {
+        String usuario = "admin";
+        
+        String contraseñaActual = view.getFieldContraeñaactual().getText().toString();
+        String contraseñaNueva = view.getFieldNuevaContraseña().getText().toString();
+        String contraseñaRepetida = view.getFieldRepetircontraseña().getText().toString();
+        
+        if (model.iniciarSesion(usuario, contraseñaActual)) {
+            if (contraseñaNueva.equals(contraseñaRepetida)) {
+                String[] usuarioOriginal = model.buscarUsuario(usuario);
+                
+                model.cambiarContraseñaPorNombre(usuario, contraseñaActual, contraseñaNueva);
+                
+                return true;
+                
+            } else {
+                view.getLblNocoincide().setVisible(true); 
+            }
+            
+        } else {
+            view.getLblIncorrecto().setVisible(true);
+        }
+        
+        return false;
     }
 }
