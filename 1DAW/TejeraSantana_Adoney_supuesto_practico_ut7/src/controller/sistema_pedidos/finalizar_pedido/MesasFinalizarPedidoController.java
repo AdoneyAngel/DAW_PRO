@@ -32,6 +32,8 @@ public class MesasFinalizarPedidoController {
         
         this.view = new PedidosMesasView(nombreMesas);
         
+        this.ocultarLbl();
+        
         this.view.getBtnAtras().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 new MenuSistemaPedidosController();
@@ -54,6 +56,10 @@ public class MesasFinalizarPedidoController {
                     destruirVentana();
                 }
             });
+        }
+        
+        if (nombreMesas.length == 0) {
+            this.view.getLblNoMesas().setVisible(true);
         }
         
         this.view.setVisible(true);
@@ -93,5 +99,9 @@ public class MesasFinalizarPedidoController {
         }
         
         return nombres;
+    }
+    
+    private void ocultarLbl() {
+        this.view.getLblNoMesas().setVisible(false);
     }
 }
