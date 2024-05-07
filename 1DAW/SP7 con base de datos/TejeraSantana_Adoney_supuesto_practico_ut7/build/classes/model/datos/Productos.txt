@@ -1,0 +1,6 @@
+
+0#CocaCola#0,75#0
+1#Fanta#0,80#0
+2#Bocadillo de pescado#1,2#1
+3#PruebaMod#2.0#3
+4#Paella#13.0#2
