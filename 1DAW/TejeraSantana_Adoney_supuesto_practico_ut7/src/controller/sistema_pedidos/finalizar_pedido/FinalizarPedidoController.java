@@ -207,6 +207,7 @@ public class FinalizarPedidoController {
     
     public void DestruirVentana(){
         this.view.dispose();
+        new MenuSistemaPedidosController();
     }
     
     private void ocultarLbl() {
