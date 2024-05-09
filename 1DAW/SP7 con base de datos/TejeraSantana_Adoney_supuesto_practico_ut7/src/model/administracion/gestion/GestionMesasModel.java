@@ -4,18 +4,13 @@
 
 package model.administracion.gestion;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import model.BaseDatosConexionServicio;
 
 /**
  *
@@ -23,112 +18,69 @@ import javax.swing.table.DefaultTableModel;
  */
 public class GestionMesasModel {
     private List<String[]> mesas;
-    private String rutaMesass;
+    private BaseDatosConexionServicio db;
     
     public GestionMesasModel() {
+        this.db = new BaseDatosConexionServicio();
+        
         this.mesas = new ArrayList();
         
-        this.cargarRutaMesas();
         this.cargarDatosMesas();
         
     }
     
     public void insertarMesa(int id, String nombre) {
-        String nuevaMesa = String.valueOf(id) + "#" + nombre;
+        this.db.abrirConexion();
         
-        BufferedWriter mesasWriter = null;
+        Statement statement = null;
         
         try {
-            File archivoMesas = new File(this.rutaMesass);
-            mesasWriter = new BufferedWriter(new FileWriter(archivoMesas, true));
+            statement = this.db.getConnection().createStatement();
+            statement.executeUpdate("INSERT INTO "+this.db.getDbname()+".mesa VALUES ("+String.valueOf(id)+", '"+nombre+"')");
             
-            mesasWriter.newLine();
-            mesasWriter.write(nuevaMesa);
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al insertar mesa: " + e.getMessage());
             
         } finally {
-            try {
-                mesasWriter.close();
-                this.cargarDatosMesas();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cerrar archivo al insertar mesa: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
+            this.cargarDatosMesas();
         }
     }
     
     public void borrarMesa(int id) {
-        BufferedWriter mesasWriter = null;
+        this.db.abrirConexion();
+        
+        Statement statement = null;
         
         try {
-            File archivoMesas = new File(this.rutaMesass);
-            mesasWriter = new BufferedWriter(new FileWriter(archivoMesas));
-            mesasWriter.close();
+            statement = this.db.getConnection().createStatement();
+            statement.executeUpdate("DELETE FROM "+this.db.getDbname()+".mesa WHERE id="+String.valueOf(id));
             
-            mesasWriter = new BufferedWriter(new FileWriter(archivoMesas, true));
-            
-            for (String[] mesaActual : this.mesas) {
-                if (Integer.parseInt(mesaActual[0]) != id) {
-                    String nuevaMesa = mesaActual[0] + "#" + mesaActual[1];
-                    
-                    mesasWriter.newLine();
-                    mesasWriter.write(nuevaMesa);                    
-                }
-            }
-            
-        } catch (IOException e) {
-            System.out.println("ERROR al insertar mesa: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("ERROR al eliminar mesa: " + e.getMessage());
             
         } finally {
-            try {
-                mesasWriter.close();
-                this.cargarDatosMesas();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cerrar archivo al insertar mesa: " + e.getMessage());
-            }
+            this.db.abrirConexion();
+            this.cargarDatosMesas();
         }
         
     }
     
     public void actualizarMesa(int id, String nombre) {
-        BufferedWriter mesasWriter = null;
-
+        this.db.abrirConexion();
+        
+        Statement statement = null;
+        
         try {
-            File archivoMesas = new File(this.rutaMesass);
-            mesasWriter = new BufferedWriter(new FileWriter(archivoMesas));
-            mesasWriter.close();
-
-            mesasWriter = new BufferedWriter(new FileWriter(archivoMesas, true));
-
-            for (String[] mesaActual : this.mesas) {
-                if (Integer.parseInt(mesaActual[0]) != id) {
-                    String nuevaMesa = mesaActual[0] + "#" + mesaActual[1];
-
-                    mesasWriter.newLine();
-                    mesasWriter.write(nuevaMesa);
-                    
-                } else {
-                    String nuevaMesa = mesaActual[0] + "#" + nombre;
-
-                    mesasWriter.newLine();
-                    mesasWriter.write(nuevaMesa);
-                }
-            }
-
-        } catch (IOException e) {
-            System.out.println("ERROR al insertar mesa: " + e.getMessage());
+            statement = this.db.getConnection().createStatement();
+            statement.executeUpdate("UPDATE "+this.db.getDbname()+".mesa SET nombre='"+nombre+"' WHERE id="+String.valueOf(id));
+            
+        } catch (SQLException e) {
+            System.out.println("ERROR al borrar mesa: " + e.getMessage());
 
         } finally {
-            try {
-                mesasWriter.close();
-                this.cargarDatosMesas();
-
-            } catch (IOException e) {
-                System.out.println("ERROR al cerrar archivo al insertar mesa: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
+            this.cargarDatosMesas();
         }
     }
     
@@ -154,76 +106,31 @@ public class GestionMesasModel {
         return this.mesas;
     }
     
-    private void cargarRutaMesas() {
-        Properties properties = new Properties();
-        InputStream inputStream = null;
-        
-        try {            
-            String path = "";
-
-            File archivo = new File(System.getProperty("user.dir") + "\\src\\model\\datos\\rutas.properties");
-            
-            if (!archivo.exists()) {
-                archivo.createNewFile();
-            }
-            
-            inputStream = new FileInputStream(archivo);
-            
-            properties.load(inputStream);
-            
-            path = System.getProperty("user.dir") + properties.getProperty("path_mesas");
-            
-            File archivoMesas = new File(path);
-            
-            if (!archivoMesas.exists()) {
-                archivoMesas.createNewFile();
-            }
-            
-            this.rutaMesass = path;
-            
-        } catch (IOException e) {
-            System.out.println("Error al cargar ruta de rutas.properties");
-            
-        } finally {
-            try {
-                inputStream.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR: " + e.getMessage());
-                        
-            }
-        }
-    }
-    
     private void cargarDatosMesas() {
-            BufferedReader mesasReader = null;
+        this.mesas = new ArrayList();
+        this.db.abrirConexion();
+        
+        Statement statement = null;
+        ResultSet resultset = null;
+        
         try {
-            File archivo = new File(this.rutaMesass);
-            mesasReader = new BufferedReader(new FileReader(archivo));
+            statement = this.db.getConnection().createStatement();
+            resultset = statement.executeQuery("SELECT * FROM "+this.db.getDbname()+".mesa ORDER BY id");
             
-            String fila;
-            
-            List<String[]> mesas = new ArrayList();
-            
-            while ((fila = mesasReader.readLine()) != null) {
-                if (!fila.isBlank()) {
-                    String[] rowData = fila.split("#");
-                    mesas.add(rowData);                    
-                }
+            while (resultset.next()) {
+                String[] mesaActual = {
+                    resultset.getString("id"),
+                    resultset.getString("nombre")
+                };
+                
+                this.mesas.add(mesaActual);
             }
             
-            this.mesas = mesas;
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al cargar mesas: " + e.getMessage());
             
         } finally {
-            try {
-                mesasReader.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cargar mesas: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     

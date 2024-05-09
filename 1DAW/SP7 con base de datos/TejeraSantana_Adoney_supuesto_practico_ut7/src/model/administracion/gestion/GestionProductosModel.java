@@ -4,22 +4,17 @@
 
 package model.administracion.gestion;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import model.BaseDatosConexionServicio;
 
 /**
  *
@@ -28,19 +23,14 @@ import javax.swing.table.TableModel;
 public class GestionProductosModel {
     private GestionCategoriasModel categoriasModel;
     private ArrayList<String[]> productos;
-    private String rutaProductos;
+    private BaseDatosConexionServicio db;
 
     public GestionProductosModel() {
+        this.db = new BaseDatosConexionServicio();
+        
         this.categoriasModel = new GestionCategoriasModel();
         this.productos = new ArrayList<>();
         
-        /*//GENERANDO PRODUCTOS DE PRUEBA
-        for (int a = 0; a<10; a++) {
-            this.insertarProducto(a, ("Producto" + String.valueOf(a)), a*1.5, a);
-        }*/
-        //-----------------------------
-        
-        this.cargarRutaProductos();
         this.cargarDatos();
     }
     
@@ -97,37 +87,20 @@ public class GestionProductosModel {
     public void insertarProducto(int id, String nombre, double precio, int idCategoria) {
         
         if (!existeNombreProducto(nombre)) {
-             String[] nuevoProducto = {
-                String.valueOf(id),
-                nombre,
-                String.valueOf(precio),
-                 String.valueOf(idCategoria)
-            };
+            this.db.abrirConexion();
             
-            //this.productos.add(nuevoProducto);
-            
-            BufferedWriter productosWriter = null;
+            Statement statement = null;
             
             try {
-                String rowData = nuevoProducto[0] + "#" + nuevoProducto[1] + "#" + nuevoProducto[2] + "#" + nuevoProducto[3];
+                statement = this.db.getConnection().createStatement();
+                statement.executeUpdate("INSERT INTO "+this.db.getDbname()+".producto VALUES ("+String.valueOf(id)+", '"+nombre+"', "+String.valueOf(precio)+", "+String.valueOf(idCategoria)+")");
                 
-                File archivoProductos = new File(this.rutaProductos);
-                productosWriter = new BufferedWriter(new FileWriter(archivoProductos, true));
-                
-                productosWriter.newLine();
-                productosWriter.write(rowData);
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al insrtar producto: " + e.getMessage());
+            } catch (SQLException e) {
+                System.out.println("ERROR AL INSERTAR PRODUCTO: " + e.getMessage());
                 
             } finally {
-                try {
-                    productosWriter.close();
-                    this.cargarDatos();
-                    
-                } catch (IOException e) {
-                    System.out.println("ERROR al inserar producto: " + e.getMessage());
-                }
+                this.db.cerrarConexion();
+                this.cargarDatos();
             }
         }
         
@@ -135,91 +108,40 @@ public class GestionProductosModel {
     
     public void actualizarProducto(int id, String nombre, double precio, int idCategoria) {
         if (existeIdProducto(id)) {
-            String[] producto = this.getProductoPorId(id);
-            //int productoIndex = this.productos.indexOf(producto);
+            this.db.abrirConexion();
             
-            producto[1] = nombre;
-            producto[2] = String.valueOf(precio);
-            producto[3] = String.valueOf(idCategoria);
-            
-            //this.productos.set(productoIndex, producto);
-            
-            BufferedWriter productosWriter = null;
+            Statement statement = null;
             
             try {
-                File archivoProductos = new File(this.rutaProductos);
-                //se crea 2 flujos, uno limpia los datos y el otro los introduce
-                productosWriter = new BufferedWriter(new FileWriter(archivoProductos));
-                productosWriter.close();
+                statement = this.db.getConnection().createStatement();
+                statement.executeUpdate("UPDATE "+this.db.getDbname()+".producto SET nombre='"+nombre+"', precio="+String.valueOf(precio)+", id_categoria="+String.valueOf(idCategoria)+" WHERE id="+String.valueOf(id));
                 
-                productosWriter = new BufferedWriter(new FileWriter(archivoProductos, true));
-                
-                for (String[] productoActual : this.productos) {
-                    productosWriter.newLine();
-                    
-                    if (Integer.parseInt(productoActual[0]) != id) {
-                        String rowData = productoActual[0] + "#" + productoActual[1] + "#" + productoActual[2] + "#" + productoActual[3];
-                        productosWriter.write(rowData);
-                        
-                    } else {
-                        String rowData = productoActual[0] + "#" + nombre + "#" + precio + "#" + idCategoria;
-                        productosWriter.write(rowData);
-                    }
-                }
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al actualizar producto: " + e.getMessage());
+            } catch (SQLException e) {
+                System.out.println("ERROR AL ACTUALIZAR PRODUCTO: " + e.getLocalizedMessage());
                 
             } finally {
-                try {
-                    productosWriter.close();
-                    this.cargarDatos();
-                    
-                } catch (IOException e) {
-                    System.out.println("ERROR al actualizar producto: " + e.getMessage());
-                }
+                this.db.cerrarConexion();
+                this.cargarDatos();
             }
         }
     }
     
     public void eliminarProducto(int id) {
         if (existeIdProducto(id)) {
-            /*String[] producto = this.getProductoPorId(id);
+            this.db.abrirConexion();
             
-            this.productos.remove(producto);*/
-            
-            BufferedWriter productosWriter = null;
+            Statement statement = null;
             
             try {
-                File archivoProductos = new File(this.rutaProductos);
+                statement = this.db.getConnection().createStatement();
+                statement.executeUpdate("DELETE FROM "+this.db.getDbname()+".producto WHERE id="+String.valueOf(id));
                 
-                //Se abre 2 flujos, uno vaciará el archivo y el siguiente añadirá la información
-                productosWriter = new BufferedWriter(new FileWriter(archivoProductos));
-                productosWriter.close();
-                
-                productosWriter = new BufferedWriter(new FileWriter(archivoProductos, true));
-                
-                for (String[] productoActual : this.productos) {
-                    if (Integer.parseInt(productoActual[0]) != id) {
-                        String rowData = productoActual[0] + "#" + productoActual[1] + "#" + productoActual[2] + "#" + productoActual[3];
-                        
-                        productosWriter.newLine();
-                        productosWriter.write(rowData);
-                    }
-                }
-                
-                
-            } catch (IOException e) {
+            } catch (SQLException e) {
                 System.out.println("ERROR al eliminar producto: " + e.getMessage());
                 
             }finally {
-                try {
-                    productosWriter.close();
-                    this.cargarDatos();
-                    
-                } catch (IOException e) {
-                    System.out.println("ERROR al eliminar producto: " + e.getMessage());
-                }
+                this.db.cerrarConexion();
+                this.cargarDatos();
             }
         }
     }
@@ -234,67 +156,33 @@ public class GestionProductosModel {
         return this.productos;
     }
     
-    private void cargarRutaProductos() {
-        InputStream fileInputStream = null;
-        Properties properties = new Properties();
-        
-        try {
-            File archivoProperties = new File(System.getProperty("user.dir") + "\\src\\model\\datos\\rutas.properties");
-            fileInputStream = new FileInputStream(archivoProperties);
-            
-            properties.load(fileInputStream);
-            
-            String rutaProductos = System.getProperty("user.dir") + properties.getProperty("path_productos");
-            
-            this.rutaProductos = rutaProductos;
-            
-            fileInputStream.close();
-            
-        } catch (IOException e) {
-            System.out.println("ERROR al cargar la ruga de productos: " + e.getMessage());
-            
-        } finally {
-            try {
-                fileInputStream.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cargar ruta productos: " + e.getMessage());
-                        
-            }
-        }
-    }
-    
     private void cargarDatos() {
-        ArrayList<String[]> productos = new ArrayList();
-        BufferedReader productosReader = null;
+        this.productos = new ArrayList();
+        this.db.abrirConexion();
+        
+        Statement statement = null;
+        ResultSet resultset = null;
         
         try {
-            File archivoProductos = new File(this.rutaProductos);
+            statement = this.db.getConnection().createStatement();
+            resultset = statement.executeQuery("SELECT * FROM "+this.db.getDbname()+".producto ORDER BY id");
             
-            productosReader = new BufferedReader(new FileReader(archivoProductos));
-            
-            String fila = "";
-            
-            while ((fila = productosReader.readLine()) != null) {
-                if (!fila.isEmpty()) {
-                    String[] rowData = fila.split("#");
-                    productos.add(rowData);                    
-                }
+            while (resultset.next()) {
+                String[] productoActual = {
+                    resultset.getString("id"),
+                    resultset.getString("nombre"),
+                    resultset.getString("precio"),
+                    resultset.getString("id_categoria")
+                };
+                
+                this.productos.add(productoActual);
             }
             
-            this.productos = productos;
-            
-            
-        } catch (IOException e) {
-            System.out.println("ERROR al cargar datos: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("ERROR AL CARGAR LOS PRODUCTOS: " + e.getMessage());
             
         } finally {
-            try {
-                productosReader.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cargar datos: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     
@@ -357,43 +245,6 @@ public class GestionProductosModel {
                 return nombreCategoria;
             }
             
-        }
-        
-        return null;
-    }
-    
-    private String[] getProductoPorId(int id) {
-        Iterator<String[]> productosIt = this.productos.iterator();
-        
-        if (!existeIdProducto(id)) {
-            return null;
-        }
-        
-        while (productosIt.hasNext()) {
-            String[] productoActual = productosIt.next();
-            
-            if (productoActual[0].equals(String.valueOf(id))) {
-                return productoActual;
-            }
-        }
-        
-        return null;
-        
-    }
-    
-    private String[] getProductoPorNombre(String nombre) {
-        Iterator<String[]> productosIt = this.productos.iterator();
-        
-        if (!existeNombreProducto(nombre)) {
-            return null;
-        }
-        
-        while (productosIt.hasNext()) {
-            String[] productoActual = productosIt.next();
-            
-            if (productoActual[1].equals(nombre)) {
-                return productoActual;
-            }
         }
         
         return null;
