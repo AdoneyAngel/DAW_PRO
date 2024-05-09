@@ -80,7 +80,7 @@ public class AdministracionMesasView extends javax.swing.JFrame {
     public JLabel getLblNoEditar() {
         return this.lblNoeditar;
     }
-
+    
     /**
      * Creates new form AdministracionMesasView
      */

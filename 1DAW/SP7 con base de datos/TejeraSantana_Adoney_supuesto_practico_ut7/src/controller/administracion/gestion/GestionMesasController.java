@@ -4,6 +4,7 @@ package controller.administracion.gestion;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import controller.administracion.MenuAdministracionController;
+import java.awt.event.MouseEvent;
 import java.util.Objects;
 import model.administracion.gestion.GestionMesasModel;
 
@@ -63,6 +64,13 @@ public class GestionMesasController {
                 editarMesa(nombre);
             }
         });
+
+        view.getTable().addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent evt) {
+                    actualizarMesaSeleccionada();
+                }
+            });
         
         view.getTable().setModel(this.model.getModelMesas());
 
@@ -78,6 +86,12 @@ public class GestionMesasController {
 
     public void destruirVentana() {
         view.dispose();
+    }
+    
+    private void actualizarMesaSeleccionada() {
+        String[] mesaSeleccionada = this.mesaSeleccionada();
+        
+       this.view.getEditarField().setText(mesaSeleccionada[1]);
     }
     
     private void insertarMesa (String nombre) {
@@ -147,6 +161,16 @@ public class GestionMesasController {
         } else {
             this.view.getLblSeleccion().setVisible(true);
         }
+    }
+    
+    private String[] mesaSeleccionada () {
+        int seleccionIndex = this.view.getTable().getSelectedRow();
+        String id = this.view.getTable().getValueAt(seleccionIndex, 0).toString();
+        String nombre = this.view.getTable().getValueAt(seleccionIndex, 1).toString();
+        
+        String[] mesa = {id, nombre};
+        
+        return mesa;
     }
     
     private void ocultarLbl() {
