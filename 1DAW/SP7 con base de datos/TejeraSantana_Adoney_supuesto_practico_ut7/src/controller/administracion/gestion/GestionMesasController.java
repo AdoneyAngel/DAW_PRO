@@ -51,7 +51,7 @@ public class GestionMesasController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombreMesa = view.getCrearField().getText();
-                
+                view.getCrearField().setText("");
                 insertarMesa(nombreMesa);
             }
         });
@@ -60,7 +60,7 @@ public class GestionMesasController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String nombre = view.getEditarField().getText();
-                
+                view.getEditarField().setText("");
                 editarMesa(nombre);
             }
         });
