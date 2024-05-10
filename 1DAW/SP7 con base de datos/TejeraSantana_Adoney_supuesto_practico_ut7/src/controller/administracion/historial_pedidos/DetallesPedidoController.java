@@ -40,7 +40,7 @@ public class DetallesPedidoController {
         this.view.getLblFinalizado().setText(enCurso ? "No" : "Si");
         this.view.getLblFecha().setText(fecha);
         this.view.getLblMesa().setText(mesa);
-        this.view.getLblPrecio().setText(String.valueOf(precio));
+        this.view.getLblPrecio().setText(String.valueOf(precio) + " €");
         
         //Métodos
         this.view.getBtnAtras().addActionListener(new java.awt.event.ActionListener() {

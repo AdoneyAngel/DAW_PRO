@@ -4,18 +4,9 @@
 
 package model.sistema_pedidos;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Properties;
 import javax.swing.table.DefaultTableModel;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -227,9 +218,14 @@ public class AddProductosModel {
     }
     
     public void insertarComandaProducto(int idComanda, int idProducto, int cantidad) {
+        this.cargarDatosComandas();
+        this.cargarDatosPedidos();
+        
         this.db.abrirConexion();
         
         Statement statement = null;
+        
+        String[] pedidoOriginal = this.obtenerPedidoDeComanda(idComanda);
         
         try {
             statement = this.db.getConnection().createStatement();
@@ -240,6 +236,7 @@ public class AddProductosModel {
             
         } finally {
             this.db.cerrarConexion();
+            this.recalcularPrecioPedido(Integer.parseInt(pedidoOriginal[0]));
         }
     }
     
@@ -254,7 +251,7 @@ public class AddProductosModel {
            if (pedidoActual[0].equals(String.valueOf(idPedido))) {
                pedidoActual[3] = String.valueOf(precio);
                
-               this.getPedidos().set(index, pedidoActual);
+               this.pedidos.set(index, pedidoActual);
            }
            
            index++;
@@ -262,10 +259,14 @@ public class AddProductosModel {
     }
     
     //----------------------Métodos implementados
-    private int[] obtenerComanda(int idComanda) {
+    
+    private String[] obtenerPedidoDeComanda(int idComanda) {
+        
         for (int[] comandaActual : this.comandas) {
             if (comandaActual[0] == idComanda) {
-                return comandaActual;
+                String[] pedido = this.obtenerPedido(comandaActual[1]);
+                
+                return pedido;
             }
         }
         
@@ -273,10 +274,11 @@ public class AddProductosModel {
     }
     
     private void recalcularPrecioPedido(int idPedido) {
-        String[] pedidoOriginal = this.obtenerPedido(idPedido);
-        
-        this.cargarDatosComandas();
         this.cargarDatosComandaProductos();
+        this.cargarDatosPedidos();
+        this.cargarDatosComandas();
+        
+        String[] pedidoOriginal = this.obtenerPedido(idPedido);
         
         double precioTotal = 0;
         
@@ -294,10 +296,7 @@ public class AddProductosModel {
         }
         
         //Se actualizan los datos del pedido
-        this.actualizarPedido(idPedido, precioTotal, Integer.parseInt(pedidoOriginal[2]), pedidoOriginal[3], Integer.parseInt(pedidoOriginal[4]));
-        
-        //Se vuelve a cargar los datos
-        this.cargarDatosPedidos();
+        this.actualizarPedido(idPedido, precioTotal, pedidoOriginal[2], pedidoOriginal[3], Integer.parseInt(pedidoOriginal[4]));
     }
     
     private String[] obtenerPedido(int idPedido) {
@@ -310,14 +309,14 @@ public class AddProductosModel {
         return null;
     }
     
-    private void actualizarPedido(int idPedido, double precio, int enCurso, String fecha, int idMesa) {
+    private void actualizarPedido(int idPedido, double precio, String enCurso, String fecha, int idMesa) {
         this.db.abrirConexion();
         
         Statement statement = null;
         
         try {
             statement = this.db.getConnection().createStatement();
-            statement.executeUpdate("UDPATE "+this.db.getDbname()+".pedido SET precio="+precio+", enCurso='"+enCurso+"', fecha='"+fecha+"', id_mesa="+idMesa+" WHERE id="+idPedido);
+            statement.executeUpdate("UPDATE "+this.db.getDbname()+".pedido SET precio="+precio+", en_curso='"+enCurso+"', fecha='"+fecha+"', id_mesa="+idMesa+" WHERE id="+idPedido);
             
         } catch (SQLException e) {
             System.out.println("ERROR al actualizar pedido: " + e.getMessage());
@@ -350,6 +349,7 @@ public class AddProductosModel {
     }
     
     private void cargarDatosComandas() {
+        this.comandas = new ArrayList();
         this.db.abrirConexion();
         
         Statement statement = null;
@@ -377,6 +377,7 @@ public class AddProductosModel {
     }
     
     private void cargarDatosPedidos() {
+        this.pedidos = new ArrayList();
         this.db.abrirConexion();
         
         Statement statement = null;
@@ -407,6 +408,7 @@ public class AddProductosModel {
     }
     
     private void cargarDatosProductos() {
+        this.productos = new ArrayList();
         this.db.abrirConexion();
         
         Statement statement = null;
@@ -436,6 +438,7 @@ public class AddProductosModel {
     }
     
     private void cargarDatosCategorias() {
+        this.categorias = new ArrayList();
         this.db.abrirConexion();
         
         Statement statement = null;
@@ -463,6 +466,7 @@ public class AddProductosModel {
     }
     
     private void cargarDatosComandaProductos() {
+        this.comandaProductos = new ArrayList();
         this.db.abrirConexion();
         
         Statement statement = null;
