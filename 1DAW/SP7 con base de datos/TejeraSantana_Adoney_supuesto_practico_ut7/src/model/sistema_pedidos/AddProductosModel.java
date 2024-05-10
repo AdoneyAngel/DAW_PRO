@@ -17,6 +17,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
 import javax.swing.table.DefaultTableModel;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import model.BaseDatosConexionServicio;
 
 /**
  *
@@ -37,13 +41,11 @@ public class AddProductosModel {
     private List<String[]> pedidoProductos;
     private List<int[]> comandas;
     private List<int[]> comandaProductos;
-    private String rutaComanda;
-    private String rutaComandaProductos;
-    private String rutaPedidos;
-    private String rutaProductos;
-    private String rutaCategorias;
+    private BaseDatosConexionServicio db;
     
     public AddProductosModel() {
+        this.db = new BaseDatosConexionServicio();
+        
         this.productos = new ArrayList();
         this.pedidos = new ArrayList();
         this.categorias = new ArrayList();
@@ -51,7 +53,6 @@ public class AddProductosModel {
         this.comandaProductos = new ArrayList();
         this.pedidoProductos = new ArrayList();
         
-        this.cargarRutas();
         this.cargarDatosComandas();
         this.cargarDatosComandaProductos();
         this.cargarDatosPedidos();
@@ -191,102 +192,54 @@ public class AddProductosModel {
     }
     
     public void insertarPedido(int id, double precio, String fecha, int idMesa) {
-        String idStr = String.valueOf(id);
-        String precioStr = String.valueOf(precio);
-        String idMesaStr = String.valueOf(idMesa);
+        this.db.abrirConexion();
         
-        String[] nuevoPedido = {idStr, precioStr, fecha, idMesaStr};
-        
-        //this.getPedidos().add(nuevoPedido);
-        
-        BufferedWriter pedidosWriter = null;
+        Statement statement = null;
         
         try {
-            File archivoPedido = new File(this.rutaPedidos);
-            pedidosWriter = new BufferedWriter(new FileWriter(archivoPedido, true));
+            statement = this.db.getConnection().createStatement();
+            statement.executeUpdate("INSERT INTO "+this.db.getDbname()+".pedido VALUES ("+id+", "+precio+", 'true', CURDATE(), "+idMesa+")");
             
-            String rowData = nuevoPedido[0] + "#" + nuevoPedido[1] + "#1#" + nuevoPedido[2] + "#" + nuevoPedido[3];
-            
-            pedidosWriter.newLine();
-            pedidosWriter.write(rowData);
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al insertar pedido: " + e.getMessage());
             
         } finally {
-            try {
-                pedidosWriter.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al insertar pedido: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     
     public void insertarComanda(int id, int idPedido) {
+        this.db.abrirConexion();
         
-        int[] nuevaComanda = {id, idPedido};
-        
-        //this.getComandas().add(nuevaComanda);
-
-        BufferedWriter comandasWriter = null;
+        Statement statement = null;
         
         try {
-            File archivoComanda = new File(this.rutaComanda);
-            comandasWriter = new BufferedWriter(new FileWriter(archivoComanda, true));
+            statement = this.db.getConnection().createStatement();
+            statement.executeUpdate("INSERT INTO "+this.db.getDbname()+".comanda VALUES ("+id+", "+idPedido+")");
             
-            String rowData = nuevaComanda[0] + "#" + nuevaComanda[1];
-            
-            comandasWriter.newLine();
-            comandasWriter.write(rowData);
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al insertar comanda: " + e.getMessage());
             
         } finally {
-            try {
-                comandasWriter.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al insertar comanda: " + e.getMessage());
-            }
-        }        
+            this.db.cerrarConexion();
+        }   
         
     }
     
     public void insertarComandaProducto(int idComanda, int idProducto, int cantidad) {
-        /*int[] nuevoComandaProducto = {idComanda, idProducto, cantidad};
+        this.db.abrirConexion();
         
-        this.getComandaProductos().add(nuevoComandaProducto);*/
-        
-        BufferedWriter comandaProductoWriter = null;
+        Statement statement = null;
         
         try {
-            File archivoComandaProducto = new File(this.rutaComandaProductos);
-            comandaProductoWriter = new BufferedWriter(new FileWriter(archivoComandaProducto, true));
+            statement = this.db.getConnection().createStatement();
+            statement.executeUpdate("INSERT INTO "+this.db.getDbname()+".comanda_producto VALUES ("+idComanda+", "+idProducto+", "+cantidad+")");
             
-            String rowData = String.valueOf(idComanda) + "#" + String.valueOf(idProducto) + "#" + String.valueOf(cantidad);
-            
-            comandaProductoWriter.newLine();
-            comandaProductoWriter.write(rowData);
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al insertar producto de comanda: " + e.getMessage());
             
         } finally {
-            try {
-                comandaProductoWriter.close();
-                
-                this.cargarDatosComandas();
-                this.cargarDatosPedidos();
-                
-                int[] comandaOriginal = this.obtenerComanda(idComanda);
-                
-                this.recalcularPrecioPedido(comandaOriginal[1]);
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al insertar producto de comanda: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     
@@ -358,48 +311,19 @@ public class AddProductosModel {
     }
     
     private void actualizarPedido(int idPedido, double precio, int enCurso, String fecha, int idMesa) {
-        BufferedWriter pedidoWriter = null;
-        this.cargarDatosPedidos();
+        this.db.abrirConexion();
+        
+        Statement statement = null;
         
         try {
-            File archivoPedidos = new File(this.rutaPedidos);
+            statement = this.db.getConnection().createStatement();
+            statement.executeUpdate("UDPATE "+this.db.getDbname()+".pedido SET precio="+precio+", enCurso='"+enCurso+"', fecha='"+fecha+"', id_mesa="+idMesa+" WHERE id="+idPedido);
             
-            pedidoWriter = new BufferedWriter(new FileWriter(archivoPedidos));
-            pedidoWriter.close();
-            
-            pedidoWriter = new BufferedWriter(new FileWriter(archivoPedidos, true));
-            
-            String linea = "";
-            
-            for (String[] pedidoActual : this.pedidos) {
-                pedidoWriter.newLine();
-                
-                if (Integer.parseInt(pedidoActual[0]) != idPedido) {
-                    String rowData = pedidoActual[0]+"#"+pedidoActual[1]+"#"+pedidoActual[2]+"#"+pedidoActual[3]+"#"+pedidoActual[4];
-                    pedidoWriter.write(rowData);
-                
-                } else {
-                    String rowData = 
-                            String.valueOf(idPedido)
-                            +"#"+String.valueOf(precio)
-                            +"#"+String.valueOf(enCurso)
-                            +"#"+fecha
-                            +"#"+String.valueOf(idMesa);
-                    
-                    pedidoWriter.write(rowData);
-                }
-            }
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al actualizar pedido: " + e.getMessage());
             
         } finally {
-            try {
-                pedidoWriter.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cerrar archivo al actualizar pedido: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     
@@ -425,211 +349,144 @@ public class AddProductosModel {
         return comandas;
     }
     
-    private void cargarRutas() {
-        InputStream fileInputStream = null;
-        Properties properties = new Properties();
-        
-        try {
-            File archivoProperties = new File(System.getProperty("user.dir") + "\\src\\model\\datos\\rutas.properties");
-            fileInputStream = new FileInputStream(archivoProperties);
-            
-            properties.load(fileInputStream);
-            
-            String rutaComandas = System.getProperty("user.dir") + properties.getProperty("path_comandas");
-            String rutaComandaProductos = System.getProperty("user.dir") + properties.getProperty("path_comandaProductos");
-            String rutaPedidos = System.getProperty("user.dir") + properties.getProperty("path_pedidos");
-            String rutaProductos = System.getProperty("user.dir") + properties.getProperty("path_productos");
-            String rutaCategorias = System.getProperty("user.dir") + properties.getProperty("path_categorias");
-            
-            this.rutaComanda = rutaComandas;
-            this.rutaComandaProductos = rutaComandaProductos;
-            this.rutaPedidos = rutaPedidos;
-            this.rutaProductos = rutaProductos;
-            this.rutaCategorias = rutaCategorias;
-            
-            fileInputStream.close();
-            
-        } catch (IOException e) {
-            System.out.println("ERROR al cargar la ruga de comandas: " + e.getMessage());
-            
-        } finally {
-            try {
-                fileInputStream.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cargar ruta de comandas: " + e.getMessage());
-                        
-            }
-        }
-    }
-    
     private void cargarDatosComandas() {
-        List<int[]> comandas = new ArrayList();
+        this.db.abrirConexion();
         
-        BufferedReader comandasReader = null;
+        Statement statement = null;
+        ResultSet resultset = null;
         
         try {
-            File archivoComandas = new File(this.rutaComanda);
-            comandasReader = new BufferedReader(new FileReader(archivoComandas));
+            statement = this.db.getConnection().createStatement();
+            resultset = statement.executeQuery("SELECT * FROM "+this.db.getDbname()+".comanda ORDER BY id");
             
-            String fila = "";
-            
-            while ((fila = comandasReader.readLine()) != null) {
-                if (!fila.isBlank()) {
-                    String[] filaSplit = fila.split("#");
-                    int rowData[] = {Integer.parseInt(filaSplit[0]), Integer.parseInt(filaSplit[1])};
-                    comandas.add(rowData);
-                }
+            while (resultset.next()) {
+                int id = resultset.getInt("id");                
+                int idPedido = resultset.getInt("id_pedido");
+                
+                int[] comandaActual = {id, idPedido};
+
+                this.comandas.add(comandaActual);
             }
             
-            this.comandas = comandas;
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al cargar datos de comandas: " + e.getMessage());
             
         } finally {
-            try {
-                comandasReader.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cargar datos de comandas: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     
     private void cargarDatosPedidos() {
-        List<String[]> pedidos = new ArrayList();
+        this.db.abrirConexion();
         
-        BufferedReader pedidosReader = null;
+        Statement statement = null;
+        ResultSet resultset = null;
         
         try {
-            File archivoPedidos = new File(this.rutaPedidos);
-            pedidosReader = new BufferedReader(new FileReader(archivoPedidos));
+            statement = this.db.getConnection().createStatement();
+            resultset = statement.executeQuery("SELECT * FROM "+this.db.getDbname()+".pedido ORDER BY id");
             
-            String fila = "";
-            
-            while ((fila = pedidosReader.readLine()) != null) {
-                if (!fila.isBlank()) {
-                    String[] filaSplit = fila.split("#");
-                    String rowData[] = {filaSplit[0], filaSplit[1], filaSplit[2], filaSplit[3], filaSplit[4]};
-                    pedidos.add(rowData);
-                }
+            while (resultset.next()) {
+                String id = resultset.getString("id");        
+                String fecha = resultset.getString("fecha");
+                String enCurso = resultset.getString("en_curso");
+                String idMesa = resultset.getString("id_mesa");
+                String precio = resultset.getString("precio");
+                
+                String[] pedidoActual = {id, precio, enCurso, fecha, idMesa};
+
+                this.pedidos.add(pedidoActual);
             }
             
-            this.pedidos = pedidos;
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al cargar datos de pedidos: " + e.getMessage());
             
         } finally {
-            try {
-                pedidosReader.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cargar datos de pedidos: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     
     private void cargarDatosProductos() {
-        List<String[]> productos = new ArrayList();
+        this.db.abrirConexion();
         
-        BufferedReader productosReader = null;
+        Statement statement = null;
+        ResultSet resultset = null;
         
         try {
-            File archivoProductos = new File(this.rutaProductos);
-            productosReader = new BufferedReader(new FileReader(archivoProductos));
+            statement = this.db.getConnection().createStatement();
+            resultset = statement.executeQuery("SELECT * FROM "+this.db.getDbname()+".producto ORDER BY id");
             
-            String fila = "";
-            
-            while ((fila = productosReader.readLine()) != null) {
-                if (!fila.isBlank()) {
-                    String[] filaSplit = fila.split("#");
-                    String rowData[] = {filaSplit[0], filaSplit[1], filaSplit[2], filaSplit[3]};
-                    productos.add(rowData);
-                }
+            while (resultset.next()) {
+                String id = resultset.getString("id");
+                String nombre = resultset.getString("nombre");
+                String categoria = resultset.getString("id_categoria");
+                String precio = resultset.getString("precio");
+                
+                String[] productoActual = {id, nombre, precio, categoria};
+
+                this.productos.add(productoActual);
             }
             
-            this.productos = productos;
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al cargar datos de productos: " + e.getMessage());
             
         } finally {
-            try {
-                productosReader.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cargar datos de productos: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     
     private void cargarDatosCategorias() {
-        List<String[]> categorias = new ArrayList();
+        this.db.abrirConexion();
         
-        BufferedReader categoriasReader = null;
+        Statement statement = null;
+        ResultSet resultset = null;
         
         try {
-            File archivoCategorias = new File(this.rutaCategorias);
-            categoriasReader = new BufferedReader(new FileReader(archivoCategorias));
+            statement = this.db.getConnection().createStatement();
+            resultset = statement.executeQuery("SELECT * FROM "+this.db.getDbname()+".categoria ORDER BY id");
             
-            String fila = "";
-            
-            while ((fila = categoriasReader.readLine()) != null) {
-                if (!fila.isBlank()) {
-                    String[] filaSplit = fila.split("#");
-                    String rowData[] = {filaSplit[0], filaSplit[1]};
-                    categorias.add(rowData);
-                }
+            while (resultset.next()) {
+                String id = resultset.getString("id");
+                String nombre = resultset.getString("nombre");
+                
+                String[] categoriaActual = {id, nombre};
+
+                this.categorias.add(categoriaActual);
             }
             
-            this.categorias = categorias;
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al cargar datos de categorias: " + e.getMessage());
             
         } finally {
-            try {
-                categoriasReader.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cargar datos de categorias: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     
     private void cargarDatosComandaProductos() {
-        List<int[]> comandaProductos = new ArrayList();
+        this.db.abrirConexion();
         
-        BufferedReader comandasProductosReader = null;
+        Statement statement = null;
+        ResultSet resultset = null;
         
         try {
-            File archivoComandas = new File(this.rutaComandaProductos);
-            comandasProductosReader = new BufferedReader(new FileReader(archivoComandas));
+            statement = this.db.getConnection().createStatement();
+            resultset = statement.executeQuery("SELECT * FROM "+this.db.getDbname()+".comanda_producto ORDER BY id_comanda");
             
-            String fila = "";
-            
-            while ((fila = comandasProductosReader.readLine()) != null) {
-                if (!fila.isBlank()) {
-                    String[] filaSplit = fila.split("#");
-                    int rowData[] = {Integer.parseInt(filaSplit[0]), Integer.parseInt(filaSplit[1]), Integer.parseInt(filaSplit[2])};
-                    comandaProductos.add(rowData);
-                }
+            while (resultset.next()) {
+                int idComanda = resultset.getInt("id_comanda");
+                int idProducto = resultset.getInt("id_producto");
+                int cantidad = resultset.getInt("cantidad");
+                
+                int[] productoActual = {idComanda, idProducto, cantidad};
+
+                this.comandaProductos.add(productoActual);
             }
             
-            this.comandaProductos = comandaProductos;
-            
-        } catch (IOException e) {
-            System.out.println("ERROR al cargar datos de productos de comandas: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("ERROR al cargar datos de producto de comandas: " + e.getMessage());
             
         } finally {
-            try {
-                comandasProductosReader.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cargar datos de productos de comandas: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     

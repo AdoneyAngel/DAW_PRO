@@ -265,8 +265,8 @@ public class NuevoPedidoController {
         
         this.pedido[1] = String.valueOf(precioTotal);
         
-        this.productosModel.insertarComanda(comandaId, pedidoId);
         this.productosModel.insertarPedido(pedidoId, precioTotal, fecha, idMesa);
+        this.productosModel.insertarComanda(comandaId, pedidoId);
         
         for (int[] comandaProductoActual : comandaProductos) {
             this.productosModel.insertarComandaProducto(comandaProductoActual[0], comandaProductoActual[1], comandaProductoActual[2]);

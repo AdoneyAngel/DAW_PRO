@@ -4,16 +4,13 @@
 
 package model.sistema_pedidos;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-import java.io.File;
-import java.io.FileReader;
 import java.util.Objects;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import model.BaseDatosConexionServicio;
 
 /**
  *
@@ -21,38 +18,21 @@ import java.util.Objects;
  */
 public class MesasModel {
     
-    //private String[][] mesas = {{"1", "Mesa 1"}, {"2", "Mesa 2"}, {"3", "Mesa A"}, {"4", "Mesa B"}, {"5", "Mesa Calle"}};
-    //MESA: {ID, nombre}
     private List<String[]> mesas;
     private List<String[]> mesasOcupadas;
     private List<String[]> pedidos;
     private AddProductosModel productosModel;
-    private String rutaDatos;
+    private BaseDatosConexionServicio db;
     
     public MesasModel() {
+        this.db = new BaseDatosConexionServicio();
         this.mesasOcupadas = new ArrayList();
         this.mesas = new ArrayList();
         this.productosModel = new AddProductosModel();
         this.pedidos = this.productosModel.getPedidos();
         
-        this.cargarRutaMesas();
         this.cargarDatos();
         this.obtenerMesasOcupadas();
-        
-        
-        //Agregando mesas de ejemplo
-        /*
-        String[] mesa1 = {"1", "Mesa 1", "0"};
-        String[] mesa2 = {"2", "Mesa 2", "1"};
-        String[] mesa3 = {"3", "Mesa A", ""};
-        String[] mesa4 = {"4", "Mesa B", ""};
-        String[] mesa5 = {"5", "Mesa Calle", ""};
-        
-        this.mesas.add(mesa1);
-        this.mesas.add(mesa2);
-        this.mesas.add(mesa3);
-        this.mesas.add(mesa4);
-        this.mesas.add(mesa5);*/
     }
     
     public List<String[]> getMesas() {
@@ -90,80 +70,34 @@ public class MesasModel {
         this.mesasOcupadas = mesas;
     }
     
-    private void cargarRutaMesas() {
-        Properties properties = new Properties();
-        InputStream inputStream = null;
-        
-        try {            
-            String path = "";
-
-            File archivo = new File(System.getProperty("user.dir") + "\\src\\model\\datos\\rutas.properties");
-            
-            if (!archivo.exists()) {
-                archivo.createNewFile();
-            }
-            
-            inputStream = new FileInputStream(archivo);
-            
-            properties.load(inputStream);
-            
-            path = System.getProperty("user.dir") + properties.getProperty("path_mesas");
-            
-            File archivoMesas = new File(path);
-            
-            if (!archivoMesas.exists()) {
-                archivoMesas.createNewFile();
-            }
-            
-            this.rutaDatos = path;
-            
-        } catch (IOException e) {
-            System.out.println("Error al cargar ruta de rutas.properties");
-            
-        } finally {
-            try {
-                inputStream.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR: " + e.getMessage());
-                        
-            }
-        }
-    }
-    
     public List<String[]> getMesasOcupadas() {
         return this.mesasOcupadas;
     }
     
     private void cargarDatos() {
-            BufferedReader mesasReader = null;
+        this.db.abrirConexion();
+        
+        Statement statement = null;
+        ResultSet resultset = null;
+        
         try {
-            File archivo = new File(this.rutaDatos);
-            mesasReader = new BufferedReader(new FileReader(archivo));
+            statement = this.db.getConnection().createStatement();
+            resultset = statement.executeQuery("SELECT * FROM "+this.db.getDbname()+".mesa ORDER BY id");
             
-            String fila;
-            
-            List<String[]> mesas = new ArrayList();
-            
-            while ((fila = mesasReader.readLine()) != null) {
-                if (!fila.isBlank()) {
-                    String[] rowData = fila.split("#");
-                    mesas.add(rowData);                    
-                }
+            while (resultset.next()) {
+                String id = resultset.getString("id");
+                String nombre = resultset.getString("nombre");
+                
+                String[] mesaActual = {id, nombre};
+                
+                this.mesas.add(mesaActual);
             }
             
-            this.mesas = mesas;
-            
-        } catch (IOException e) {
+        } catch (SQLException e) {
             System.out.println("ERROR al cargar datos: " + e.getMessage());
             
         } finally {
-            try {
-                mesasReader.close();
-                
-            } catch (IOException e) {
-                System.out.println("ERROR al cargar datos: " + e.getMessage());
-            }
+            this.db.cerrarConexion();
         }
     }
     
@@ -179,7 +113,7 @@ public class MesasModel {
     
     private String[] ocupado(int idMesa) {
         for (String[] pedidoActual : this.pedidos) {
-            if (Integer.parseInt(pedidoActual[4]) == idMesa && Integer.parseInt(pedidoActual[2]) == 1) {
+            if (Integer.parseInt(pedidoActual[4]) == idMesa && pedidoActual[2].equals("true")) {
                 String[] mesaOriginal = obtenerMesaPorId(idMesa);
                 String[] mesaOcupada = {mesaOriginal[0], mesaOriginal[1], pedidoActual[0]};
                 

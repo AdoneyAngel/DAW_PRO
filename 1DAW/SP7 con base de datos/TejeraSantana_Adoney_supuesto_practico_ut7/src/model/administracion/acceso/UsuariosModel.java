@@ -43,7 +43,7 @@ public class UsuariosModel implements Serializable{
         
         try {
             statement = this.db.getConnection().createStatement();
-            resultset = statement.executeQuery("SELECT * FROM usuario WHERE nombre = '" + nombre + "' AND password = '" + contraseña + "'");
+            resultset = statement.executeQuery("SELECT * FROM usuario WHERE nombre = '" + nombre + "' AND password = '" + contraseña + "' AND disponible = 1");
             
             while (resultset.next()) {
                 sesionIniciada = true;
