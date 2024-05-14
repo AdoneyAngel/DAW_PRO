@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package actividades.ej1;
+package ej1;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -13,20 +13,20 @@ import java.util.Set;
  * @author AdoneyDAW
  */
 public class BlocNotas {
-    private Set<NotaAlarma> notas;
+    private Set<Nota> notas;
     
     public BlocNotas () {
         this.notas = new HashSet();
     }
-    public BlocNotas (Set<NotaAlarma> notas) {
+    public BlocNotas (Set<Nota> notas) {
         this.notas = notas;
     }
 
-    public Set<NotaAlarma> getNotas() {
+    public Set<Nota> getNotas() {
         return notas;
     }
 
-    public void setNotas(Set<NotaAlarma> notas) {
+    public void setNotas(Set<Nota> notas) {
         this.notas = notas;
     }
     
@@ -39,12 +39,12 @@ public class BlocNotas {
     }
     
     public void delNota (int index) {
-        Iterator<NotaAlarma> notasIt = this.notas.iterator();
+        Iterator<Nota> notasIt = this.notas.iterator();
         
         int whileIndex = 0;
         
         while (notasIt.hasNext()) {
-            NotaAlarma notaActual = notasIt.next();
+            Nota notaActual = notasIt.next();
             
             if (whileIndex == index) {
                 this.notas.remove(notaActual);

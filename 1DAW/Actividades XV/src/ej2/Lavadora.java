@@ -13,7 +13,8 @@ public class Lavadora extends Electrodomestico{
     private boolean aguaCaliente;
     
     public Lavadora () {
-        
+        this.precio = 0;
+        this.aguaCaliente = false;
     }
     public Lavadora (String tipo, String marca, float potencia, float precio, boolean aguaCaliente) {
         super(tipo, marca, potencia);
@@ -22,7 +23,7 @@ public class Lavadora extends Electrodomestico{
     }
     
     public String toString ()  {
-        return "Tipo: " + this.tipo + " || Marca: " + this.marca + " || Potencia " + String.valueOf(this.potencia) + " || " + String.valueOf(this.precio) + " || " + String.valueOf(this.aguaCaliente);
+        return "Tipo: " + this.tipo + " || Marca: " + this.marca + " || Potencia: " + String.valueOf(this.potencia) + " || Precio: " + String.valueOf(this.precio) + " || Agua caliente: " + String.valueOf(this.aguaCaliente);
     }
 
     public float getPrecio() {

@@ -16,7 +16,7 @@ public class Main {
         List<Legislador> legisladores = new ArrayList<>();
         
         Diputado diputado1 = new Diputado("1", "Dip1", "Aqui");
-        Diputado diputado2 = new Diputado("1", "Dip3", "Ahi");
+        Diputado diputado2 = new Diputado("1", "Dip2", "Ahi");
         Senador sen1 = new Senador("1", "Sen2", "Alli");
         
         legisladores.add(diputado1);
