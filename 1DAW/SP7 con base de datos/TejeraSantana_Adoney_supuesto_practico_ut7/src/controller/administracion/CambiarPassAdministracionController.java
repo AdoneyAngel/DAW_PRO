@@ -55,17 +55,17 @@ public class CambiarPassAdministracionController {
     }
     
     private static boolean cambiarContraseña() {
-        String usuario = "admin";
+        String userName = "admin";
         
         String contraseñaActual = view.getFieldContraeñaactual().getText().toString();
         String contraseñaNueva = view.getFieldNuevaContraseña().getText().toString();
         String contraseñaRepetida = view.getFieldRepetircontraseña().getText().toString();
         
-        if (model.iniciarSesion(usuario, contraseñaActual)) {
+        if (model.iniciarSesion(userName, contraseñaActual)) {
             if (contraseñaNueva.equals(contraseñaRepetida)) {
-                String[] usuarioOriginal = model.buscarUsuario(usuario);
+                String[] usuarioOriginal = model.buscarUsuario(userName);
                 
-                model.cambiarContraseñaPorNombre(usuario, contraseñaActual, contraseñaNueva);
+                model.cambiarContraseñaPorNombre(userName, contraseñaNueva);
                 
                 return true;
                 

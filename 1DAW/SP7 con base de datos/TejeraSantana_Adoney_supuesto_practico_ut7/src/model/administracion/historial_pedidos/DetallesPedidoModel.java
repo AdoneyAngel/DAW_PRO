@@ -4,18 +4,11 @@
 
 package model.administracion.historial_pedidos;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import javax.swing.table.DefaultTableModel;
 import model.BaseDatosConexionServicio;
 
