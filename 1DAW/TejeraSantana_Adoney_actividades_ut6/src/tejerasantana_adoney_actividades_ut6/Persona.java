@@ -8,7 +8,7 @@ package tejerasantana_adoney_actividades_ut6;
  *
  * @author Adone
  */
-public class Persona {
+public class Persona implements Imprimible{
     private String DNI;
     private String nombre;
     private String apellidos;
@@ -42,6 +42,10 @@ public class Persona {
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
     }
-    
+
+    @Override
+    public String devolverInfoString() {
+        return (this.nombre + " " + this.apellidos + " ("+this.DNI+")");
+    }
     
 }

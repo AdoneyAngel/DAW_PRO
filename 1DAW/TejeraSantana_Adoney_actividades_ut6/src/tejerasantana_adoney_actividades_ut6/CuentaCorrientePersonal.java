@@ -4,8 +4,6 @@
  */
 package tejerasantana_adoney_actividades_ut6;
 
-import java.util.List;
-
 /**
  *
  * @author Adone

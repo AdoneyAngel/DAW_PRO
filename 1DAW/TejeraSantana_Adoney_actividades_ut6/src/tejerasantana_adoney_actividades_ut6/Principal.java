@@ -27,18 +27,10 @@ public class Principal {
             
             showMain();
             
-            //Se obtiene la opcion, siempre y cuando sea valido
-            while(option < 1 || option > 6) {
-                System.out.print(">_");
-                
-                option = inputInt();
-                
-                if (option < 1 || option > 6) {
-                    showError("Esa opcion no esta disponible");
-                }
-                
-            }
+            System.out.print(">_ ");
+            option = inputInt();
             
+            System.out.println();
             System.out.println("_______________");
             System.out.println("");
             
@@ -50,19 +42,30 @@ public class Principal {
                     opcion2();
                     break;
                 case 3:
-                    
+                    opcion3();
                     break;
                 case 4:
                     opcion4();
                     break;
+                case 5:
+                    opcion5();
+                    break;
                 case 6:
+                    opcion6();
+                    break;
+                case 7:
                     running = false;
                     showMessage("Finalizado");
+                    break;
+                    
+                default :
+                    showError("Esa opcion no esta disponible");
                     break;
             }
             
             System.out.println("");
             System.out.println("_______________");
+            System.out.println();
             
         }
             
@@ -116,28 +119,64 @@ public class Principal {
         }
     }
     
+    private static void opcion3() {
+        showHead("Obtener datos de una cuenta");
+        
+        System.out.print("IBAN >_ES ");
+        String IBAN = inputNotBlankString();
+        System.out.println();
+        
+        if (validarIBAN(IBAN)) {
+            CuentaBancaria cuentaOriginal = buscarCuenta(IBAN);
+            
+            if (cuentaOriginal != null) {
+                System.out.print(cuentaOriginal.devolverInfoString());
+                
+            } else {
+                showError("La cuenta introducida no existe actualmente");
+            }
+            
+        } else {
+            showError("El IBAN proporcionado no es valido, se cancela el proceso");
+        }
+    }
+    
     private static void opcion4() {
         showHead("Retiro de cuenta");
         
-        String numeroCuentaRegex = "\\d{20}";
-        
-        String numeroCuenta;
+        String IBAN;
         CuentaBancaria cuentaOriginal;
         double cantidad;
         
         System.out.println("");
-        System.out.print("Numero de cuenta >_ES ");
-        numeroCuenta = inputNotBlankString();
+        System.out.print("IBAN >_ES ");
+        IBAN = inputNotBlankString();
         System.out.println();
         
-        if (!numeroCuenta.matches(numeroCuentaRegex)) {
+        if (!validarIBAN(IBAN)) {
             showError("Numero de cuenta invalido, se cancela el proceso");
             
         } else {
-            if (banco.existeNumeroCuenta(numeroCuenta)) {
-                System.out.print("Dinero a retirar >_");
+            if (banco.existeIBAN(IBAN)) {
+                cuentaOriginal = buscarCuenta(IBAN);
+                
+                System.out.print("Cantidad a retirar >_");
                 cantidad = inputDouble();
                 System.out.println();
+                
+                if (cuentaOriginal.getSaldo() >= cantidad) {
+                    boolean retirado = banco.retiradaCuenta(IBAN, cantidad);
+                    
+                    if (retirado) {
+                        showMessage("Dinero retirado");
+                        
+                    } else {
+                        showMessage("No se ha podido retirar el dinero");
+                    }
+                    
+                } else {
+                    showError("Saldo insuficiente, no es posible retirar ese dinero");
+                }
                 
             } else {
                 showError("No existe ninguna cuenta asociado al numero introducido");
@@ -145,6 +184,64 @@ public class Principal {
         }
     }
     
+    private static void opcion5 () {
+        showHead("Ingreso de cuenta");
+        
+        String IBAN;
+        double cantidad;
+        
+        System.out.println("");
+        System.out.print("IBAN >_ES ");
+        IBAN = inputNotBlankString();
+        System.out.println();
+        
+        if (!validarIBAN(IBAN)) {
+            showError("Numero de cuenta invalido, se cancela el proceso");
+            
+        } else {
+            if (banco.existeIBAN(IBAN)) {
+                
+                System.out.print("Cantidad a ingresar >_");
+                cantidad = inputDouble();
+                System.out.println();
+                
+                boolean ingresado = banco.ingresoCuenta(IBAN, cantidad);
+
+                if (ingresado) {
+                    showMessage("Dinero ingresado");
+
+                } else {
+                    showMessage("No se ha podido ingresar el dinero");
+                }
+                
+            } else {
+                showError("No existe ninguna cuenta asociado al numero introducido");
+            }
+        }
+    }
+    
+    private static void opcion6 () {
+        showHead("Consultar saldo");
+        
+        String IBAN = "";
+        
+        System.out.println("");
+        System.out.print("IBAN >_ES ");
+        IBAN = inputNotBlankString();
+        System.out.println();
+        
+        if (validarIBAN(IBAN)) {
+            CuentaBancaria cuentaOriginal = buscarCuenta(IBAN);
+            
+            System.out.println("Saldo actual: " + String.valueOf(cuentaOriginal.getSaldo()));
+            
+        } else {
+            showError("Numero IBAN invalido");
+        }
+    }
+    
+    //-------------------------
+            
     private static void creacionCuentaCorrientePersonal(Persona titular) {
         showHead("Introduccion");
         
@@ -159,7 +256,7 @@ public class Principal {
         
         cuentaCorrientePersonal = new CuentaCorrientePersonal(cuentaCorriente, comisionMantenimiento);
         
-        banco.insertarCuenta(cuentaCorrientePersonal);
+        banco.abrirCuenta(cuentaCorrientePersonal);
         
     }
     
@@ -178,14 +275,20 @@ public class Principal {
         interesPorDescubierto = inputDouble();
         System.out.println();
         
-        System.out.println("");
-        System.out.print("Maximo numero de descubiertos >_");
-        maximioDescubierto = inputInt();
-        System.out.println();
+        //No puede haber un interes superior al 100%
+        if (interesPorDescubierto >= 0 && interesPorDescubierto <= 100) {
+            System.out.println("");
+            System.out.print("Maximo numero de descubiertos >_");
+            maximioDescubierto = inputInt();
+            System.out.println();
+
+            cuentaCorrienteEmpresa = new CuentaCorrienteEmpresa(cuentaCorriente, interesPorDescubierto, maximioDescubierto);
+
+            banco.abrirCuenta(cuentaCorrienteEmpresa);            
         
-        cuentaCorrienteEmpresa = new CuentaCorrienteEmpresa(cuentaCorriente, interesPorDescubierto, maximioDescubierto);
-        
-        banco.insertarCuenta(cuentaCorrienteEmpresa);
+        } else {
+            showError("Debe ingresar un interes entre los valores 0%-100%");
+        }
         
     }
     
@@ -201,15 +304,22 @@ public class Principal {
         System.out.print("Intereses >_");
         intereses = inputDouble();
         
-        cuentaAhorro = new CuentaAhorro(cuentaBancaria, intereses);
+        //Validando que el porcentaje de intereses sea valido
         
-        boolean insertado = banco.insertarCuenta(cuentaAhorro);
+        if (intereses >= 0 && intereses <= 100) {
+            cuentaAhorro = new CuentaAhorro(cuentaBancaria, intereses);
+
+            boolean insertado = banco.abrirCuenta(cuentaAhorro);
+
+            if (insertado) {
+                showMessage("Se ha creado la cuenta");
+
+            } else {
+                showMessage("No se ha podido insertar la cuenta");
+            }            
         
-        if (insertado) {
-            showMessage("Se ha creado la cuenta");
-            
         } else {
-            showMessage("No se ha podido insertar la cuenta");
+            showError("Debe ingresar un interes entre los valores 0%-100%");
         }
     }
     
@@ -218,7 +328,7 @@ public class Principal {
         CuentaBancaria cuentaBancaria = creacionCuentaBancaria(titular);
         CuentaCorriente cuenta;
         
-        List<Persona> titulares = new ArrayList();
+        List<String> titulares = new ArrayList();
         
         boolean creandoTitulares = true;
         
@@ -237,25 +347,27 @@ public class Principal {
                 break;
             }
             
-            Persona nuevoTitular = solicitarPersona();
-
-            boolean existeDNI = false;
-
-            for (Persona titularActual : titulares) {
-                if (titularActual.getDNI().equals(nuevoTitular.getDNI())) {
-                    existeDNI = true;
-                }
-            }
+            System.out.println();
+            System.out.print("DNI del titular >_ ");
+            String nuevoTitularDNI = inputNotBlankString();
             
-            if (titular.getDNI().equals(nuevoTitular.getDNI())) {
-                existeDNI = true;
-            }
-
-            if (!existeDNI) {
-                titulares.add(titular);
-
-            } else {
-                showError("Ya hay un titular asociado al DNI introducido");
+            if (validarDNI(nuevoTitularDNI)) {
+                //Se valida si el ID ya esta agregado en la lista
+                
+                boolean existeDNI = false;
+                
+                for (String titularActual : titulares) {
+                    if (titularActual.equals(nuevoTitularDNI)) {
+                        existeDNI = true;
+                    }
+                }
+                
+                if (!existeDNI && !titular.getDNI().equals(nuevoTitularDNI)) {
+                    titulares.add(nuevoTitularDNI);
+                    
+                } else {
+                    showError("Este DNI ya esta asociado a esta cuenta");
+                }
             }
         }
         
@@ -293,18 +405,26 @@ public class Principal {
     private static CuentaBancaria creacionCuentaBancaria(Persona titular) {
         CuentaBancaria cuenta;
         double saldoInicial = 0;
-        String numeroCuenta = banco.generarNumeroCuenta();
+        String IBAN = banco.generarIBAN();
         
         System.out.println("");
         System.out.print("Saldo inicial >_");
         saldoInicial = inputDouble();
         
-        cuenta = new CuentaBancaria(titular, saldoInicial, numeroCuenta);
+        cuenta = new CuentaBancaria(titular, saldoInicial, IBAN);
         
         return cuenta;
     }
     
-    //--------------------------------
+    private static CuentaBancaria buscarCuenta(String IBAN) {
+        for (CuentaBancaria cuentaActual : banco.getCuentas()) {
+            if (cuentaActual.getIBAN().equals(IBAN)) {
+                return cuentaActual;
+            }
+        }
+        
+        return null;
+    }
     
     private static void showMessage(String txt) {
         System.out.println();
@@ -349,8 +469,9 @@ public class Principal {
         System.out.println("2. Ver un listado de las cuentas disponibles.");
         System.out.println("3. Obtener los datos de una cuenta concreta.");
         System.out.println("4. Retirar efectivo de una cuenta.");
-        System.out.println("5. Consultar el saldo actual de una cuenta.");
-        System.out.println("6. Salir de la aplicacion.");
+        System.out.println("5. Ingresar efectivo de una cuenta.");
+        System.out.println("6. Consultar el saldo actual de una cuenta.");
+        System.out.println("7. Salir de la aplicacion.");
     }
     
     private static int inputInt() {
@@ -414,5 +535,11 @@ public class Principal {
     
     private static void showError(String error) {
         System.out.println("<!!@@" + error + "@@!!>");
+    }
+    
+    private static boolean validarIBAN (String IBAN) {
+        String regex = "\\d{20}";
+        
+        return IBAN.matches(regex);
     }
 }

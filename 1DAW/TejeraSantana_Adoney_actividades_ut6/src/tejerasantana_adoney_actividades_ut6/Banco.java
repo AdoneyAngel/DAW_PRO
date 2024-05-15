@@ -24,11 +24,77 @@ public class Banco {
         return this.cuentas;
     }
     
-    public boolean insertarCuenta (CuentaBancaria cuenta) {
+    public boolean abrirCuenta (CuentaBancaria cuenta) {
         return this.cuentas.add(cuenta);
     }
     
-    public String generarNumeroCuenta() {
+    public String[] listadoCuentas () {
+        String[] listado = new String[this.cuentas.size()];
+        
+        int listadoIndex = 0;
+        
+        for (CuentaBancaria cuentaActual : this.cuentas) {
+            String datoActual = cuentaActual.devolverInfoString();
+            
+            listado[listadoIndex] = datoActual;
+            
+            listadoIndex++;
+        }
+        
+        return listado;
+    }
+    
+    public String informacionCuenta(String IBAN) {
+        CuentaBancaria cuentaOriginal = this.buscarCuenta(IBAN);
+        
+        if (cuentaOriginal != null) {
+            return cuentaOriginal.devolverInfoString();
+            
+        } else {
+            return null;
+        }
+    }
+    
+    public boolean ingresoCuenta(String IBAN, double cantidad) {
+        CuentaBancaria cuentaOriginal = this.buscarCuenta(IBAN);
+        
+        if (cuentaOriginal != null) {
+            cuentaOriginal.setSaldo(cuentaOriginal.getSaldo() + cantidad);
+            
+            return true;
+            
+        } else {
+            return false;
+        }
+    }
+    
+    public boolean retiradaCuenta (String IBAN, double cantidad) {
+        CuentaBancaria cuentaOriginal = this.buscarCuenta(IBAN);
+        
+        if (cuentaOriginal != null) {
+            if (cuentaOriginal.getSaldo() >= cantidad) {
+                cuentaOriginal.setSaldo(cuentaOriginal.getSaldo()-cantidad);
+                
+                return true;
+                
+            }
+        }
+        
+        return false;
+    }
+    
+    public double obtenerSaldo (String IBAN) {
+        CuentaBancaria cuentaOriginal = this.buscarCuenta(IBAN);
+        
+        if (cuentaOriginal != null) {
+            return cuentaOriginal.getSaldo();
+            
+        } else {
+            return -1;
+        }
+    }
+    
+    public String generarIBAN() {
         boolean numeroValido = false;
         String nuevoNumeroStr = "";
         
@@ -41,15 +107,15 @@ public class Banco {
                 nuevoNumeroStr += String.valueOf(nuevoDigito);
             }
             
-            numeroValido = !this.existeNumeroCuenta(nuevoNumeroStr);
+            numeroValido = !this.existeIBAN(nuevoNumeroStr);
         }
         
         return nuevoNumeroStr;
     }
     
-    public boolean existeNumeroCuenta(String numeroCuenta) {
+    public boolean existeIBAN(String numeroCuenta) {
         for (CuentaBancaria cuentaActual : this.cuentas) {
-            if (cuentaActual.getNumeroCuenta().equals(numeroCuenta)) {
+            if (cuentaActual.getIBAN().equals(numeroCuenta)) {
                 return true;
             }
         }
@@ -57,7 +123,15 @@ public class Banco {
         return false;
     }
     
-    
+    private CuentaBancaria buscarCuenta(String IBAN) {
+        for (CuentaBancaria cuentaActual : this.cuentas) {
+            if (cuentaActual.getIBAN().equals(IBAN)) {
+                return cuentaActual;
+            }
+        }
+        
+        return null;
+    }
     
     
 }

@@ -12,7 +12,7 @@ public class CuentaAhorro extends CuentaBancaria{
     private double interes;
     
     public CuentaAhorro (CuentaBancaria cuenta, double interes) {
-        super(cuenta.getTitular(), cuenta.getSaldo(), cuenta.getNumeroCuenta());
+        super(cuenta.getTitular(), cuenta.getSaldo(), cuenta.getIBAN());
         this.interes = interes;
     }
 

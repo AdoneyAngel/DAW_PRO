@@ -31,7 +31,7 @@ public class CuentaBancaria implements Imprimible{
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-    public String getNumeroCuenta() {
+    public String getIBAN() {
         return numeroCuenta;
     }
     public void setNumeroCuenta(String numeroCuenta) {
@@ -45,7 +45,7 @@ public class CuentaBancaria implements Imprimible{
         String saldo = String.valueOf(this.saldo);
         String numeroCuenta = String.valueOf(this.numeroCuenta);
         
-        info = "[" + this.titular.getNombre() + " " + this.titular.getApellidos() + " (" +this.titular.getDNI()+")] ES" + numeroCuenta + ": " + saldo + " €";
+        info = "ES " + numeroCuenta + ": $ " + saldo + " | Titular: [" + this.titular.devolverInfoString() + "]";
         
         return info;
     }
