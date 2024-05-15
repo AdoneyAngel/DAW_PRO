@@ -6,15 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.io.Serializable;
 import model.BaseDatosConexionServicio;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 /**
  *
- * @author AdoneyDAW
+ * González Olivares Brandon - Tejera Santana Adoney
  */
 public class UsuariosModel implements Serializable{
     private BaseDatosConexionServicio db;
