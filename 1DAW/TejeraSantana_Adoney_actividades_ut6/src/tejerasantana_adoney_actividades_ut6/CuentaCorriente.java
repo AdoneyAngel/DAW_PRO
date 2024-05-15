@@ -11,18 +11,18 @@ import java.util.List;
  * @author Adone
  */
 public class CuentaCorriente extends CuentaBancaria{
-    private List<String> titulares;
+    private List<Persona> titulares;
     
-    public CuentaCorriente (CuentaBancaria cuenta, List<String> titulares) {
+    public CuentaCorriente (CuentaBancaria cuenta, List<Persona> titulares) {
         super(cuenta.getTitular(), cuenta.getSaldo(), cuenta.getNumeroCuenta());
         this.titulares = titulares;
     }
 
-    public List<String> getTitulares() {
+    public List<Persona> getTitulares() {
         return titulares;
     }
 
-    public void setTitulares(List<String> titulares) {
+    public void setTitulares(List<Persona> titulares) {
         this.titulares = titulares;
     }
     

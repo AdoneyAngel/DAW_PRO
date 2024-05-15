@@ -22,4 +22,9 @@ public class CuentaAhorro extends CuentaBancaria{
     public void setInteres(double interes) {
         this.interes = interes;
     }
+    
+    @Override
+    public String getTipo () {
+        return "ahorro";
+    }
 }

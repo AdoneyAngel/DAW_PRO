@@ -8,12 +8,12 @@ package tejerasantana_adoney_actividades_ut6;
  *
  * @author Adone
  */
-public class CuentaBancaria {
+public class CuentaBancaria implements Imprimible{
     private Persona titular;
     private double saldo;
-    private int numeroCuenta;
+    private String numeroCuenta;
     
-    public CuentaBancaria (Persona titular, double saldo, int numeroCuenta) {
+    public CuentaBancaria (Persona titular, double saldo, String numeroCuenta) {
         this.titular = titular;
         this.saldo = saldo;
         this.numeroCuenta = numeroCuenta;
@@ -31,10 +31,26 @@ public class CuentaBancaria {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
-    public int getNumeroCuenta() {
+    public String getNumeroCuenta() {
         return numeroCuenta;
     }
-    public void setNumeroCuenta(int numeroCuenta) {
+    public void setNumeroCuenta(String numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
+    }
+
+    @Override
+    public String devolverInfoString() {
+        String info = "";
+        
+        String saldo = String.valueOf(this.saldo);
+        String numeroCuenta = String.valueOf(this.numeroCuenta);
+        
+        info = "[" + this.titular.getNombre() + " " + this.titular.getApellidos() + " (" +this.titular.getDNI()+")] ES" + numeroCuenta + ": " + saldo + " €";
+        
+        return info;
+    }
+    
+    public String getTipo() {
+        return "cuenta";
     }
 }

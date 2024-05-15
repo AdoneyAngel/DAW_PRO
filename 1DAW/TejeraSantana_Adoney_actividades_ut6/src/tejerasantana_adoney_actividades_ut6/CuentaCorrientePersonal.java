@@ -13,8 +13,8 @@ import java.util.List;
 public class CuentaCorrientePersonal extends CuentaCorriente {
     private double comisionMantenimiento;
     
-    public CuentaCorrientePersonal (CuentaBancaria cuenta, List<String> titulares, double comisionMantenimiento) {
-        super(cuenta, titulares);
+    public CuentaCorrientePersonal (CuentaCorriente cuentaCorriente, double comisionMantenimiento) {
+        super(cuentaCorriente, cuentaCorriente.getTitulares());
         this.comisionMantenimiento = comisionMantenimiento;
     }
 
@@ -24,6 +24,11 @@ public class CuentaCorrientePersonal extends CuentaCorriente {
 
     public void setComisionMantenimiento(double comisionMantenimiento) {
         this.comisionMantenimiento = comisionMantenimiento;
+    }
+    
+    @Override
+    public String getTipo() {
+        return "corrientePersonal";
     }
     
     

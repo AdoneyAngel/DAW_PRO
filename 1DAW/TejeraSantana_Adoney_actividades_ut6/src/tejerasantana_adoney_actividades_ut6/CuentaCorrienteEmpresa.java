@@ -4,8 +4,6 @@
  */
 package tejerasantana_adoney_actividades_ut6;
 
-import java.util.List;
-
 /**
  *
  * @author Adone
@@ -14,8 +12,8 @@ public class CuentaCorrienteEmpresa extends CuentaCorriente{
     private double interesPorDescubierto;
     private int maximoDescubierto;
     
-    public CuentaCorrienteEmpresa (CuentaBancaria cuenta, List<String> titulares, double interesesPorDescubierto, int maximoDescubierto) {
-        super(cuenta, titulares);
+    public CuentaCorrienteEmpresa (CuentaCorriente cuentaCorriente, double interesesPorDescubierto, int maximoDescubierto) {
+        super(cuentaCorriente, cuentaCorriente.getTitulares());
         this.interesPorDescubierto = interesesPorDescubierto;
         this.maximoDescubierto = maximoDescubierto;
     }
@@ -36,5 +34,9 @@ public class CuentaCorrienteEmpresa extends CuentaCorriente{
         this.maximoDescubierto = maximoDescubierto;
     }
     
+    @Override
+    public String getTipo() {
+        return "corrienteEmpresa";
+    }
     
 }
