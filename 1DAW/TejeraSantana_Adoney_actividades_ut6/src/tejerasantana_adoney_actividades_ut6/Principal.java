@@ -233,7 +233,7 @@ public class Principal {
         if (validarIBAN(IBAN)) {
             CuentaBancaria cuentaOriginal = buscarCuenta(IBAN);
             
-            System.out.println("Saldo actual: " + String.valueOf(cuentaOriginal.getSaldo()));
+            System.out.println("Saldo actual: $ " + String.valueOf(cuentaOriginal.getSaldo()));
             
         } else {
             showError("Numero IBAN invalido");
@@ -366,7 +366,7 @@ public class Principal {
             
             System.out.println();
             System.out.print("DNI del titular >_ ");
-            String nuevoTitularDNI = inputNotBlankString();
+            String nuevoTitularDNI = inputNotBlankString().toUpperCase();
             
             if (validarDNI(nuevoTitularDNI)) {
                 //Se valida si el ID ya esta agregado en la lista

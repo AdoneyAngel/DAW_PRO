@@ -17,6 +17,8 @@ public abstract class CuentaBancaria implements Imprimible{
         this.titular = titular;
         this.saldo = saldo;
         this.IBAN = IBAN;
+        
+        this.titular.setDNI(this.titular.getDNI().toUpperCase());
     }
 
     public Persona getTitular() {
@@ -39,7 +41,7 @@ public abstract class CuentaBancaria implements Imprimible{
     }
     
     protected String infoBasica () {
-        return this.titular.devolverInfoString() + " | IBAN: " + this.IBAN + " | Saldo: $ " + String.valueOf(this.saldo);
+        return this.titular.devolverInfoString() + " | IBAN: ES " + this.IBAN + " | Saldo: $ " + String.valueOf(this.saldo);
     }
 
     @Override
