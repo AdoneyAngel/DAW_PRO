@@ -10,11 +10,11 @@ import java.util.List;
  *
  * @author Adone
  */
-public class CuentaCorriente extends CuentaBancaria{
-    private List<String> titulares;
+public abstract class CuentaCorriente extends CuentaBancaria{
+    protected List<String> titulares;
     
-    public CuentaCorriente (CuentaBancaria cuenta, List<String> titulares) {
-        super(cuenta.getTitular(), cuenta.getSaldo(), cuenta.getIBAN());
+    public CuentaCorriente (Persona titular, double saldo, String IBAN, List<String> titulares) {
+        super(titular, saldo, IBAN);
         this.titulares = titulares;
     }
 
@@ -26,5 +26,10 @@ public class CuentaCorriente extends CuentaBancaria{
         this.titulares = titulares;
     }
     
+    @Override
+    public abstract String getTipo ();
+
+    @Override
+    public abstract String devolverInfoString ();
     
 }

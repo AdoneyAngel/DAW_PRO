@@ -4,6 +4,8 @@
  */
 package tejerasantana_adoney_actividades_ut6;
 
+import java.util.List;
+
 /**
  *
  * @author Adone
@@ -11,8 +13,8 @@ package tejerasantana_adoney_actividades_ut6;
 public class CuentaCorrientePersonal extends CuentaCorriente {
     private double comisionMantenimiento;
     
-    public CuentaCorrientePersonal (CuentaCorriente cuentaCorriente, double comisionMantenimiento) {
-        super(cuentaCorriente, cuentaCorriente.getTitulares());
+    public CuentaCorrientePersonal (Persona titular, double saldo, String IBAN, List<String> titulares, double comisionMantenimiento) {
+        super(titular, saldo, IBAN, titulares);
         this.comisionMantenimiento = comisionMantenimiento;
     }
 
@@ -28,6 +30,10 @@ public class CuentaCorrientePersonal extends CuentaCorriente {
     public String getTipo() {
         return "corrientePersonal";
     }
-    
+
+    @Override
+    public String devolverInfoString() {
+        return "Cuenta corriente personal -> " + this.infoBasica() + " | Comision mantenimiento: " + String.valueOf(this.comisionMantenimiento) + " | Titulares permitidos: " + this.titulares.toString();
+    }
     
 }

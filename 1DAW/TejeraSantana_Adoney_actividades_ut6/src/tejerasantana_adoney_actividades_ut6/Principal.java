@@ -241,65 +241,20 @@ public class Principal {
     }
     
     //-------------------------
-            
-    private static void creacionCuentaCorrientePersonal(Persona titular) {
-        showHead("Introduccion");
-        
-        CuentaCorrientePersonal cuentaCorrientePersonal;
-        
-        //Se obtiene los datos para una cuenta corriente
-        CuentaCorriente cuentaCorriente = creacionCuentaCorriente(titular);
-        
-        System.out.println("");
-        System.out.print("Comision de mantenimiento >_");
-        double comisionMantenimiento = inputDouble();
-        
-        cuentaCorrientePersonal = new CuentaCorrientePersonal(cuentaCorriente, comisionMantenimiento);
-        
-        banco.abrirCuenta(cuentaCorrientePersonal);
-        
-    }
-    
-    private static void creacionCuentaCorrienteEmpresa(Persona titular) {
-        showHead("Introduccion");
-        
-        CuentaCorrienteEmpresa cuentaCorrienteEmpresa;
-        double interesPorDescubierto = -1;
-        int maximioDescubierto = -1;
-        
-        //Se obtiene los datos para una cuenta corriente
-        CuentaCorriente cuentaCorriente = creacionCuentaCorriente(titular);
-        
-        System.out.println("");
-        System.out.print("Intereses por descubierto >_");
-        interesPorDescubierto = inputDouble();
-        System.out.println();
-        
-        //No puede haber un interes superior al 100%
-        if (interesPorDescubierto >= 0 && interesPorDescubierto <= 100) {
-            System.out.println("");
-            System.out.print("Maximo numero de descubiertos >_");
-            maximioDescubierto = inputInt();
-            System.out.println();
-
-            cuentaCorrienteEmpresa = new CuentaCorrienteEmpresa(cuentaCorriente, interesPorDescubierto, maximioDescubierto);
-
-            banco.abrirCuenta(cuentaCorrienteEmpresa);            
-        
-        } else {
-            showError("Debe ingresar un interes entre los valores 0%-100%");
-        }
-        
-    }
     
     private static void creacionCuentaAhorro(Persona titular) {
         showHead("Introduccion");
         
         CuentaAhorro cuentaAhorro;
-        CuentaBancaria cuentaBancaria = creacionCuentaBancaria(titular);
+        String IBAN = banco.generarIBAN();
         double intereses = -1;
+        double saldo = -1;
         
-        //Se obtiene el resto de datos para este tipo de cuenta
+        System.out.println();
+        System.out.print("Saldo inicial >_");
+        saldo = inputDouble();
+        System.out.println();
+        
         System.out.println("");
         System.out.print("Intereses >_");
         intereses = inputDouble();
@@ -307,7 +262,7 @@ public class Principal {
         //Validando que el porcentaje de intereses sea valido
         
         if (intereses >= 0 && intereses <= 100) {
-            cuentaAhorro = new CuentaAhorro(cuentaBancaria, intereses);
+            cuentaAhorro = new CuentaAhorro(titular, saldo, IBAN, intereses);
 
             boolean insertado = banco.abrirCuenta(cuentaAhorro);
 
@@ -323,16 +278,78 @@ public class Principal {
         }
     }
     
-    //Funcion para solicitar los datos necesarios para CuentaCorriente
-    private static CuentaCorriente creacionCuentaCorriente(Persona titular) {
-        CuentaBancaria cuentaBancaria = creacionCuentaBancaria(titular);
-        CuentaCorriente cuenta;
+    private static void creacionCuentaCorrientePersonal(Persona titular) {
+        showHead("Introduccion");
         
+        CuentaCorrientePersonal cuentaCorrientePersonal;
+        double comisionMantenimiento;
+        double saldo;
+        String IBAN = banco.generarIBAN();
+        List<String> titulares = solicitarListaTitulares(titular);
+        
+        System.out.println();
+        System.out.print("Saldo inicial >_");
+        saldo = inputDouble();
+        System.out.println();
+        
+        System.out.println("");
+        System.out.print("Comision de mantenimiento >_");
+        comisionMantenimiento = inputDouble();
+        
+        if (comisionMantenimiento >= 0 && comisionMantenimiento <= 100) {
+            cuentaCorrientePersonal = new CuentaCorrientePersonal(titular, saldo, IBAN, titulares, comisionMantenimiento);
+
+            banco.abrirCuenta(cuentaCorrientePersonal);            
+        
+        } else {
+            showError("Debe tener unos intereses entre los valores 0-100, se cancela el proceso");
+            
+        }
+        
+    }
+    
+    private static void creacionCuentaCorrienteEmpresa(Persona titular) {
+        showHead("Introduccion");
+        
+        CuentaCorrienteEmpresa cuentaCorrienteEmpresa;
+        double interesPorDescubierto;
+        int maximoDescubierto;
+        double saldo;
+        String IBAN = banco.generarIBAN();
+        List<String> titulares = solicitarListaTitulares(titular);
+        
+        System.out.println();
+        System.out.print("Saldo inicial >_");
+        saldo = inputDouble();
+        System.out.println();
+        
+        System.out.println("");
+        System.out.print("Intereses por descubierto >_");
+        interesPorDescubierto = inputDouble();
+        System.out.println();
+        
+        //No puede haber un interes superior al 100%
+        if (interesPorDescubierto >= 0 && interesPorDescubierto <= 100) {
+            System.out.println("");
+            System.out.print("Maximo numero de descubiertos >_");
+            maximoDescubierto = inputInt();
+            System.out.println();
+
+            cuentaCorrienteEmpresa = new CuentaCorrienteEmpresa(titular, saldo, IBAN, titulares, interesPorDescubierto, maximoDescubierto);
+
+            banco.abrirCuenta(cuentaCorrienteEmpresa);            
+        
+        } else {
+            showError("Debe ingresar un interes entre los valores 0%-100%");
+        }
+        
+    }
+    
+    //Funcion para solicitar los datos necesarios para CuentaCorriente
+    private static List<String> solicitarListaTitulares(Persona titular) {
         List<String> titulares = new ArrayList();
         
         boolean creandoTitulares = true;
-        
-        showHead("Titulares de la cuenta");
         
         while (creandoTitulares) {
             System.out.println("¿Añadir mas titulares?");
@@ -371,9 +388,7 @@ public class Principal {
             }
         }
         
-        cuenta = new CuentaCorriente(cuentaBancaria, titulares);
-        
-        return cuenta;
+        return titulares;
         
     }
     
@@ -399,21 +414,6 @@ public class Principal {
         persona = new Persona(DNI, nombreTitular, apellidosTitular);
         
         return persona;
-    }
-    
-    //Funcion para solicitar los datos para un objeto CuentaBancaria
-    private static CuentaBancaria creacionCuentaBancaria(Persona titular) {
-        CuentaBancaria cuenta;
-        double saldoInicial = 0;
-        String IBAN = banco.generarIBAN();
-        
-        System.out.println("");
-        System.out.print("Saldo inicial >_");
-        saldoInicial = inputDouble();
-        
-        cuenta = new CuentaBancaria(titular, saldoInicial, IBAN);
-        
-        return cuenta;
     }
     
     private static CuentaBancaria buscarCuenta(String IBAN) {

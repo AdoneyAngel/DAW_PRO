@@ -11,8 +11,8 @@ package tejerasantana_adoney_actividades_ut6;
 public class CuentaAhorro extends CuentaBancaria{
     private double interes;
     
-    public CuentaAhorro (CuentaBancaria cuenta, double interes) {
-        super(cuenta.getTitular(), cuenta.getSaldo(), cuenta.getIBAN());
+    public CuentaAhorro (Persona titular, double saldo, String IBAN, double interes) {
+        super(titular, saldo, IBAN);
         this.interes = interes;
     }
 
@@ -26,5 +26,10 @@ public class CuentaAhorro extends CuentaBancaria{
     @Override
     public String getTipo () {
         return "ahorro";
+    }
+
+    @Override
+    public String devolverInfoString() {
+        return "Cuenta ahorro -> " + this.infoBasica() + " | Intereses: " + String.valueOf(this.interes);
     }
 }
