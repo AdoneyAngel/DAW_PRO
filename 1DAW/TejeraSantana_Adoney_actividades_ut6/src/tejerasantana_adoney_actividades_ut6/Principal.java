@@ -141,7 +141,7 @@ public class Principal {
         }
     }
     
-    private static void opcion4() {
+    private static void opcion5() {
         showHead("Retiro de cuenta");
         
         String IBAN;
@@ -184,7 +184,7 @@ public class Principal {
         }
     }
     
-    private static void opcion5 () {
+    private static void opcion4 () {
         showHead("Ingreso de cuenta");
         
         String IBAN;
@@ -468,8 +468,8 @@ public class Principal {
         System.out.println("1. Abrir una nueva cuenta.");
         System.out.println("2. Ver un listado de las cuentas disponibles.");
         System.out.println("3. Obtener los datos de una cuenta concreta.");
-        System.out.println("4. Retirar efectivo de una cuenta.");
-        System.out.println("5. Ingresar efectivo de una cuenta.");
+        System.out.println("4. Ingresar efectivo de una cuenta.");
+        System.out.println("5. Retirar efectivo de una cuenta.");
         System.out.println("6. Consultar el saldo actual de una cuenta.");
         System.out.println("7. Salir de la aplicacion.");
     }
