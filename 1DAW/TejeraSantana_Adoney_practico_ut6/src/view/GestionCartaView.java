@@ -17,6 +17,94 @@ public class GestionCartaView extends javax.swing.JFrame {
         initComponents();
     }
 
+    public javax.swing.JComboBox<String> getComboArtefactos() {
+        return ComboArtefactos;
+    }
+
+    public javax.swing.JComboBox<String> getComboConjuros() {
+        return ComboConjuntos;
+    }
+
+    public javax.swing.JComboBox<String> getComboCriaturas() {
+        return ComboCriaturas;
+    }
+
+    public javax.swing.JComboBox<String> getComboEncantamientos() {
+        return ComboEncantamientos;
+    }
+
+    public javax.swing.JComboBox<String> getComboInstantaneos() {
+        return ComboInstantaneos;
+    }
+
+    public javax.swing.JComboBox<String> getComboTierras() {
+        return ComboTierras;
+    }
+
+    public javax.swing.JButton getBtnCargar() {
+        return btnCargar;
+    }
+
+    public javax.swing.JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    public javax.swing.JPanel getjPanel2() {
+        return jPanel2;
+    }
+
+    public javax.swing.JPanel getjPanel3() {
+        return jPanel3;
+    }
+
+    public javax.swing.JPanel getjPanel4() {
+        return jPanel4;
+    }
+
+    public javax.swing.JScrollPane getjScrollPane1() {
+        return jScrollPane1;
+    }
+
+    public javax.swing.JTextArea getjTextArea1() {
+        return jTextArea1;
+    }
+
+    public javax.swing.JLabel getLblArtefactos() {
+        return lblArtefactos;
+    }
+
+    public javax.swing.JLabel getLblConjuntos() {
+        return lblConjuntos;
+    }
+
+    public javax.swing.JLabel getLblCriaturas() {
+        return lblCriaturas;
+    }
+
+    public javax.swing.JLabel getLblDatos() {
+        return lblDatos;
+    }
+
+    public javax.swing.JLabel getLblEncantamientos() {
+        return lblEncantamientos;
+    }
+
+    public javax.swing.JLabel getLblImagen() {
+        return lblImagen;
+    }
+
+    public javax.swing.JLabel getLblInstantaneos() {
+        return lblInstantaneos;
+    }
+
+    public javax.swing.JLabel getLblTipo() {
+        return lblTipo;
+    }
+
+    public javax.swing.JPanel getPanelImg() {
+        return panelImg;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,21 +114,271 @@ public class GestionCartaView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        lblTipo = new javax.swing.JLabel();
+        ComboTierras = new javax.swing.JComboBox<>();
+        lblCriaturas = new javax.swing.JLabel();
+        ComboCriaturas = new javax.swing.JComboBox<>();
+        ComboEncantamientos = new javax.swing.JComboBox<>();
+        lblEncantamientos = new javax.swing.JLabel();
+        lblInstantaneos = new javax.swing.JLabel();
+        ComboInstantaneos = new javax.swing.JComboBox<>();
+        ComboConjuntos = new javax.swing.JComboBox<>();
+        lblConjuntos = new javax.swing.JLabel();
+        ComboArtefactos = new javax.swing.JComboBox<>();
+        lblArtefactos = new javax.swing.JLabel();
+        btnCargar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        lblDatos = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jPanel3 = new javax.swing.JPanel();
+        lblImagen = new javax.swing.JLabel();
+        panelImg = new javax.swing.JPanel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(100, 100, 100));
+
+        lblTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTipo.setText("Tierras");
+
+        ComboTierras.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        lblCriaturas.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblCriaturas.setText("Criaturas");
+
+        ComboCriaturas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboCriaturas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboCriaturasActionPerformed(evt);
+            }
+        });
+
+        ComboEncantamientos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboEncantamientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboEncantamientosActionPerformed(evt);
+            }
+        });
+
+        lblEncantamientos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblEncantamientos.setText("Encantamientos");
+
+        lblInstantaneos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblInstantaneos.setText("Instantáneos");
+
+        ComboInstantaneos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboInstantaneos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboInstantaneosActionPerformed(evt);
+            }
+        });
+
+        ComboConjuntos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboConjuntos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboConjuntosActionPerformed(evt);
+            }
+        });
+
+        lblConjuntos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblConjuntos.setText("Conjuntos");
+
+        ComboArtefactos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        ComboArtefactos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComboArtefactosActionPerformed(evt);
+            }
+        });
+
+        lblArtefactos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblArtefactos.setText("Artefactos");
+
+        btnCargar.setText("Cargar");
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(lblArtefactos, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblConjuntos, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblInstantaneos, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEncantamientos, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCriaturas, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTipo, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ComboInstantaneos, javax.swing.GroupLayout.Alignment.LEADING, 0, 187, Short.MAX_VALUE)
+                    .addComponent(ComboEncantamientos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ComboCriaturas, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ComboTierras, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ComboConjuntos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ComboArtefactos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCargar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(lblTipo)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ComboTierras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblCriaturas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ComboCriaturas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblEncantamientos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ComboEncantamientos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblInstantaneos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ComboInstantaneos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblConjuntos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ComboConjuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lblArtefactos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ComboArtefactos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(btnCargar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(100, 100, 100));
+
+        lblDatos.setText("Datos de la carta");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setEnabled(false);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(lblDatos)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(lblDatos)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+
+        jPanel3.setBackground(new java.awt.Color(200, 200, 200));
+
+        lblImagen.setText("Imagen de la carta");
+
+        javax.swing.GroupLayout panelImgLayout = new javax.swing.GroupLayout(panelImg);
+        panelImg.setLayout(panelImgLayout);
+        panelImgLayout.setHorizontalGroup(
+            panelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 317, Short.MAX_VALUE)
+        );
+        panelImgLayout.setVerticalGroup(
+            panelImgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 517, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblImagen)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(lblImagen)
+                .addGap(18, 18, 18)
+                .addComponent(panelImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(84, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ComboCriaturasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboCriaturasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboCriaturasActionPerformed
+
+    private void ComboEncantamientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboEncantamientosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboEncantamientosActionPerformed
+
+    private void ComboInstantaneosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboInstantaneosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboInstantaneosActionPerformed
+
+    private void ComboConjuntosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboConjuntosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboConjuntosActionPerformed
+
+    private void ComboArtefactosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboArtefactosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComboArtefactosActionPerformed
+
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCargarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +416,27 @@ public class GestionCartaView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboArtefactos;
+    private javax.swing.JComboBox<String> ComboConjuntos;
+    private javax.swing.JComboBox<String> ComboCriaturas;
+    private javax.swing.JComboBox<String> ComboEncantamientos;
+    private javax.swing.JComboBox<String> ComboInstantaneos;
+    private javax.swing.JComboBox<String> ComboTierras;
+    private javax.swing.JButton btnCargar;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lblArtefactos;
+    private javax.swing.JLabel lblConjuntos;
+    private javax.swing.JLabel lblCriaturas;
+    private javax.swing.JLabel lblDatos;
+    private javax.swing.JLabel lblEncantamientos;
+    private javax.swing.JLabel lblImagen;
+    private javax.swing.JLabel lblInstantaneos;
+    private javax.swing.JLabel lblTipo;
+    private javax.swing.JPanel panelImg;
     // End of variables declaration//GEN-END:variables
 }

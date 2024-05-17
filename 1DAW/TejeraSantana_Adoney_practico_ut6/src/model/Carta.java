@@ -4,6 +4,12 @@
  */
 package model;
 
+import java.util.List;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+
 /**
  *
  * @author Adone
@@ -19,10 +25,10 @@ public class Carta {
     private String imagen;
     private int id_tipo_carta;
     private int id_tipo_habilidad;
-    
-    public Carta () {
-        
-    }
+    private List<String[]> tipos;
+    private List<String[]> tiposHabilidades;
+    private List<String[]> tiposMana;
+    private db db;
     
     public Carta (int id, 
             int mareo_invocacion, 
@@ -45,8 +51,105 @@ public class Carta {
         this.imagen = imagen;
         this.id_tipo_carta = id_tipo_carta;
         this.id_tipo_habilidad = id_tipo_habilidad;
+        this.db = new db();
+        this.tipos = new ArrayList();
+        this.tiposHabilidades = new ArrayList();
+        this.tiposMana = new ArrayList();
         
     }
+    
+    //Funciones para cargar las listas de tipos de la carta actual
+    
+    public void cargarTipos () {
+        Statement statement = null;
+        ResultSet result = null;
+        
+        this.db.abrirConexion();
+        
+        try {
+            statement = this.db.getConnection().createStatement();
+            result = statement.executeQuery("SELECT * FROM "+this.db.getName()+".tipos_carta WHERE id IN (SELECT id_tipo_carta FROM "+this.db.getName()+".cartas_tipos_carta WHERE id_carta = "+this.id+")");
+            
+            while (result.next()) {
+                String[] tipo = {
+                    result.getString("id"),
+                    result.getString("tipo")
+                };
+                
+                this.tipos.add(tipo);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Error al cargar los tipos de la carta actual: " + e.getMessage());
+            
+        } finally {
+            this.db.cerrarConexion();
+        }
+    }
+    
+    public void cargarTiposHabilidad () {
+        Statement statement = null;
+        ResultSet result = null;
+        
+        this.db.abrirConexion();
+        
+        try {
+            statement = this.db.getConnection().createStatement();
+            result = statement.executeQuery("SELECT * FROM "+this.db.getName()+".tipos_habilidad WHERE id IN (SELECT id_habilidad FROM "+this.db.getName()+".cartas_tipo_habilidad WHERE id_carta = "+this.id+")");
+            
+            while (result.next()) {
+                String[] tipo = {
+                    result.getString("id"),
+                    result.getString("tipo")
+                };
+                
+                this.tiposHabilidades.add(tipo);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Error al cargar los tipos de habilidades de la carta actual: " + e.getMessage());
+            
+        } finally {
+            this.db.cerrarConexion();
+        }
+    }
+    
+    public void cargarTiposMana () {
+        Statement statement = null;
+        ResultSet result = null;
+        
+        this.db.abrirConexion();
+        
+        try {
+            statement = this.db.getConnection().createStatement();
+            result = statement.executeQuery("SELECT "+this.db.getName()+".tipos_mana.id, "+
+                    this.db.getName()+".tipos_mana.tipo, "+
+                    this.db.getName()+".cartas_tipos_mana.cantidad "
+                            + "FROM "+this.db.getName()+".cartas_tipos_mana "
+                            + "LEFT JOIN "+this.db.getName()+".tipos_mana "
+                            + "ON "+this.db.getName()+".cartas_tipos_mana.id_tipo_mana = "
+                            + this.db.getName()+".tipos_mana.id WHERE "
+                            + this.db.getName()+".cartas_tipos_mana.id_carta = " + this.id);
+            
+            while (result.next()) {
+                String[] tipo = {
+                    result.getString("id"),
+                    result.getString("tipo"),
+                    result.getString("cantidad")
+                };
+                
+                this.tiposMana.add(tipo);
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Error al cargar los tipos de mana de la carta actual: " + e.getMessage());
+            
+        } finally {
+            this.db.cerrarConexion();
+        }
+    }
+    
+    //-------------------------------------------
 
     //GETTES/SETTERS
     
