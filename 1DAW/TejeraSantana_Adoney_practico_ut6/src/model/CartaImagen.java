@@ -18,7 +18,7 @@ public class CartaImagen extends javax.swing.JPanel{
     public CartaImagen (String url) {
         this.URL = url;
         
-        this.setSize(300, 500);
+        this.setSize(317, 500);
     }
     
     public void paint (Graphics grafico) {
