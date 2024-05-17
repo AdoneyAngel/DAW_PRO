@@ -6,9 +6,12 @@ package controller;
 
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import model.Carta;
+import model.CartaImagen;
 import model.GestionCartaModel;
 import view.GestionCartaView;
+import model.CartaSeleccionada;
 
 /**
  *
@@ -88,16 +91,65 @@ public class GestionCartaController {
         
         view.getBtnCargar().addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                
+                establecerCarta();
             }
         });
     }
     
-    private void establecerCarta() {
+    private static void establecerCarta() {
+        boolean comboSeleccionado = true;
         
+        String tierraValue = view.getComboTierras().getSelectedItem().toString();
+        String criaturasValue = view.getComboCriaturas().getSelectedItem().toString();
+        String encantemientoValue = view.getComboEncantamientos().getSelectedItem().toString();
+        String instantaneoValue = view.getComboInstantaneos().getSelectedItem().toString();
+        String conjuroValue = view.getComboConjuros().getSelectedItem().toString();
+        String artefactoValue = view.getComboArtefactos().getSelectedItem().toString();
+        
+        if (!tierraValue.equals("-")) {
+            cartaSeleccionada = model.getCartaPorNombre(tierraValue);
+            
+        } else if (!criaturasValue.equals("-")) {
+            cartaSeleccionada = model.getCartaPorNombre(criaturasValue);
+            
+        } else if (!encantemientoValue.equals("-")) {
+            cartaSeleccionada = model.getCartaPorNombre(encantemientoValue);
+            
+        } else if (!instantaneoValue.equals("-")) {
+            cartaSeleccionada = model.getCartaPorNombre(instantaneoValue);
+            
+        } else if (!conjuroValue.equals("-")) {
+            cartaSeleccionada = model.getCartaPorNombre(conjuroValue);
+            
+        } else if(!artefactoValue.equals("-")) {
+            cartaSeleccionada = model.getCartaPorNombre(artefactoValue);
+            
+        } else {
+            comboSeleccionado = false;
+        }
+        
+        if (comboSeleccionado) {
+            CartaSeleccionada cartaSeleccionadaClass = new CartaSeleccionada(cartaSeleccionada);
+            String detallesCarta = cartaSeleccionadaClass.generarDescripcion();
+            
+            view.getTextAreaDetalles().setText(detallesCarta);
+            
+            //Cargar imagen
+            CartaImagen cartaImagen = new CartaImagen("/images/"+cartaSeleccionadaClass.getImagen());
+            view.getPanelImg().removeAll();
+            view.getPanelImg().add(cartaImagen);
+            view.getPanelImg().repaint();
+            
+            vaciarCombos();
+        }
     }
     
-    private String getCartaSeleccionada () {
-        
+    private static void vaciarCombos () {
+        view.getComboTierras().setSelectedIndex(0);
+        view.getComboConjuntos().setSelectedIndex(0);
+        view.getComboCriaturas().setSelectedIndex(0);
+        view.getComboInstantaneos().setSelectedIndex(0);
+        view.getComboArtefactos().setSelectedIndex(0);
+        view.getComboEncantamientos().setSelectedIndex(0);
     }
 }

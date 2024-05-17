@@ -4,10 +4,12 @@
  */
 package model.interfaz;
 
+import model.Carta;
+
 /**
  *
  * @author AdoneyDAW
  */
 public interface iCarta {
-    
+    public Carta getCartaPorNombre(String nombre);
 }

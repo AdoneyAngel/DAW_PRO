@@ -22,7 +22,7 @@ public class GestionCartaView extends javax.swing.JFrame {
     }
 
     public javax.swing.JComboBox<String> getComboConjuros() {
-        return ComboConjuntos;
+        return getComboConjuntos();
     }
 
     public javax.swing.JComboBox<String> getComboCriaturas() {
@@ -57,16 +57,12 @@ public class GestionCartaView extends javax.swing.JFrame {
         return jPanel3;
     }
 
-    public javax.swing.JPanel getjPanel4() {
-        return jPanel4;
-    }
-
     public javax.swing.JScrollPane getjScrollPane1() {
         return jScrollPane1;
     }
 
     public javax.swing.JTextArea getjTextArea1() {
-        return jTextArea1;
+        return getTextAreaDetalles();
     }
 
     public javax.swing.JLabel getLblArtefactos() {
@@ -104,6 +100,14 @@ public class GestionCartaView extends javax.swing.JFrame {
     public javax.swing.JPanel getPanelImg() {
         return panelImg;
     }
+
+    public javax.swing.JComboBox<String> getComboConjuntos() {
+        return ComboConjuntos;
+    }
+
+    public javax.swing.JTextArea getTextAreaDetalles() {
+        return textAreaDetalles;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -131,14 +135,14 @@ public class GestionCartaView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         lblDatos = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textAreaDetalles = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
         lblImagen = new javax.swing.JLabel();
         panelImg = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(100, 100, 100));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         lblTipo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblTipo.setText("Tierras");
@@ -207,7 +211,7 @@ public class GestionCartaView extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(lblArtefactos, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblConjuntos, javax.swing.GroupLayout.Alignment.LEADING)
@@ -221,8 +225,8 @@ public class GestionCartaView extends javax.swing.JFrame {
                     .addComponent(ComboTierras, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ComboConjuntos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ComboArtefactos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(24, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCargar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -254,19 +258,23 @@ public class GestionCartaView extends javax.swing.JFrame {
                 .addComponent(lblArtefactos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(ComboArtefactos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(32, 32, 32)
                 .addComponent(btnCargar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new java.awt.Color(100, 100, 100));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         lblDatos.setText("Datos de la carta");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setEnabled(false);
-        jScrollPane1.setViewportView(jTextArea1);
+        textAreaDetalles.setBackground(new java.awt.Color(255, 255, 255));
+        textAreaDetalles.setColumns(20);
+        textAreaDetalles.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        textAreaDetalles.setForeground(new java.awt.Color(0, 0, 0));
+        textAreaDetalles.setRows(5);
+        textAreaDetalles.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        textAreaDetalles.setEnabled(false);
+        jScrollPane1.setViewportView(textAreaDetalles);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -279,7 +287,7 @@ public class GestionCartaView extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblDatos)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -292,9 +300,12 @@ public class GestionCartaView extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel3.setBackground(new java.awt.Color(200, 200, 200));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         lblImagen.setText("Imagen de la carta");
+
+        panelImg.setBackground(new java.awt.Color(255, 255, 255));
+        panelImg.setToolTipText("");
 
         javax.swing.GroupLayout panelImgLayout = new javax.swing.GroupLayout(panelImg);
         panelImg.setLayout(panelImgLayout);
@@ -380,40 +391,6 @@ public class GestionCartaView extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCargarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GestionCartaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GestionCartaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GestionCartaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GestionCartaView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GestionCartaView().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboArtefactos;
@@ -426,9 +403,7 @@ public class GestionCartaView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblArtefactos;
     private javax.swing.JLabel lblConjuntos;
     private javax.swing.JLabel lblCriaturas;
@@ -438,5 +413,6 @@ public class GestionCartaView extends javax.swing.JFrame {
     private javax.swing.JLabel lblInstantaneos;
     private javax.swing.JLabel lblTipo;
     private javax.swing.JPanel panelImg;
+    private javax.swing.JTextArea textAreaDetalles;
     // End of variables declaration//GEN-END:variables
 }

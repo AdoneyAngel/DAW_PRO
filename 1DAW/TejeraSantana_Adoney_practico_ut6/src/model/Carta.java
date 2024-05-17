@@ -15,20 +15,20 @@ import java.util.ArrayList;
  * @author Adone
  */
 public class Carta {
-    private int id;
-    private int mareo_invocacion;
-    private String nombre;
-    private int id_rareza;
-    private String descripcion;
-    private int fuerza;
-    private int resistencia;
-    private String imagen;
-    private int id_tipo_carta;
-    private int id_tipo_habilidad;
-    private List<String[]> tipos;
-    private List<String[]> tiposHabilidades;
-    private List<String[]> tiposMana;
-    private db db;
+    protected int id;
+    protected int mareo_invocacion;
+    protected String nombre;
+    protected int id_rareza;
+    protected String descripcion;
+    protected int fuerza;
+    protected int resistencia;
+    protected String imagen;
+    protected int id_tipo_carta;
+    protected int id_tipo_habilidad;
+    protected List<String[]> tipos;
+    protected List<String[]> tiposHabilidades;
+    protected List<String[]> tiposMana;
+    protected db db;
     
     public Carta (int id, 
             int mareo_invocacion, 
@@ -76,7 +76,7 @@ public class Carta {
                     result.getString("tipo")
                 };
                 
-                this.tipos.add(tipo);
+                this.getTipos().add(tipo);
             }
             
         } catch (SQLException e) {
@@ -103,7 +103,7 @@ public class Carta {
                     result.getString("tipo")
                 };
                 
-                this.tiposHabilidades.add(tipo);
+                this.getTiposHabilidades().add(tipo);
             }
             
         } catch (SQLException e) {
@@ -138,7 +138,7 @@ public class Carta {
                     result.getString("cantidad")
                 };
                 
-                this.tiposMana.add(tipo);
+                this.getTiposMana().add(tipo);
             }
             
         } catch (SQLException e) {
@@ -161,7 +161,7 @@ public class Carta {
         this.id = id;
     }
 
-    public int getMare_invocacion() {
+    public int getMareo_invocacion() {
         return mareo_invocacion;
     }
 
@@ -231,6 +231,18 @@ public class Carta {
 
     public void setId_tipo_habilidad(int id_tipo_habilidad) {
         this.id_tipo_habilidad = id_tipo_habilidad;
+    }
+
+    public List<String[]> getTipos() {
+        return tipos;
+    }
+
+    public List<String[]> getTiposHabilidades() {
+        return tiposHabilidades;
+    }
+
+    public List<String[]> getTiposMana() {
+        return tiposMana;
     }
     
     

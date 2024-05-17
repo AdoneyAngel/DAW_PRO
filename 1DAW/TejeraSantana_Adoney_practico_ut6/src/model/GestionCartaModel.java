@@ -90,44 +90,6 @@ public class GestionCartaModel implements iCarta, iTiposCarta, iTiposHabilidad, 
         return null;
     }
     
-    private List<Carta> getCartas() {
-        List<Carta> cartas = new ArrayList();
-        
-        Statement statement = null;
-        ResultSet result = null;
-        
-        this.db.abrirConexion();
-        
-        try {
-            statement = this.db.getConnection().createStatement();
-            result = statement.executeQuery("SELECT * FROM "+this.db.getName()+".cartas");
-            
-            while (result.next()) {
-                int id = result.getInt("id");
-                int mareo_invocacion = result.getInt("mareo_invocacion");
-                String nombre = result.getString("nombre");
-                int id_rareza = result.getInt("id_rareza");
-                String descripcion = result.getString("descripcion");
-                int fuerza = result.getInt("fuerza");
-                int resistencia = result.getInt("resistencia");
-                String imagen = result.getString("imagen");
-                int id_tipo_carta = result.getInt("id_tipo_carta");
-                int id_tipo_habilidad = result.getInt("id_tipo_habilidad");
-                
-                Carta nuevaCarta = new Carta(id, mareo_invocacion, nombre, id_rareza, descripcion, fuerza, resistencia, imagen, id_tipo_carta, id_tipo_habilidad);
-                
-                cartas.add(nuevaCarta);
-            }
-            
-        } catch (SQLException e) {
-            System.out.println("Error al cargar las cartas: " + e.getMessage());
-            
-        } finally {
-            this.db.cerrarConexion();
-            return cartas;
-        }
-    }
-    
     private List<Carta> cargarCartasPorQuery (String where) {
         List<Carta> cartasCargadas = new ArrayList();
         
@@ -293,5 +255,12 @@ public class GestionCartaModel implements iCarta, iTiposCarta, iTiposHabilidad, 
         } finally {
             return tipos;
         }
+    }
+    
+    @Override
+    public Carta getCartaPorNombre (String nombre) {
+        List<Carta> cartas = this.cargarCartasPorQuery("nombre LIKE '" + nombre + "'");
+        
+        return cartas.get(0);
     }
 }
