@@ -187,7 +187,7 @@ public class GestionCartaView extends javax.swing.JFrame {
         });
 
         lblConjuntos.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        lblConjuntos.setText("Conjuntos");
+        lblConjuntos.setText("Conjuros");
 
         ComboArtefactos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         ComboArtefactos.addActionListener(new java.awt.event.ActionListener() {
@@ -212,23 +212,21 @@ public class GestionCartaView extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(lblArtefactos, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblConjuntos, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblInstantaneos, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblEncantamientos, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblCriaturas, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTipo, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ComboInstantaneos, javax.swing.GroupLayout.Alignment.LEADING, 0, 187, Short.MAX_VALUE)
-                    .addComponent(ComboEncantamientos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ComboCriaturas, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ComboTierras, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ComboConjuntos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ComboArtefactos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCargar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(lblArtefactos, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblConjuntos, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblInstantaneos, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblEncantamientos, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblCriaturas, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(lblTipo, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(ComboInstantaneos, javax.swing.GroupLayout.Alignment.LEADING, 0, 187, Short.MAX_VALUE)
+                        .addComponent(ComboEncantamientos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ComboCriaturas, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ComboTierras, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ComboConjuntos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(ComboArtefactos, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCargar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
